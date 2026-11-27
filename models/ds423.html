@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3QgeD0iMiIgeT0iMiIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiByeD0iMTQiIGZpbGw9IiMwYTBmMWEiIHN0cm9rZT0iIzI0MzI0ZCIgc3Ryb2tlLXdpZHRoPSIzIi8+PHJlY3QgeD0iMTgiIHk9IjEyIiB3aWR0aD0iMjgiIGhlaWdodD0iMTIiIHJ4PSIzIiBmaWxsPSIjMTMxZTMzIiBzdHJva2U9IiMzOGJkZjgiIHN0cm9rZS13aWR0aD0iMyIvPjxwYXRoIGQ9Ik0zMiAyNHYxME0xNiAzNGgzMk0xNiAzNHY4TTMyIDM0djhNNDggMzR2OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzhiZGY4IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjxyZWN0IHg9IjEwIiB5PSI0MiIgd2lkdGg9IjEyIiBoZWlnaHQ9IjEwIiByeD0iMi41IiBmaWxsPSIjNjBhNWZhIi8+PHJlY3QgeD0iMjYiIHk9IjQyIiB3aWR0aD0iMTIiIGhlaWdodD0iMTAiIHJ4PSIyLjUiIGZpbGw9IiMzOGJkZjgiLz48cmVjdCB4PSI0MiIgeT0iNDIiIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMCIgcng9IjIuNSIgZmlsbD0iIzM0ZDM5OSIvPjwvc3ZnPg==" />
+<title>Synology DS423 (Realtek RTD1619B) Hardware &amp; 4-Bay SATA Topology | 群晖 DS423 硬件拓扑图</title>
+<meta name="description" content="Interactive hardware topology diagram for Synology DS423 (Value series, Realtek RTD1619B ARM64 Cortex-A55 4C/4T): 2GB soldered DDR4, 4 internal SATA III bays, dual 1GbE, dual rear USB 3.2 Gen 1, and ARM SoC on-die/PCIe bus architecture. 群晖 DS423 价值系列硬件互联与 4 盘位 SATA/网络拓扑图。" />
+<meta name="keywords" content="Synology DS423, Realtek RTD1619B, ARM64 NAS, Cortex-A55, rtd1619b, Synology Value series, SATA topology, PCIe topology, 群晖DS423, 群晖硬件拓扑, 群晖价值系列, RTD1619B架构" />
+<meta name="robots" content="index, follow" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Synology DS423 Hardware &amp; 4-Bay SATA Topology | 群晖 DS423 硬件拓扑图" />
+<meta property="og:description" content="Interactive ARM SoC, SATA, and dual 1GbE hardware topology diagram for Synology DS423 (Realtek RTD1619B). 群晖 DS423 交互式硬件互联与 4 盘位拓扑图。" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Synology DS423 Hardware Topology | 群晖 DS423 硬件拓扑图" />
+<meta name="twitter:description" content="Interactive ARM64 SoC &amp; 4-bay SATA interconnect diagram for Synology DS423 (Realtek RTD1619B) | 群晖 DS423 硬件拓扑图。" />
+<style>
+  :root {
+    --bg: #0a0f1a;
+    --panel: #111827;
+    --border: #24324d;
+    --text: #e6edf7;
+    --muted: #8fa3c4;
+    --accent: #38bdf8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", monospace;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+  }
+  .nav-bar {
+    width: 100%;
+    max-width: 1680px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+  .nav-left, .nav-models {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    text-decoration: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 11px;
+    font-weight: 600;
+    transition: all 0.15s ease;
+  }
+  .nav-link:hover {
+    color: #fff;
+    border-color: var(--accent);
+    background: #1b2840;
+  }
+  .nav-link.active {
+    color: #fff;
+    background: #1d4ed8;
+    border-color: #3b82f6;
+  }
+  .toolbar {
+    width: 100%;
+    max-width: 1680px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 18px;
+    margin-bottom: 12px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .title-group h1 {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: #f8fafc;
+  }
+  .title-group p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .lang-switch {
+    display: inline-flex;
+    background: #0d1526;
+    border: 1px solid #32476b;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .lang-switch button {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .lang-switch button.active {
+    background: #2563eb;
+    color: #ffffff;
+  }
+  .lang-switch button:not(.active):hover {
+    background: #1b2840;
+    color: #f8fafc;
+  }
+  button.action-btn {
+    background: #1b2840;
+    color: var(--text);
+    border: 1px solid #32476b;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  button.action-btn:hover {
+    background: #253859;
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .canvas-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 1680px;
+    background: #0b111e;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 54px rgba(0, 0, 0, 0.5);
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    cursor: default;
+    touch-action: manipulation;
+  }
+  #tooltip {
+    position: absolute;
+    pointer-events: none;
+    display: none;
+    max-width: min(380px, calc(100% - 20px));
+    background: rgba(11, 17, 30, 0.97);
+    border: 1px solid #38bdf8;
+    border-radius: 8px;
+    padding: 11px 13px;
+    font-size: 12px;
+    line-height: 1.55;
+    color: #e2e8f0;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+    z-index: 20;
+  }
+  #tooltip .tt-title {
+    font-weight: 700;
+    color: #38bdf8;
+    margin-bottom: 3px;
+    font-size: 13px;
+  }
+  #tooltip .tt-bdf {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    color: #94a3b8;
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+  #tooltip .tt-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid rgba(148, 163, 184, 0.14);
+    padding-top: 3px;
+    margin-top: 3px;
+  }
+  #tooltip .tt-key { color: #94a3b8; white-space: nowrap; }
+  #tooltip .tt-val { color: #f8fafc; font-weight: 600; text-align: right; }
+  #tooltip .tt-warn { color: #fbbf24; margin-top: 6px; font-size: 11.5px; }
+  #tooltip .tt-crit { color: #f87171; margin-top: 6px; font-size: 11.5px; font-weight: 600; }
+  .seo-footer {
+    width: 100%;
+    max-width: 1680px;
+    margin-top: 14px;
+    padding: 12px 18px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .seo-footer a { color: var(--accent); text-decoration: none; }
+  .seo-footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar" aria-label="Breadcrumb">
+  <div class="nav-left">
+    <a class="nav-link" id="navHome" href="../index.html">← All Models</a>
+  </div>
+  <div class="nav-models">
+    <span class="nav-link active" aria-current="page">Synology DS423</span>
+  </div>
+</nav>
+
+<div class="toolbar">
+  <div class="title-group">
+    <h1 id="uiTitle"></h1>
+    <p id="uiSubtitle"></p>
+  </div>
+  <div class="controls">
+    <div class="lang-switch" role="group" aria-label="Language Switcher">
+      <button id="btnZh" type="button">中文</button>
+      <button id="btnEn" type="button">EN</button>
+    </div>
+    <button id="btnExport" class="action-btn" type="button"></button>
+  </div>
+</div>
+
+<div class="canvas-wrap" id="wrap">
+  <canvas id="topoCanvas" role="img" aria-label="Synology DS423 Hardware and 4-Bay SATA Topology Diagram"></canvas>
+  <div id="tooltip" role="tooltip"></div>
+</div>
+
+<noscript>
+  <div class="seo-footer">JavaScript is required to render the interactive Synology DS423 (Realtek RTD1619B ARM64) 4-bay SATA and dual 1GbE hardware topology diagram.</div>
+</noscript>
+
+<footer class="seo-footer">
+  <span id="uiFooter"></span>
+  <a id="footerHome" href="../index.html">Synology Hardware Topology</a>
+</footer>
+
+<script>
+(() => {
+  const LOGICAL_W = 1680;
+  const LOGICAL_H = 1025;
+
+  const canvas = document.getElementById('topoCanvas');
+  const ctx = canvas.getContext('2d');
+  const tooltip = document.getElementById('tooltip');
+  const wrap = document.getElementById('wrap');
+  const uiTitle = document.getElementById('uiTitle');
+  const uiSubtitle = document.getElementById('uiSubtitle');
+  const btnExport = document.getElementById('btnExport');
+  const btnZh = document.getElementById('btnZh');
+  const btnEn = document.getElementById('btnEn');
+  const navHome = document.getElementById('navHome');
+  const uiFooter = document.getElementById('uiFooter');
+  const footerHome = document.getElementById('footerHome');
+
+  const COLORS = {
+    bg: '#0b111e',
+    grid: 'rgba(148, 163, 184, 0.045)',
+    socBg: '#101a2e',
+    nodeBg: '#131e33',
+    nodeBorder: '#293b5c',
+    nodeHover: '#38bdf8',
+    pcie2x1: '#f59e0b',   // Amber (PCIe 2.0 x1 · 500 MB/s)
+    pcie1x1: '#a78bfa',   // Violet (PCIe 1.1/2.0 x1 NIC)
+    internal: '#34d399',  // Emerald (ARM SoC On-Die Platform Bus)
+    sata: '#38bdf8',      // Sky (SATA III 6Gbps)
+    usb: '#60a5fa',       // Blue (USB 3.2 Gen 1 · 5Gbps)
+    warnBg: 'rgba(245, 158, 11, 0.16)',
+    warnText: '#fbbf24',
+    critBg: 'rgba(239, 68, 68, 0.18)',
+    critText: '#f87171',
+    okBg: 'rgba(52, 211, 153, 0.14)',
+    okText: '#34d399',
+    textMain: '#f1f5f9',
+    textSub: '#94a3b8'
+  };
+
+  function detectInitialLang() {
+    try {
+      const saved = localStorage.getItem('syno_topo_lang');
+      if (saved === 'zh' || saved === 'en') return saved;
+    } catch (_) {}
+    const navLang = (navigator.language || (navigator.languages && navigator.languages[0]) || 'en').toLowerCase();
+    return navLang.startsWith('zh') ? 'zh' : 'en';
+  }
+
+  let currentLang = detectInitialLang();
+  let hoveredNode = null;
+  let pinnedNode = null;
+
+  const I18N = {
+    zh: {
+      navHome: '← 全部机型',
+      footerHome: '返回 Synology Hardware Topology 首页',
+      pageTitle: 'Synology DS423 (Realtek RTD1619B) 硬件架构与 4 盘位拓扑图',
+      toolbarTitle: 'Synology DS423 硬件互联与 4 盘位拓扑图（价值系列 · Realtek RTD1619B + 双 1GbE）',
+      toolbarSub: '依据 Synology 官方规格、硬件安装指南与 RTD1619B ARM64 平台架构绘制（* 为平台推算项，待实机 dmesg / sysfs / lspci 核验）｜ 悬停或点击查看详情',
+      exportBtn: '导出高清 PNG',
+      exportName: 'synology-ds423-4bay-topology-zh.png',
+      canvasTitle: 'SYNOLOGY DS423 硬件架构与 4 盘位内部互联拓扑图（VALUE 价值系列）',
+      canvasSub: 'Realtek RTD1619B (ARM64 Cortex-A55 · 4C/4T @ 1.7GHz · 2GB 板载 DDR4) ｜ 纯内置 4 盘位 · 无 M.2 NVMe / 无扩展柜 ｜ 有效带宽按 PCIe 1.x/2.x (8b/10b) 计算',
+      socBanner: 'Realtek RTD1619B SoC — rtd1619b 平台（ARMv8 Cortex-A55 4C/4T @ 1.7GHz · 片内集成总线 + PCIe 2.0 通道*）',
+      socSummary: '内存：2GB DDR4 non-ECC 板载（不可扩展） ｜ 功耗：32.41W 存取 / 4.97W 休眠 ｜ 硬件加密引擎 ｜ DSM 无视频输出/无官方核显转码 ｜ PCIe 预算：仅板载固定分配，无开放扩展槽',
+      socExtLabel: '外置 PCIe 2.0 通道（ARM 平台推算*，具体通道与控制器型号待实机核验）',
+      socIntLabel: 'SoC 片内集成总线（Platform Bus / SerDes 直连，免外置 PCIe）',
+      backplaneTitle: '内置 4 盘位热插拔硬盘背板（4× 3.5"/2.5" SATA III 6Gbps · 支持 Btrfs/SHR · 盘位控制器归属为平台推算*）',
+      diffPanelTitle: 'DS423 vs DS423+ 关键区分',
+      diffPanelLines: [
+        '• 定位：DS423 属 Value 价值系列',
+        '• SoC：ARM64 RTD1619B (非 J4125)',
+        '• 内存：2GB 焊死不可扩 (非 SODIMM)',
+        '• 闪存：无 M.2 NVMe 槽位',
+        '• 套件：官方不支持 Docker / VMM',
+        '• 扩展：仅 4 盘内置，无外置盘柜'
+      ],
+      pins: {
+        p_lan2:      'PCIe 2.0 x1 (推算*)',
+        p_pcie_sata: 'PCIe 2.0 x1 (推算*)',
+        p_nat_sata:  '片内原生 SATA*',
+        p_lan1:      '片内 GMAC (RGMII)*',
+        p_soc_io:    '片内集成外设'
+      },
+      linkSpecs: {
+        l_lan2:      { bw: '250 MB/s',  spec: 'PCIe 1.1/2.0 x1*' },
+        l_pcie_sata: { bw: '500 MB/s',  spec: 'PCIe 2.0 x1 · 5GT/s*' },
+        l_nat_sata:  { bw: '片内直连',   spec: '2× SATA 6Gbps*' },
+        l_lan1:      { bw: '片内直连',   spec: 'RGMII · 1GbE*' },
+        l_soc_io:    { bw: '片内直连',   spec: 'xHCI / Flash / PWM' },
+        l_hdd:       { bw: '600 MB/s',  spec: 'SATA 6Gbps' },
+        l_usb:       { bw: '5 Gbps',    spec: '2× USB 3.2 Gen 1' }
+      },
+      panel1Title: 'DS423 硬件架构特征与数据溯源（官方确认 vs ARM 平台推算）',
+      panel1Lines: [
+        '• 官方规格已确认：Realtek RTD1619B (ARM64 4C/4T @ 1.7GHz)、2GB 板载 DDR4 不可扩展、4× 3.5"/2.5" 热插拔 SATA III 盘位',
+        '• 接口与散热确认：2× 1GbE RJ-45 (支持 LACP/故障转移，官方顺序读写 225/218 MB/s)、2× 后置 USB 3.2 Gen 1、双 80mm 风扇',
+        '• 软件与存储能力：支持 Btrfs 快照与 SHR/RAID 0/1/5/6/10（单卷上限 108 TB）；无 M.2 NVMe、无扩展柜、官方无 Container Manager',
+        '• ARM 平台架构特性：RTD1619B 外设多以片内 Platform Bus / SerDes 挂载，SSH 下 lspci 通常不显示片内原生 SATA 与 GMAC 设备',
+        '• * 平台推算说明：4 盘位在片内原生 SATA 与外置 PCIe-to-SATA 桥接间的具体分配、以及双 1GbE 的 PHY/PCIe 归属待实机 dmesg/sysfs 核验'
+      ],
+      panel2Title: '链路图例与关键瓶颈分析',
+      legend: [
+        'PCIe 2.0 x1 (500 MB/s · 推算*)',
+        'PCIe 1.1/2.0 x1 NIC (250 MB/s · 推算*)',
+        'SATA III 6Gbps (600 MB/s)',
+        'USB 3.2 Gen 1 (5Gbps · 后置)',
+        'SoC 片内集成总线 (Platform Bus)'
+      ],
+      notes: [
+        { title: '1. 内存硬上限 · 2GB DDR4 焊死不可扩展', text: '无 SODIMM 槽位，重度套件并发、大库 Photos 索引或非官方容器易触及内存瓶颈，官方不提供 VMM 与 Docker。' },
+        { title: '2. 网络与扩展天花板 · 仅双 1GbE，无 M.2 与扩展柜', text: '双千兆聚合上限 ~2 Gbps (官方 225/218 MB/s)；无 10GbE 槽、无 M.2 NVMe 缓存，也不支持 DX 系列外置扩展柜。' },
+        { title: '3. 外置 SATA 桥接共享上行* · PCIe 2.0 x1 (500 MB/s)', text: '若 2 盘经 PCIe 2.0 x1 桥接芯片承载，盘间重建/校验并发接近 500 MB/s 上限；对外传输受限于双千兆网口不易先撞墙。' }
+      ],
+      ttKeys: { cap: '硬件规格', sta: '链路/角色', driver: '总线/驱动', note: '架构说明' },
+      nodes: {
+        soc: {
+          title: 'Realtek RTD1619B SoC (ARMv8 Cortex-A55)',
+          meta: {
+            bdf: 'DSM 平台: rtd1619b ｜ 官方规格确认 + ARM 平台推算',
+            cap: 'ARM64 4C/4T @ 1.7GHz · 硬件加密引擎 · 整机 32.41W(存取)/4.97W(休眠)',
+            sta: '2GB DDR4 non-ECC 板载不可扩展 ｜ 片内集成 Mali-G57/VPU 但 DSM 无视频输出/无官方转码',
+            detail: '面向 Value 价值系列的低功耗 ARM64 SoC，原生集成高速 SerDes (SATA/PCIe Gen2)、GMAC 与 xHCI；所有通道在主板上固定分配，无开放 PCIe 扩展槽或 M.2 槽位。'
+          }
+        },
+        dev_lan2: {
+          bdf: '主板板载 · LAN 2 (推算*)', title: '板载千兆网卡 #2 (LAN 2*)',
+          lines: ['后置 RJ-45 1GbE 端口 2', '支持链路聚合 / 故障转移', '推算经 PCIe x1 扩展网卡*'],
+          badge: '1GbE 线速 125 MB/s · 链路充足',
+          meta: {
+            bdf: 'Onboard NIC #2 (具体芯片型号待实机 dmesg / ethtool -i 核验)',
+            cap: '推算 PCIe 1.1/2.0 x1 (250–500 MB/s) ｜ 1GbE 全双工',
+            sta: '与 LAN 1 配合实现双千兆 LACP (官方实测 225/218 MB/s)',
+            driver: 'r8168 / Realtek GbE (推算*)',
+            detail: 'RTD1619B 平台通常由片内 GMAC 提供一路千兆，第二路 1GbE 经板载 PCIe 网卡芯片（如 Realtek RTL8111 系列）或外置桥接实现，具体归属待实机核验。'
+          }
+        },
+        dev_pcie_sata: {
+          bdf: '主板板载 · PCIe SATA (推算*)', title: '外置 PCIe-to-SATA 控制器*',
+          lines: ['2口 AHCI SATA III 桥接*', '承载内置盘位 1 / 2 (推算*)', '常见方案: JMB / ASM 2口芯片'],
+          badge: '⚠ 推算上行: PCIe 2.0 x1 (500MB/s)',
+          meta: {
+            bdf: 'Onboard PCIe SATA Controller (具体芯片与 BDF 待实机 lspci 核验)',
+            cap: '推算 PCIe 2.0 x1 (5GT/s, 500 MB/s 有效单向) ｜ 2× SATA 6Gbps',
+            sta: '与片内原生 SATA 合计提供 4 路内置热插拔 SATA III*',
+            driver: 'ahci (推算*)',
+            warn: '若由单通道 PCIe 2.0 x1 承载 2 块机械盘/SATA SSD，RAID 重建或双盘满载顺序读写会接近 500 MB/s 上行天花板；常规双 1GbE 网络读写 (~225 MB/s) 不受影响。'
+          }
+        },
+        dev_nat_sata: {
+          bdf: 'SoC 片内原生 SATA*', title: 'RTD1619B 原生 AHCI SATA*',
+          lines: ['SoC 片内 2口 SATA III*', 'Platform Bus 直连 (免 PCIe)', '承载内置盘位 3 / 4 (推算*)'],
+          badge: '片内直连 · 无外置 PCIe 争抢',
+          meta: {
+            bdf: 'Realtek RTD1619B Integrated SATA Host Controller (待 dmesg / sysfs 核验)',
+            cap: 'SoC 片内总线直连 ｜ 2× 原生 SATA III 6Gbps*',
+            sta: '直连 2 块内置热插拔盘位（具体盘位号映射待 sysfs 确认）',
+            driver: 'ahci_rtk / platform ahci',
+            detail: 'Realtek RTD1619B 内部集成原生 SATA III 控制器，通过片内总线直接访问内存，在 lspci 中不可见，无外置 PCIe 带宽争抢。'
+          }
+        },
+        dev_lan1: {
+          bdf: 'SoC 片内 GMAC (推算*)', title: '片内 GMAC + GbE PHY (LAN 1*)',
+          lines: ['后置 RJ-45 1GbE 端口 1', '片内 MAC + 外置 PHY (RGMII*)', '支持 LACP / 故障转移'],
+          badge: '片内直连 · 1GbE 无瓶颈',
+          meta: {
+            bdf: 'Realtek RTD1619B On-Die GMAC + External GbE PHY (推算*)',
+            cap: '片内总线 RGMII ｜ 1GbE 全双工 (125 MB/s)',
+            sta: '独立于 PCIe 通道，与 LAN 2 组成双千兆网络',
+            driver: 'r8169 / rtk-gmac (推算*)',
+            detail: 'RTD1619B 原生集成千兆以太网 MAC，通常搭配外部千兆 PHY（如 RTL8211 系列）直出 LAN 1 网口，具体 PHY 型号与网口对应关系待实机核验。'
+          }
+        },
+        dev_soc_io: {
+          bdf: 'SoC 片内与板载辅助', title: '片内外设 / 引导 / 散热',
+          lines: ['• 片内 xHCI (USB 3.2 Gen 1)', '• 引导闪存 (eMMC/SPI Flash*)', '• ARMv8 硬件加密引擎', '• 双 80mm 风扇 PWM 监控'],
+          badge: '32.41W 满载 / 4.97W 休眠',
+          meta: {
+            bdf: 'RTD1619B On-Die xHCI + Boot Flash + Crypto + Fan Control',
+            cap: '2× USB 3.2 Gen 1 (5Gbps) + ARMv8 Crypto + 双 80mm 风扇',
+            sta: '官方确认低功耗静音设计 (20.6 dB(A))，90W 外置电源',
+            driver: 'xhci-plat / rtk-crypto',
+            detail: '片内集成 USB 3.2 Gen 1 控制器与硬件加密引擎；前面板仅设状态灯与电源键，无前置 USB 接口；背面配备双 80mm 风扇与电源/复位接口。'
+          }
+        },
+        hdd_1: {
+          bay: '内置盘位 1 (推算*)', title: 'SATA 盘位 1',
+          lines: ['3.5" HDD / 2.5" SSD', 'SATA III 6Gbps · 热插拔', '经外置 PCIe SATA*'],
+          meta: {
+            bdf: 'Internal Bay 1 (推算归属外置 PCIe-to-SATA 控制器*)',
+            sta: 'SATA III 6Gbps (支持热插拔 · Btrfs / ext4)',
+            detail: '盘位 1–4 均为官方确认的 3.5"/2.5" 热插拔 SATA 盘位；具体哪 2 盘走片内原生 SATA、哪 2 盘走外置控制器待实机 /sys/block/sata* 核验。'
+          }
+        },
+        hdd_2: {
+          bay: '内置盘位 2 (推算*)', title: 'SATA 盘位 2',
+          lines: ['3.5" HDD / 2.5" SSD', 'SATA III 6Gbps · 热插拔', '经外置 PCIe SATA*'],
+          meta: {
+            bdf: 'Internal Bay 2 (推算归属外置 PCIe-to-SATA 控制器*)',
+            sta: 'SATA III 6Gbps (支持热插拔 · Btrfs / ext4)',
+            detail: '推算与盘位 1 共享外置 SATA 控制器的 PCIe 2.0 x1 (500 MB/s) 上行链路，具体归属待实机 sysfs 验证。'
+          }
+        },
+        hdd_3: {
+          bay: '内置盘位 3 (推算*)', title: 'SATA 盘位 3',
+          lines: ['3.5" HDD / 2.5" SSD', 'SATA III 6Gbps · 热插拔', 'RTD1619B 原生 SATA*'],
+          meta: {
+            bdf: 'Internal Bay 3 (推算归属 RTD1619B 片内原生 SATA*)',
+            sta: 'SATA III 6Gbps (支持热插拔 · Btrfs / ext4)',
+            detail: '推算由 RTD1619B 片内原生 AHCI SATA 控制器直连，无外置 PCIe 通道争抢，具体归属待实机 sysfs 验证。'
+          }
+        },
+        hdd_4: {
+          bay: '内置盘位 4 (推算*)', title: 'SATA 盘位 4',
+          lines: ['3.5" HDD / 2.5" SSD', 'SATA III 6Gbps · 热插拔', 'RTD1619B 原生 SATA*'],
+          meta: {
+            bdf: 'Internal Bay 4 (推算归属 RTD1619B 片内原生 SATA*)',
+            sta: 'SATA III 6Gbps (支持热插拔 · Btrfs / ext4)',
+            detail: '推算由 RTD1619B 片内原生 AHCI SATA 控制器直连；全机仅支持 4 块内置硬盘，不支持任何 Synology 扩展柜。'
+          }
+        },
+        dev_usb: {
+          bdf: '后置面板 · 2× USB-A (官方确认)', title: '双后置 USB 3.2 Gen 1',
+          lines: ['2× USB-A 5Gbps (均在背面)', '外置硬盘备份 / UPS 通信', '前面板无 USB 接口'],
+          badge: '片内 xHCI 直连 · 5Gbps',
+          meta: {
+            bdf: 'Rear Panel 2× USB 3.2 Gen 1 Type-A (官方硬件安装指南确认)',
+            cap: 'USB 3.2 Gen 1 (5Gbps, 约 400–450 MB/s 实测上限)',
+            sta: '由 RTD1619B 片内 xHCI 控制器直连，前面板不设 USB 口',
+            driver: 'xhci_hcd',
+            detail: '可用于连接外置 USB 移动硬盘（支持 Btrfs/ext4/NTFS/exFAT 等）做 Hyper Backup 离线备份，或接入 UPS 实现断电自动关机。'
+          }
+        }
+      }
+    },
+
+    en: {
+      navHome: '← All Models',
+      footerHome: 'Back to Synology Hardware Topology',
+      pageTitle: 'Synology DS423 (Realtek RTD1619B) Hardware & 4-Bay SATA Topology',
+      toolbarTitle: 'Synology DS423 Hardware Topology (Value Series · Realtek RTD1619B + Dual 1GbE)',
+      toolbarSub: 'Compiled from Synology official specs, hardware guide & RTD1619B ARM64 architecture (* = platform-inferred; awaiting dmesg/sysfs/lspci)  |  Hover or tap to inspect',
+      exportBtn: 'Export PNG',
+      exportName: 'synology-ds423-4bay-topology-en.png',
+      canvasTitle: 'SYNOLOGY DS423 HARDWARE & 4-BAY INTERNAL TOPOLOGY (VALUE SERIES)',
+      canvasSub: 'Realtek RTD1619B (ARM64 Cortex-A55 · 4C/4T @ 1.7GHz · 2GB Soldered DDR4)  |  4 Internal Bays Only · No M.2 / No Expansion Unit  |  Effective BW: PCIe 1.x/2.x (8b/10b)',
+      socBanner: 'Realtek RTD1619B SoC — rtd1619b Platform (ARMv8 Cortex-A55 4C/4T @ 1.7GHz · On-Die Platform Bus + PCIe 2.0 Lanes*)',
+      socSummary: 'RAM: 2GB Soldered DDR4 non-ECC (Non-Expandable) | Power: 32.41W Access / 4.97W Hibernation | HW Crypto | No DSM Video/Transcode | Fixed Onboard I/O, No Open Slots',
+      socExtLabel: 'External PCIe 2.0 Lanes (ARM Platform Inferred* — Exact Controller & Lane Split Pending Dump)',
+      socIntLabel: 'On-Die Integrated Bus (Platform Bus / SerDes Direct, No External PCIe)',
+      backplaneTitle: 'Internal 4-Bay Hot-Swap Backplane (4× 3.5"/2.5" SATA III 6Gbps · Btrfs / SHR · Controller Split Inferred*)',
+      diffPanelTitle: 'DS423 vs DS423+ Key Differences',
+      diffPanelLines: [
+        '• Line: DS423 is Value Series (not Plus)',
+        '• SoC: ARM64 RTD1619B (not Intel J4125)',
+        '• RAM: 2GB Soldered (no SODIMM slot)',
+        '• NVMe: No M.2 SSD cache slots',
+        '• Apps: No official Docker / VMM',
+        '• Bays: 4 internal only, no expansion'
+      ],
+      pins: {
+        p_lan2:      'PCIe 2.0 x1 (Inferred*)',
+        p_pcie_sata: 'PCIe 2.0 x1 (Inferred*)',
+        p_nat_sata:  'On-Die Native SATA*',
+        p_lan1:      'On-Die GMAC (RGMII)*',
+        p_soc_io:    'On-Die Peripherals'
+      },
+      linkSpecs: {
+        l_lan2:      { bw: '250 MB/s',   spec: 'PCIe 1.1/2.0 x1*' },
+        l_pcie_sata: { bw: '500 MB/s',   spec: 'PCIe 2.0 x1 · 5GT/s*' },
+        l_nat_sata:  { bw: 'On-Die Bus', spec: '2× SATA 6Gbps*' },
+        l_lan1:      { bw: 'On-Die Bus', spec: 'RGMII · 1GbE*' },
+        l_soc_io:    { bw: 'On-Die Bus', spec: 'xHCI / Flash / PWM' },
+        l_hdd:       { bw: '600 MB/s',   spec: 'SATA 6Gbps' },
+        l_usb:       { bw: '5 Gbps',     spec: '2× USB 3.2 Gen 1' }
+      },
+      panel1Title: 'DS423 Architecture Highlights & Provenance (Official Spec vs ARM Platform Inferred)',
+      panel1Lines: [
+        '• Confirmed Official Specs: Realtek RTD1619B (ARM64 4C/4T @ 1.7GHz), 2GB soldered DDR4 (non-upgradable), 4× hot-swap 3.5"/2.5" SATA III bays',
+        '• Confirmed I/O & Cooling: 2× 1GbE RJ-45 (LACP / failover, rated 225/218 MB/s seq R/W), 2× rear USB 3.2 Gen 1 (5Gbps), dual 80mm fans',
+        '• Storage & DSM Scope: Supports Btrfs snapshots & SHR/RAID 0/1/5/6/10 (108 TB max volume); no M.2 NVMe, no expansion unit, no official Docker',
+        '• ARM SoC Bus Behavior: RTD1619B exposes native SATA & GMAC over on-die Platform Bus/SerDes rather than standard x86 PCIe, so lspci omits them',
+        '• * Platform-Inferred Items: Exact split between native SATA & onboard PCIe SATA bridge, plus dual-1GbE PHY/PCIe wiring await dmesg/sysfs dump'
+      ],
+      panel2Title: 'Link Legend & Key Bottlenecks',
+      legend: [
+        'PCIe 2.0 x1 (500 MB/s · Inferred*)',
+        'PCIe 1.1/2.0 x1 NIC (250 MB/s · Inferred*)',
+        'SATA III 6Gbps (600 MB/s)',
+        'USB 3.2 Gen 1 (5Gbps · Rear)',
+        'On-Die Integrated SoC Bus (Platform Bus)'
+      ],
+      notes: [
+        { title: '1. Hard Memory Ceiling · 2GB Soldered DDR4', text: 'No SODIMM upgrade slot; heavy package concurrency or large Photos indexing can trigger swap. No official Docker or VMM.' },
+        { title: '2. Network & Expansion Cap · Dual 1GbE Only, No M.2 / Expansion', text: 'Dual GbE LACP tops out at ~2 Gbps (225/218 MB/s rated); no 10GbE slot, no M.2 NVMe slots, and no DX expansion unit support.' },
+        { title: '3. Shared SATA Bridge Uplink* · PCIe 2.0 x1 (500 MB/s)', text: 'If 2 bays traverse a PCIe 2.0 x1 SATA bridge, internal RAID rebuilds approach 500 MB/s; network transfers stay GbE-bound first.' }
+      ],
+      ttKeys: { cap: 'Spec', sta: 'Link / Role', driver: 'Bus / Driver', note: 'Notes' },
+      nodes: {
+        soc: {
+          title: 'Realtek RTD1619B SoC (ARMv8 Cortex-A55)',
+          meta: {
+            bdf: 'DSM Platform: rtd1619b  |  Official Spec + ARM Platform Inferred',
+            cap: 'ARM64 4C/4T @ 1.7GHz · HW Crypto Engine · 32.41W Access / 4.97W Hibernation',
+            sta: '2GB Soldered DDR4 non-ECC (Non-Expandable) | Integrated Mali-G57/VPU Unused for DSM Video',
+            detail: 'Low-power ARM64 SoC for Synology Value series integrating SerDes (SATA/PCIe Gen2), GMAC, and xHCI. All lanes are fixed onboard with no open PCIe or M.2 slots.'
+          }
+        },
+        dev_lan2: {
+          bdf: 'Onboard · LAN 2 (Inferred*)', title: 'Onboard GbE NIC #2 (LAN 2*)',
+          lines: ['Rear RJ-45 1GbE Port 2', 'LACP / Failover Support', 'Inferred via PCIe x1 NIC*'],
+          badge: '1GbE 125 MB/s · Ample Headroom',
+          meta: {
+            bdf: 'Onboard NIC #2 (Exact IC pending live dmesg / ethtool -i verification)',
+            cap: 'Inferred PCIe 1.1/2.0 x1 (250–500 MB/s) | Full-Duplex 1GbE',
+            sta: 'Pairs with LAN 1 for dual-GbE LACP (225/218 MB/s official rated)',
+            driver: 'r8168 / Realtek GbE (Inferred*)',
+            detail: 'RTD1619B designs typically use on-die GMAC for one GbE port and an onboard PCIe GbE controller (e.g. Realtek RTL8111 class) for the second port; exact IC awaits live dump.'
+          }
+        },
+        dev_pcie_sata: {
+          bdf: 'Onboard · PCIe SATA (Inferred*)', title: 'Onboard PCIe-to-SATA Ctrl*',
+          lines: ['2-Port AHCI SATA III Bridge*', 'Serves Internal Bays 1–2*', 'Typical: JMB / ASM 2-Port IC'],
+          badge: '⚠ Inferred: PCIe 2.0 x1 (500 MB/s)',
+          meta: {
+            bdf: 'Onboard PCIe SATA Controller (Exact IC & BDF pending live lspci dump)',
+            cap: 'Inferred PCIe 2.0 x1 (5GT/s, 500 MB/s raw) | 2× SATA 6Gbps',
+            sta: 'Combines with on-die native SATA for 4 internal hot-swap bays*',
+            driver: 'ahci (Inferred*)',
+            warn: 'Two drives sharing a PCIe 2.0 x1 bridge can approach the 500 MB/s uplink ceiling during heavy RAID rebuilds or dual-SSD sequential I/O, though dual 1GbE (~225 MB/s) remains the primary network cap.'
+          }
+        },
+        dev_nat_sata: {
+          bdf: 'SoC On-Die Native SATA*', title: 'RTD1619B Native AHCI SATA*',
+          lines: ['On-Die 2-Port SATA III*', 'Platform Bus Direct (No PCIe)', 'Serves Internal Bays 3–4*'],
+          badge: 'On-Die Direct · No PCIe Cap',
+          meta: {
+            bdf: 'Realtek RTD1619B Integrated SATA Host Controller (Pending dmesg / sysfs)',
+            cap: 'On-Die Platform Bus | 2× Native SATA III 6Gbps*',
+            sta: 'Direct to 2 internal hot-swap bays (exact bay indices pending sysfs)',
+            driver: 'ahci_rtk / platform ahci',
+            detail: 'RTD1619B integrates native SATA III host channels directly on the SoC platform bus, invisible to lspci and free from external PCIe lane contention.'
+          }
+        },
+        dev_lan1: {
+          bdf: 'SoC On-Die GMAC (Inferred*)', title: 'On-Die GMAC + GbE PHY (LAN 1*)',
+          lines: ['Rear RJ-45 1GbE Port 1', 'On-Die MAC + Ext PHY (RGMII*)', 'LACP / Failover Support'],
+          badge: 'On-Die Direct · Full 1GbE',
+          meta: {
+            bdf: 'Realtek RTD1619B On-Die GMAC + External GbE PHY (Inferred*)',
+            cap: 'On-Die RGMII Bus | Full-Duplex 1GbE (125 MB/s)',
+            sta: 'Independent of external PCIe; pairs with LAN 2 for Link Aggregation',
+            driver: 'r8169 / rtk-gmac (Inferred*)',
+            detail: 'RTD1619B includes a built-in Gigabit MAC typically paired with an external GbE PHY (such as RTL8211 series) for LAN 1; exact PHY and port assignment await live verification.'
+          }
+        },
+        dev_soc_io: {
+          bdf: 'On-Die & Board Support', title: 'On-Die I/O / Boot / Thermal',
+          lines: ['• On-Die xHCI (USB 3.2 Gen 1)', '• Boot Flash (eMMC / SPI*)', '• ARMv8 HW Crypto Engine', '• Dual 80mm Fan PWM Ctrl'],
+          badge: '32.41W Access / 4.97W Idle',
+          meta: {
+            bdf: 'RTD1619B On-Die xHCI + Boot Flash + Crypto + Fan Control',
+            cap: '2× USB 3.2 Gen 1 (5Gbps) + ARMv8 Crypto + Dual 80mm Fans',
+            sta: 'Quiet low-power chassis (20.6 dB(A)), 90W external PSU',
+            driver: 'xhci-plat / rtk-crypto',
+            detail: 'Integrates USB 3.2 Gen 1 host controller and hardware encryption. Front panel carries only status/drive LEDs and power button; all USB, LAN, and fan hardware sit on the rear.'
+          }
+        },
+        hdd_1: {
+          bay: 'Internal Bay 1 (Inferred*)', title: 'SATA Bay 1',
+          lines: ['3.5" HDD / 2.5" SSD', 'SATA III 6Gbps · Hot-Swap', 'Via PCIe SATA Bridge*'],
+          meta: {
+            bdf: 'Internal Bay 1 (Inferred on Onboard PCIe-to-SATA Controller*)',
+            sta: 'SATA III 6Gbps (Hot-Swap · Btrfs / ext4)',
+            detail: 'All 4 bays are confirmed hot-swap 3.5"/2.5" SATA III; exact bay-to-controller mapping between native SATA and PCIe bridge awaits /sys/block/sata* verification.'
+          }
+        },
+        hdd_2: {
+          bay: 'Internal Bay 2 (Inferred*)', title: 'SATA Bay 2',
+          lines: ['3.5" HDD / 2.5" SSD', 'SATA III 6Gbps · Hot-Swap', 'Via PCIe SATA Bridge*'],
+          meta: {
+            bdf: 'Internal Bay 2 (Inferred on Onboard PCIe-to-SATA Controller*)',
+            sta: 'SATA III 6Gbps (Hot-Swap · Btrfs / ext4)',
+            detail: 'Inferred to share the onboard SATA bridge PCIe 2.0 x1 (500 MB/s) uplink with Bay 1; exact mapping pending live sysfs verification.'
+          }
+        },
+        hdd_3: {
+          bay: 'Internal Bay 3 (Inferred*)', title: 'SATA Bay 3',
+          lines: ['3.5" HDD / 2.5" SSD', 'SATA III 6Gbps · Hot-Swap', 'RTD1619B Native SATA*'],
+          meta: {
+            bdf: 'Internal Bay 3 (Inferred on RTD1619B Native SATA*)',
+            sta: 'SATA III 6Gbps (Hot-Swap · Btrfs / ext4)',
+            detail: 'Inferred direct connection to RTD1619B on-die native AHCI SATA controller with zero external PCIe contention; exact mapping pending sysfs verification.'
+          }
+        },
+        hdd_4: {
+          bay: 'Internal Bay 4 (Inferred*)', title: 'SATA Bay 4',
+          lines: ['3.5" HDD / 2.5" SSD', 'SATA III 6Gbps · Hot-Swap', 'RTD1619B Native SATA*'],
+          meta: {
+            bdf: 'Internal Bay 4 (Inferred on RTD1619B Native SATA*)',
+            sta: 'SATA III 6Gbps (Hot-Swap · Btrfs / ext4)',
+            detail: 'Inferred direct connection to RTD1619B on-die native AHCI SATA controller. DS423 is strictly a 4-bay internal unit with no expansion unit support.'
+          }
+        },
+        dev_usb: {
+          bdf: 'Rear Panel · 2× USB-A (Confirmed)', title: 'Dual Rear USB 3.2 Gen 1',
+          lines: ['2× Rear USB-A 5Gbps Ports', 'External Backup / UPS Link', 'No Front USB Port'],
+          badge: 'On-Die xHCI Direct · 5Gbps',
+          meta: {
+            bdf: 'Rear Panel 2× USB 3.2 Gen 1 Type-A (Official Hardware Guide Confirmed)',
+            cap: 'USB 3.2 Gen 1 (5Gbps, ~400–450 MB/s practical ceiling)',
+            sta: 'Direct to RTD1619B on-die xHCI controller; front panel has no USB port',
+            driver: 'xhci_hcd',
+            detail: 'Supports external USB storage (Btrfs, ext4, NTFS, exFAT, HFS+, FAT32) for Hyper Backup offline copies as well as USB UPS communication.'
+          }
+        }
+      }
+    }
+  };
+
+  const socPins = {
+    p_lan2:      { x: 180,  y: 190, color: COLORS.pcie1x1 },
+    p_pcie_sata: { x: 520,  y: 190, color: COLORS.pcie2x1 },
+    p_nat_sata:  { x: 900,  y: 190, color: COLORS.internal },
+    p_lan1:      { x: 1225, y: 190, color: COLORS.internal },
+    p_soc_io:    { x: 1515, y: 190, color: COLORS.internal }
+  };
+
+  const nodes = [
+    { id: 'soc',           x: 40,   y: 74,  w: 1600, h: 116, type: 'soc' },
+    { id: 'dev_lan2',      x: 40,   y: 298, w: 280,  h: 148, type: 'chip', color: COLORS.pcie1x1,  badgeLevel: 'ok' },
+    { id: 'dev_pcie_sata', x: 360,  y: 298, w: 320,  h: 148, type: 'chip', color: COLORS.pcie2x1,  badgeLevel: 'warn' },
+    { id: 'dev_nat_sata',  x: 740,  y: 298, w: 320,  h: 148, type: 'chip', color: COLORS.internal, badgeLevel: 'ok' },
+    { id: 'dev_lan1',      x: 1100, y: 298, w: 250,  h: 148, type: 'chip', color: COLORS.internal, badgeLevel: 'ok' },
+    { id: 'dev_soc_io',    x: 1390, y: 298, w: 250,  h: 148, type: 'chip', color: COLORS.internal, badgeLevel: 'ok' },
+    { id: 'hdd_1',         x: 366,  y: 544, w: 224,  h: 116, type: 'hdd',  color: COLORS.sata },
+    { id: 'hdd_2',         x: 610,  y: 544, w: 224,  h: 116, type: 'hdd',  color: COLORS.sata },
+    { id: 'hdd_3',         x: 854,  y: 544, w: 224,  h: 116, type: 'hdd',  color: COLORS.internal },
+    { id: 'hdd_4',         x: 1098, y: 544, w: 224,  h: 116, type: 'hdd',  color: COLORS.internal },
+    { id: 'dev_usb',       x: 1368, y: 544, w: 272,  h: 116, type: 'chip', color: COLORS.usb,      badgeLevel: 'ok' }
+  ];
+
+  const links = [
+    { id: 'l_lan2',      specKey: 'l_lan2',      from: 'soc', pin: 'p_lan2',      to: 'dev_lan2',      color: COLORS.pcie1x1,  width: 2.8 },
+    { id: 'l_pcie_sata', specKey: 'l_pcie_sata', from: 'soc', pin: 'p_pcie_sata', to: 'dev_pcie_sata', color: COLORS.pcie2x1,  width: 3.4 },
+    { id: 'l_nat_sata',  specKey: 'l_nat_sata',  from: 'soc', pin: 'p_nat_sata',  to: 'dev_nat_sata',  color: COLORS.internal, width: 4.2, dashed: true },
+    { id: 'l_lan1',      specKey: 'l_lan1',      from: 'soc', pin: 'p_lan1',      to: 'dev_lan1',      color: COLORS.internal, width: 4.2, dashed: true },
+    { id: 'l_soc_io',    specKey: 'l_soc_io',    from: 'soc', pin: 'p_soc_io',    to: 'dev_soc_io',    color: COLORS.internal, width: 4.2, dashed: true },
+    { id: 'l_hdd1',      specKey: 'l_hdd',       from: 'dev_pcie_sata', to: 'hdd_1', color: COLORS.sata,     width: 2.6, mode: 'sata_drop', srcX: 478, midY: 472, pillY: 498 },
+    { id: 'l_hdd2',      specKey: 'l_hdd',       from: 'dev_pcie_sata', to: 'hdd_2', color: COLORS.sata,     width: 2.6, mode: 'sata_drop', srcX: 604, midY: 472, pillY: 498 },
+    { id: 'l_hdd3',      specKey: 'l_hdd',       from: 'dev_nat_sata',  to: 'hdd_3', color: COLORS.internal, width: 2.6, mode: 'sata_drop', srcX: 874, midY: 472, pillY: 498 },
+    { id: 'l_hdd4',      specKey: 'l_hdd',       from: 'dev_nat_sata',  to: 'hdd_4', color: COLORS.internal, width: 2.6, mode: 'sata_drop', srcX: 996, midY: 472, pillY: 498 },
+    { id: 'l_usb',       specKey: 'l_usb',       from: 'dev_soc_io',    to: 'dev_usb', color: COLORS.usb,    width: 3.0, mode: 'sata_drop', srcX: 1504, midY: 472, pillY: 498, pillW: 126 }
+  ];
+
+  function t() { return I18N[currentLang]; }
+  function getNode(id) { return nodes.find(n => n.id === id); }
+
+  function getRelatedIds(nodeId) {
+    if (!nodeId || nodeId === 'soc') return null;
+    const set = new Set([nodeId]);
+    let changed = true;
+    const up = new Set([nodeId]);
+    while (changed) {
+      changed = false;
+      for (const l of links) {
+        if (up.has(l.to) && !up.has(l.from)) { up.add(l.from); set.add(l.from); changed = true; }
+      }
+    }
+    changed = true;
+    const down = new Set([nodeId]);
+    while (changed) {
+      changed = false;
+      for (const l of links) {
+        if (down.has(l.from) && !down.has(l.to)) { down.add(l.to); set.add(l.to); changed = true; }
+      }
+    }
+    return set;
+  }
+
+  function roundRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function drawArrow(x, y, dir, color) {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    if (dir === 'down') {
+      ctx.moveTo(x, y); ctx.lineTo(x - 5, y - 9); ctx.lineTo(x + 5, y - 9);
+    } else if (dir === 'right') {
+      ctx.moveTo(x, y); ctx.lineTo(x - 9, y - 5); ctx.lineTo(x - 9, y + 5);
+    }
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawGrid() {
+    ctx.fillStyle = COLORS.bg;
+    ctx.fillRect(0, 0, LOGICAL_W, LOGICAL_H);
+    ctx.strokeStyle = COLORS.grid;
+    ctx.lineWidth = 1;
+    for (let x = 0; x <= LOGICAL_W; x += 28) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, LOGICAL_H); ctx.stroke();
+    }
+    for (let y = 0; y <= LOGICAL_H; y += 28) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(LOGICAL_W, y); ctx.stroke();
+    }
+  }
+
+  function drawHeader() {
+    const tr = t();
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = '700 20px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.canvasTitle, 40, 36, 1600);
+
+    ctx.fillStyle = COLORS.textSub;
+    ctx.font = '12.5px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.canvasSub, 40, 56, 1600);
+  }
+
+  function drawEnclosures() {
+    const tr = t();
+    // Internal 4-Bay Backplane
+    roundRect(348, 526, 992, 170, 12);
+    ctx.save();
+    ctx.fillStyle = 'rgba(56, 189, 248, 0.035)';
+    ctx.fill();
+    ctx.setLineDash([6, 4]);
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.44)';
+    ctx.lineWidth = 1.4;
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = '#7dd3fc';
+    ctx.font = '700 12px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.backplaneTitle, 366, 684, 956);
+  }
+
+  function drawSoCNode(isHover) {
+    const tr = t();
+    const s = getNode('soc');
+    roundRect(s.x, s.y, s.w, s.h, 14);
+    ctx.fillStyle = COLORS.socBg;
+    ctx.fill();
+    ctx.lineWidth = isHover ? 2.2 : 1.7;
+    ctx.strokeStyle = isHover ? COLORS.nodeHover : 'rgba(59, 130, 246, 0.65)';
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(59, 130, 246, 0.16)';
+    roundRect(s.x + 1, s.y + 1, s.w - 2, 30, 12);
+    ctx.fill();
+
+    ctx.fillStyle = '#93c5fd';
+    ctx.font = '700 13px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.socBanner, s.x + 16, s.y + 21, s.w - 32);
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11.5px ui-monospace, Menlo, "PingFang SC", sans-serif';
+    ctx.fillText(tr.socSummary, s.x + 16, s.y + 53, s.w - 32);
+
+    ctx.save();
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.28)';
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(710, s.y + 66);
+    ctx.lineTo(710, s.y + s.h - 4);
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = '#fbbf24';
+    ctx.font = '600 10.5px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.socExtLabel, s.x + 16, s.y + 76, 670);
+    ctx.fillStyle = '#34d399';
+    ctx.fillText(tr.socIntLabel, 726, s.y + 76, 890);
+
+    ctx.textAlign = 'center';
+    for (const key in socPins) {
+      const p = socPins[key];
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = '600 10.5px ui-monospace, Menlo, "PingFang SC", sans-serif';
+      ctx.fillText(tr.pins[key], p.x, p.y - 11, 210);
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 4.5, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = '#0b111e';
+      ctx.stroke();
+    }
+    ctx.textAlign = 'left';
+  }
+
+  function drawSpeedPill(cx, cy, bw, spec, color, compact = false, customW = null) {
+    const w = customW || (compact ? 104 : 154);
+    const h = compact ? 28 : 34;
+    roundRect(cx - w / 2, cy - h / 2, w, h, 5);
+    ctx.fillStyle = '#0d1526';
+    ctx.fill();
+    ctx.lineWidth = 1.1;
+    ctx.strokeStyle = color;
+    ctx.stroke();
+
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = compact ? '700 10px ui-monospace, Menlo, sans-serif' : '700 11px ui-monospace, Menlo, sans-serif';
+    ctx.fillText(bw, cx, cy - 1.5, w - 8);
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = compact ? '9.5px "Segoe UI", "PingFang SC", sans-serif' : '10px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(spec, cx, cy + 10.5, w - 8);
+    ctx.textAlign = 'left';
+  }
+
+  function drawLinks(activeSet) {
+    const specs = t().linkSpecs;
+    for (const l of links) {
+      const sp = specs[l.specKey];
+      const isActive = !activeSet || (activeSet.has(l.from) && activeSet.has(l.to));
+      ctx.save();
+      ctx.globalAlpha = isActive ? 1 : 0.16;
+      ctx.strokeStyle = l.color;
+      ctx.lineWidth = (isActive && activeSet) ? l.width + 1.2 : l.width;
+      if (l.dashed) ctx.setLineDash([6, 4]);
+
+      const dst = getNode(l.to);
+
+      if (l.pin) {
+        const p = socPins[l.pin];
+        const x2 = dst.x + dst.w / 2;
+        const y2 = dst.y;
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y + 4);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        drawArrow(x2, y2, 'down', l.color);
+        drawSpeedPill((p.x + x2) / 2, (p.y + y2) / 2, sp.bw, sp.spec, l.color);
+      } else if (l.mode === 'sata_drop') {
+        const src = getNode(l.from);
+        const x1 = l.srcX;
+        const y1 = src.y + src.h;
+        const x2 = dst.x + dst.w / 2;
+        const y2 = dst.y;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        if (Math.abs(x1 - x2) > 1) {
+          ctx.lineTo(x1, l.midY);
+          ctx.lineTo(x2, l.midY);
+        }
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        drawArrow(x2, y2, 'down', l.color);
+        drawSpeedPill(x2, l.pillY, sp.bw, sp.spec, l.color, true, l.pillW || 104);
+      }
+
+      ctx.restore();
+    }
+  }
+
+  function drawNodes(activeSet) {
+    const trNodes = t().nodes;
+    drawSoCNode(hoveredNode && hoveredNode.id === 'soc');
+
+    for (const n of nodes) {
+      if (n.type === 'soc') continue;
+      const nt = trNodes[n.id];
+      const isHover = hoveredNode && hoveredNode.id === n.id;
+      const isActive = !activeSet || activeSet.has(n.id);
+      const innerMaxW = n.w - 20;
+
+      ctx.save();
+      ctx.globalAlpha = isActive ? 1 : 0.25;
+
+      roundRect(n.x, n.y, n.w, n.h, 8);
+      ctx.fillStyle = n.type === 'hdd' ? '#111b2e' : COLORS.nodeBg;
+      ctx.fill();
+
+      ctx.lineWidth = isHover ? 2.2 : 1.3;
+      ctx.strokeStyle = isHover ? COLORS.nodeHover : (n.color || COLORS.nodeBorder);
+      ctx.stroke();
+
+      ctx.fillStyle = n.color;
+      roundRect(n.x + 1, n.y + 1, n.w - 2, 4, 2);
+      ctx.fill();
+
+      if (n.type === 'chip') {
+        ctx.fillStyle = n.color;
+        ctx.font = '700 10.5px ui-monospace, Menlo, sans-serif';
+        ctx.fillText(nt.bdf, n.x + 10, n.y + 21, innerMaxW);
+
+        ctx.fillStyle = COLORS.textMain;
+        ctx.font = '700 13.5px "Segoe UI", "PingFang SC", sans-serif';
+        ctx.fillText(nt.title, n.x + 10, n.y + 40, innerMaxW);
+
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '11px "Segoe UI", "PingFang SC", sans-serif';
+        const lineGap = nt.lines.length >= 4 ? 15.5 : 16.5;
+        nt.lines.forEach((line, idx) => {
+          ctx.fillText(line, n.x + 10, n.y + 59 + idx * lineGap, innerMaxW);
+        });
+
+        if (nt.badge) {
+          const by = n.y + n.h - 26;
+          roundRect(n.x + 8, by, n.w - 16, 19, 4);
+          if (n.badgeLevel === 'crit') {
+            ctx.fillStyle = COLORS.critBg;
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(248, 113, 113, 0.45)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.fillStyle = COLORS.critText;
+          } else if (n.badgeLevel === 'warn') {
+            ctx.fillStyle = COLORS.warnBg;
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(251, 191, 36, 0.4)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.fillStyle = COLORS.warnText;
+          } else {
+            ctx.fillStyle = COLORS.okBg;
+            ctx.fill();
+            ctx.fillStyle = COLORS.okText;
+          }
+          ctx.font = '700 10px "Segoe UI", "PingFang SC", sans-serif';
+          ctx.fillText(nt.badge, n.x + 13, by + 13, n.w - 26);
+        }
+      } else if (n.type === 'hdd') {
+        ctx.fillStyle = n.color;
+        ctx.font = '700 10.5px "Segoe UI", "PingFang SC", sans-serif';
+        ctx.fillText(nt.bay, n.x + 12, n.y + 22, innerMaxW);
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '700 14px "Segoe UI", sans-serif';
+        ctx.fillText(nt.title, n.x + 12, n.y + 42, innerMaxW);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '11px "Segoe UI", "PingFang SC", sans-serif';
+        nt.lines.forEach((line, idx) => {
+          ctx.fillText(line, n.x + 12, n.y + 62 + idx * 17, innerMaxW);
+        });
+      }
+
+      ctx.restore();
+    }
+  }
+
+  function drawInfoPanels() {
+    const tr = t();
+
+    // Left Mid Card: DS423 vs DS423+ Comparison
+    roundRect(40, 526, 280, 170, 10);
+    ctx.fillStyle = '#101829';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(251, 191, 36, 0.42)';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#fbbf24';
+    ctx.font = '700 12.5px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.diffPanelTitle, 54, 549, 252);
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11px "Segoe UI", "PingFang SC", sans-serif';
+    tr.diffPanelLines.forEach((txt, i) => {
+      ctx.fillText(txt, 54, 574 + i * 20.5, 252);
+    });
+
+    // Bottom Left Panel 1: Architecture & Provenance
+    roundRect(40, 722, 776, 266, 12);
+    ctx.fillStyle = '#101829';
+    ctx.fill();
+    ctx.strokeStyle = '#24324d';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#38bdf8';
+    ctx.font = '700 13px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.panel1Title, 56, 750, 744);
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11.5px "Segoe UI", "PingFang SC", sans-serif';
+    tr.panel1Lines.forEach((txt, i) => {
+      ctx.fillText(txt, 56, 782 + i * 38, 744);
+    });
+
+    // Bottom Right Panel 2: Legend & Bottlenecks
+    roundRect(844, 722, 796, 266, 12);
+    ctx.fillStyle = '#101829';
+    ctx.fill();
+    ctx.strokeStyle = '#24324d';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = '700 13px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.panel2Title, 860, 750, 764);
+
+    const legendMeta = [
+      { color: COLORS.pcie2x1,  x: 860,  y: 778, maxW: 330 },
+      { color: COLORS.pcie1x1,  x: 1244, y: 778, maxW: 345 },
+      { color: COLORS.sata,     x: 860,  y: 800, maxW: 330 },
+      { color: COLORS.usb,      x: 1244, y: 800, maxW: 345 },
+      { color: COLORS.internal, x: 860,  y: 822, maxW: 720, dashed: true }
+    ];
+
+    ctx.font = '600 11px "Segoe UI", "PingFang SC", sans-serif';
+    legendMeta.forEach((it, idx) => {
+      ctx.save();
+      ctx.strokeStyle = it.color;
+      ctx.lineWidth = 3.2;
+      if (it.dashed) ctx.setLineDash([5, 3]);
+      ctx.beginPath();
+      ctx.moveTo(it.x, it.y - 4);
+      ctx.lineTo(it.x + 24, it.y - 4);
+      ctx.stroke();
+      ctx.restore();
+      ctx.fillStyle = '#e2e8f0';
+      ctx.fillText(tr.legend[idx], it.x + 32, it.y, it.maxW);
+    });
+
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.16)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(860, 838);
+    ctx.lineTo(1624, 838);
+    ctx.stroke();
+
+    const noteColors = [COLORS.critText, COLORS.warnText, COLORS.warnText];
+    let ny = 862;
+    tr.notes.forEach((nt, idx) => {
+      ctx.fillStyle = noteColors[idx];
+      ctx.font = '700 11.5px "Segoe UI", "PingFang SC", sans-serif';
+      ctx.fillText(nt.title, 860, ny, 764);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '11px "Segoe UI", "PingFang SC", sans-serif';
+      ctx.fillText(nt.text, 860, ny + 17, 764);
+      ny += 44;
+    });
+  }
+
+  function syncToolbarUI() {
+    const tr = t();
+    document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
+    document.title = tr.pageTitle;
+    navHome.textContent = tr.navHome;
+    uiTitle.textContent = tr.toolbarTitle;
+    uiSubtitle.textContent = tr.toolbarSub;
+    btnExport.textContent = tr.exportBtn;
+    uiFooter.innerHTML = '<a href="https://github.com/Einsfier/synology-hardware-topology" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;color:#94a3b8;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;"><svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>Einsfier/synology-hardware-topology</a>';
+    footerHome.textContent = tr.footerHome;
+    btnZh.classList.toggle('active', currentLang === 'zh');
+    btnEn.classList.toggle('active', currentLang === 'en');
+  }
+
+  function render() {
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = LOGICAL_W * dpr;
+    canvas.height = LOGICAL_H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    drawGrid();
+    drawHeader();
+    drawEnclosures();
+    drawInfoPanels();
+
+    const activeNode = pinnedNode || hoveredNode;
+    const activeSet = activeNode ? getRelatedIds(activeNode.id) : null;
+    drawLinks(activeSet);
+    drawNodes(activeSet);
+
+    ctx.fillStyle = '#64748b';
+    ctx.font = '11px ui-monospace, Menlo, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText('github.com/Einsfier/synology-hardware-topology', LOGICAL_W - 40, LOGICAL_H - 13);
+    ctx.textAlign = 'left';
+  }
+
+  function setLang(lang) {
+    if (lang !== 'zh' && lang !== 'en') return;
+    currentLang = lang;
+    try { localStorage.setItem('syno_topo_lang', lang); } catch (_) {}
+    pinnedNode = null;
+    hoveredNode = null;
+    tooltip.style.display = 'none';
+    syncToolbarUI();
+    render();
+  }
+
+  function hitTest(mx, my) {
+    for (let i = nodes.length - 1; i >= 0; i--) {
+      const n = nodes[i];
+      if (mx >= n.x && mx <= n.x + n.w && my >= n.y && my <= n.y + n.h) return n;
+    }
+    return null;
+  }
+
+  function updateTooltip(node, clientX, clientY) {
+    if (!node) {
+      tooltip.style.display = 'none';
+      return;
+    }
+    const tr = t();
+    const nt = tr.nodes[node.id];
+    if (!nt || !nt.meta) {
+      tooltip.style.display = 'none';
+      return;
+    }
+    const m = nt.meta;
+    const k = tr.ttKeys;
+    let html = `<div class="tt-title">${nt.title}</div>`;
+    if (m.bdf) html += `<div class="tt-bdf">${m.bdf}</div>`;
+    if (m.cap) html += `<div class="tt-row"><span class="tt-key">${k.cap}</span><span class="tt-val">${m.cap}</span></div>`;
+    if (m.sta) html += `<div class="tt-row"><span class="tt-key">${k.sta}</span><span class="tt-val">${m.sta}</span></div>`;
+    if (m.driver) html += `<div class="tt-row"><span class="tt-key">${k.driver}</span><span class="tt-val">${m.driver}</span></div>`;
+    if (m.detail) html += `<div style="margin-top:6px;color:#cbd5e1;font-size:11.5px;">${m.detail}</div>`;
+    if (m.warn) html += `<div class="tt-warn">⚠ ${m.warn}</div>`;
+    if (m.crit) html += `<div class="tt-crit">⛔ ${m.crit}</div>`;
+
+    tooltip.innerHTML = html;
+    tooltip.style.display = 'block';
+
+    const rect = wrap.getBoundingClientRect();
+    const ttW = tooltip.offsetWidth || 350;
+    const ttH = tooltip.offsetHeight || 180;
+    let left = clientX - rect.left + 16;
+    let top = clientY - rect.top + 16;
+    if (left + ttW + 10 > rect.width) left = clientX - rect.left - ttW - 16;
+    if (top + ttH + 10 > rect.height) top = clientY - rect.top - ttH - 16;
+    left = Math.max(8, Math.min(left, Math.max(8, rect.width - ttW - 8)));
+    top = Math.max(8, Math.min(top, Math.max(8, rect.height - ttH - 8)));
+    tooltip.style.left = left + 'px';
+    tooltip.style.top = top + 'px';
+  }
+
+  function getLogicalCoords(e) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+      mx: (e.clientX - rect.left) * (LOGICAL_W / rect.width),
+      my: (e.clientY - rect.top) * (LOGICAL_H / rect.height)
+    };
+  }
+
+  canvas.addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse' || pinnedNode) return;
+    const { mx, my } = getLogicalCoords(e);
+    const hit = hitTest(mx, my);
+    canvas.style.cursor = hit ? 'pointer' : 'default';
+    if (hit !== hoveredNode) {
+      hoveredNode = hit;
+      render();
+    }
+    updateTooltip(hit, e.clientX, e.clientY);
+  });
+
+  canvas.addEventListener('pointerdown', (e) => {
+    const { mx, my } = getLogicalCoords(e);
+    const hit = hitTest(mx, my);
+    if (!hit) {
+      if (pinnedNode || hoveredNode) {
+        pinnedNode = null;
+        hoveredNode = null;
+        tooltip.style.display = 'none';
+        render();
+      }
+      return;
+    }
+    if (pinnedNode && pinnedNode.id === hit.id) {
+      pinnedNode = null;
+      if (e.pointerType !== 'mouse') {
+        hoveredNode = null;
+        tooltip.style.display = 'none';
+      }
+    } else {
+      pinnedNode = hit;
+      hoveredNode = hit;
+      updateTooltip(hit, e.clientX, e.clientY);
+    }
+    render();
+  });
+
+  canvas.addEventListener('pointerleave', (e) => {
+    if (e.pointerType !== 'mouse' || pinnedNode) return;
+    hoveredNode = null;
+    tooltip.style.display = 'none';
+    render();
+  });
+
+  document.addEventListener('pointerdown', (e) => {
+    if (pinnedNode && !wrap.contains(e.target)) {
+      pinnedNode = null;
+      hoveredNode = null;
+      tooltip.style.display = 'none';
+      render();
+    }
+  });
+
+  btnZh.addEventListener('click', () => setLang('zh'));
+  btnEn.addEventListener('click', () => setLang('en'));
+
+  btnExport.addEventListener('click', () => {
+    pinnedNode = null;
+    hoveredNode = null;
+    tooltip.style.display = 'none';
+    render();
+    const link = document.createElement('a');
+    link.download = t().exportName;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
+
+  window.addEventListener('resize', render);
+  syncToolbarUI();
+  render();
+})();
+</script>
+</body>
+</html>
