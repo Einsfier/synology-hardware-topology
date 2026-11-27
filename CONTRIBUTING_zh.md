@@ -57,7 +57,7 @@ lrwxrwxrwx 1 root root 0 ... /sys/block/sata3 -> ../devices/pci0000:00/0000:00:0
   - 高清 PNG 导出前清除高亮态，并在画布右下角（`y = 1012`）绘制 `github.com/Einsfier/synology-hardware-topology`。
   - 顶部 `.nav-bar` 左侧为 `← 全部机型`（`../index.html`），右侧仅高亮当前完整型号名称（如 `Synology DS1522+`）。
   - 页脚仅保留内联 GitHub SVG 图标 + `Einsfier/synology-hardware-topology`。
-  - 复用 `index.html` 中的内联 Base64 SVG `<link rel="icon">`，补齐 SEO / Open Graph / Twitter Meta 与 `<noscript>`。
+  - 复用 `index.html` 中的内联 Base64 SVG `<link rel="icon">`，补齐中英双语 `<title>`、SEO / Open Graph / Twitter Meta 与 `<noscript>`。
 
 ### `index.html` `MODELS` 字段格式
 

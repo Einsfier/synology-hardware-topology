@@ -57,7 +57,7 @@ lrwxrwxrwx 1 root root 0 ... /sys/block/sata3 -> ../devices/pci0000:00/0000:00:0
   - HiDPI PNG export that clears active highlights and renders `github.com/Einsfier/synology-hardware-topology` at bottom-right (`y = 1012`).
   - Top `.nav-bar`: `← All Models` (`../index.html`) on the left, and only the current model's full name highlighted on the right (e.g., `Synology DS1522+`).
   - Minimal footer with the inline GitHub SVG icon + `Einsfier/synology-hardware-topology`.
-  - Copy the inline Base64 SVG `<link rel="icon">` from `index.html` and include SEO/Open Graph/Twitter meta tags and `<noscript>`.
+  - Copy the inline Base64 SVG `<link rel="icon">` from `index.html` and include bilingual (EN + ZH) `<title>`, SEO/Open Graph/Twitter meta tags, and `<noscript>`.
 
 ### `index.html` `MODELS` Entry Schema
 
