@@ -72,13 +72,13 @@ lrwxrwxrwx 1 root root 0 ... /sys/block/sata3 -> ../devices/pci0000:00/0000:00:0
   searchText: 'synology ds1525+ ...',
   soc: ['AMD V1500B', 'x86_64 · 4C/8T'], // [Model, Arch · Cores/Threads]
   pcie: {
-    zh: ['16× PCIe 3.0', '10/16 已分配 (x2 Mini 10G)'], // Parenthetical slot note only if an open slot exists
+    zh: ['16× PCIe 3.0', '10/16 已分配 (x2 Mini 10G)'], // Allocatable PCIe lanes only; use ['—'] if none (no negative phrasing or repeated arch). Parenthetical slot note only if an open slot exists
     en: ['16× PCIe 3.0', '10/16 Allocated (x2 Mini 10G)']
   },
   bays: { zh: ['5 内置', '10 扩展'], en: ['5 Internal', '10 Expansion'] }, // 1-element array if internal-only; omit expansion unit names
-  nvme: '2× PCIe 3.0 x2',
+  nvme: '2× PCIe 3.0 x2',                // Use '—' if no M.2 slots
   nic: { zh: ['2× 2.5GbE', '10GbE 扩展槽'], en: ['2× 2.5GbE', '10GbE Slot'] }, // 1-element array if single tier
-  exp: { zh: ['2× USB-C (专用)', 'DX525'], en: ['2× USB-C (Proprietary)', 'DX525'] } // No parentheses on normal speeds (e.g., eSATA 6Gbps)
+  exp: { zh: ['2× USB-C (专用)', 'DX525'], en: ['2× USB-C (Proprietary)', 'DX525'] } // Use ['—'] if unsupported; no parentheses on normal speeds (e.g., eSATA 6Gbps)
 }
 ```
 

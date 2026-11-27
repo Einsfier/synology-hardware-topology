@@ -72,13 +72,13 @@ lrwxrwxrwx 1 root root 0 ... /sys/block/sata3 -> ../devices/pci0000:00/0000:00:0
   searchText: 'synology ds1525+ ...',
   soc: ['AMD V1500B', 'x86_64 · 4C/8T'], // [处理器名称, 架构 · 核心规格]
   pcie: {
-    zh: ['16× PCIe 3.0', '10/16 已分配 (x2 Mini 10G)'], // 有开放槽时末尾括号补充，无则省略括号
+    zh: ['16× PCIe 3.0', '10/16 已分配 (x2 Mini 10G)'], // 仅填可分配 PCIe 通道；无外置 PCIe 统一填 ['—']（不写否定句、不重复架构）；有开放槽时末尾括号补充
     en: ['16× PCIe 3.0', '10/16 Allocated (x2 Mini 10G)']
   },
   bays: { zh: ['5 内置', '10 扩展'], en: ['5 Internal', '10 Expansion'] }, // 仅内置传单元素数组；不写扩展柜型号
-  nvme: '2× PCIe 3.0 x2',
+  nvme: '2× PCIe 3.0 x2',                // 无 M.2 槽统一填 '—'
   nic: { zh: ['2× 2.5GbE', '10GbE 扩展槽'], en: ['2× 2.5GbE', '10GbE Slot'] }, // 单类别传单元素数组
-  exp: { zh: ['2× USB-C (专用)', 'DX525'], en: ['2× USB-C (Proprietary)', 'DX525'] } // 常规速率不加括号（如 eSATA 6Gbps）
+  exp: { zh: ['2× USB-C (专用)', 'DX525'], en: ['2× USB-C (Proprietary)', 'DX525'] } // 不支持扩展柜统一填 ['—']；常规速率不加括号（如 eSATA 6Gbps）
 }
 ```
 
