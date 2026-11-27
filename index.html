@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3QgeD0iMiIgeT0iMiIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiByeD0iMTQiIGZpbGw9IiMwYTBmMWEiIHN0cm9rZT0iIzI0MzI0ZCIgc3Ryb2tlLXdpZHRoPSIzIi8+PHJlY3QgeD0iMTgiIHk9IjEyIiB3aWR0aD0iMjgiIGhlaWdodD0iMTIiIHJ4PSIzIiBmaWxsPSIjMTMxZTMzIiBzdHJva2U9IiMzOGJkZjgiIHN0cm9rZS13aWR0aD0iMyIvPjxwYXRoIGQ9Ik0zMiAyNHYxME0xNiAzNGgzMk0xNiAzNHY4TTMyIDM0djhNNDggMzR2OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzhiZGY4IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjxyZWN0IHg9IjEwIiB5PSI0MiIgd2lkdGg9IjEyIiBoZWlnaHQ9IjEwIiByeD0iMi41IiBmaWxsPSIjNjBhNWZhIi8+PHJlY3QgeD0iMjYiIHk9IjQyIiB3aWR0aD0iMTIiIGhlaWdodD0iMTAiIHJ4PSIyLjUiIGZpbGw9IiMzOGJkZjgiLz48cmVjdCB4PSI0MiIgeT0iNDIiIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMCIgcng9IjIuNSIgZmlsbD0iIzM0ZDM5OSIvPjwvc3ZnPg==" />
+<title>Synology Hardware Topology — Interactive PCIe & SATA Architecture Diagrams</title>
+<meta name="description" content="Interactive PCIe, SATA, eSATA, and expansion hardware topology diagrams for Synology NAS models (DS920+, DS923+, DS925+, DS1525+, and more). Verified via lspci, syno_slot_mapping, and sysfs with bilingual UI and PNG export." />
+<meta name="keywords" content="Synology hardware topology, Synology PCIe diagram, DS920+, DS923+, DS925+, DS1525+, Intel J4125, AMD R1600, AMD V1500B, DX517, DX525, NAS SATA controller, Marvell 88SE9235, JMB585, RTL8125D" />
+<meta name="robots" content="index, follow" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Synology Hardware Topology — Interactive PCIe & SATA Diagrams" />
+<meta property="og:description" content="Explore interactive PCIe lane budgets, SATA controllers, network links, and expansion bottlenecks across Synology NAS models." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Synology Hardware Topology" />
+<meta name="twitter:description" content="Interactive PCIe & SATA hardware interconnect diagrams for Synology NAS models." />
+<style>
+  :root {
+    --bg: #0a0f1a;
+    --panel: #111827;
+    --row-hover: #162238;
+    --border: #24324d;
+    --text: #e6edf7;
+    --muted: #8fa3c4;
+    --accent: #38bdf8;
+    --ok: #34d399;
+    --warn: #fbbf24;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.035) 1px, transparent 1px);
+    background-size: 28px 28px;
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+    min-height: 100vh;
+    padding: 24px 16px 40px;
+  }
+  .container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+  header.hero {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
+    flex-wrap: wrap;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  }
+  .hero-text { max-width: 820px; }
+  .hero-kicker {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .hero h1 {
+    font-size: 24px;
+    font-weight: 800;
+    color: #f8fafc;
+    letter-spacing: 0.2px;
+    line-height: 1.25;
+  }
+  .hero p {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .contrib-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #1b2840;
+    color: var(--text);
+    border: 1px solid #32476b;
+    border-radius: 6px;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+  .contrib-link:hover {
+    background: #253859;
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .lang-switch {
+    display: inline-flex;
+    background: #0d1526;
+    border: 1px solid #32476b;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .lang-switch button {
+    background: transparent;
+    border: none;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .lang-switch button.active {
+    background: #2563eb;
+    color: #fff;
+  }
+  .lang-switch button:not(.active):hover {
+    background: #1b2840;
+    color: #f8fafc;
+  }
+
+  .filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .line-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .line-btn {
+    background: var(--panel);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+  .line-btn:hover {
+    color: #f8fafc;
+    border-color: var(--accent);
+  }
+  .line-btn.empty-line:not(.active) {
+    opacity: 0.45;
+  }
+  .line-btn.empty-line:hover {
+    opacity: 0.85;
+  }
+  .line-btn.active {
+    background: rgba(56, 189, 248, 0.16);
+    border-color: var(--accent);
+    color: #7dd3fc;
+    opacity: 1;
+  }
+  #lineTip {
+    position: fixed;
+    pointer-events: none;
+    display: none;
+    max-width: min(320px, calc(100vw - 24px));
+    background: rgba(11, 17, 30, 0.97);
+    border: 1px solid #38bdf8;
+    border-radius: 7px;
+    padding: 8px 11px;
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: #e2e8f0;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6);
+    z-index: 50;
+  }
+  #lineTip .lt-title {
+    font-weight: 700;
+    color: #38bdf8;
+    margin-bottom: 2px;
+  }
+  .filter-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .pill-btn {
+    background: var(--panel);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .pill-btn:hover {
+    color: #f8fafc;
+    border-color: var(--accent);
+  }
+  .pill-btn.active {
+    background: rgba(56, 189, 248, 0.16);
+    border-color: var(--accent);
+    color: #7dd3fc;
+  }
+  .search-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .count-label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .search-input {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    padding: 8px 13px;
+    font-size: 12.5px;
+    width: 320px;
+    max-width: 100%;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: #64748b; }
+
+  .table-section {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  }
+  .table-scroll {
+    width: 100%;
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 820px;
+  }
+  th, td {
+    text-align: left;
+    padding: 13px 16px;
+    border-top: 1px solid rgba(148, 163, 184, 0.12);
+    vertical-align: middle;
+  }
+  th {
+    color: #94a3b8;
+    font-size: 12px;
+    font-weight: 700;
+    border-top: none;
+    background: #0d1526;
+    white-space: nowrap;
+  }
+  tbody tr.model-row {
+    cursor: pointer;
+    transition: background 0.12s ease;
+  }
+  tbody tr.model-row:hover {
+    background: var(--row-hover);
+  }
+  .model-link {
+    color: #f8fafc;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  tbody tr.model-row:hover .model-link {
+    color: var(--accent);
+  }
+  .mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12.5px;
+  }
+  .cell-stack {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+  }
+  .cell-main {
+    color: #e2e8f0;
+    line-height: 1.35;
+    white-space: nowrap;
+  }
+  .cell-sub {
+    color: var(--muted);
+    font-size: 11.5px;
+    line-height: 1.35;
+    white-space: nowrap;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .badge-verified {
+    background: rgba(52, 211, 153, 0.14);
+    color: var(--ok);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+  }
+  .badge-inferred {
+    background: rgba(245, 158, 11, 0.14);
+    color: var(--warn);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+  }
+  .empty-cell {
+    text-align: center;
+    padding: 40px 16px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    padding-top: 4px;
+    line-height: 1.7;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="hero">
+    <div class="hero-text">
+      <div class="hero-kicker">SYNOLOGY HARDWARE TOPOLOGY</div>
+      <h1 id="uiTitle"></h1>
+      <p id="uiSubtitle"></p>
+    </div>
+    <div class="hero-actions">
+      <a class="contrib-link" id="uiContrib" href="https://github.com/Einsfier/synology-hardware-topology/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener"></a>
+      <div class="lang-switch" role="group" aria-label="Language Switcher">
+        <button id="btnZh" type="button">中文</button>
+        <button id="btnEn" type="button">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="filter-bar" aria-label="Filter Models">
+    <div class="filter-pills" id="filterPills"></div>
+    <div class="search-group">
+      <span class="count-label" id="uiCount"></span>
+      <input type="search" id="searchInput" class="search-input" aria-label="Search models" />
+    </div>
+  </section>
+
+  <section class="line-filter-bar" id="lineFilterBar" aria-label="Filter by Product Line"></section>
+
+  <main class="table-section" aria-label="Synology Models Hardware Topology List">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr id="tableHead"></tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer>
+    <div id="uiFooter"></div>
+  </footer>
+</div>
+<div id="lineTip" role="tooltip"></div>
+
+<script>
+(() => {
+  function detectInitialLang() {
+    try {
+      const saved = localStorage.getItem('syno_topo_lang')
+        || localStorage.getItem('ds923_topo_lang')
+        || localStorage.getItem('ds925_topo_lang');
+      if (saved === 'zh' || saved === 'en') return saved;
+    } catch (_) {}
+    const navLang = (navigator.language || (navigator.languages && navigator.languages[0]) || 'en').toLowerCase();
+    return navLang.startsWith('zh') ? 'zh' : 'en';
+  }
+
+  let currentLang = detectInitialLang();
+  let activeFilter = 'all';
+  let activeLine = 'all';
+  let searchQuery = '';
+
+  const PRODUCT_LINES = [
+    {
+      id: 'pas',
+      label: { zh: 'PAS', en: 'PAS' },
+      tipTitle: { zh: 'PAS 双活主存储', en: 'PAS — Active-Active' },
+      tipDesc: { zh: 'Active-Active 双控制器架构，面向零停机核心企业负载与高并发业务。', en: 'Active-Active dual-controller primary storage for mission-critical enterprise workloads.' }
+    },
+    {
+      id: 'fs',
+      label: { zh: 'FS 全闪存', en: 'FS' },
+      tipTitle: { zh: 'FS 全闪存阵列 (FlashStation)', en: 'FS — All-flash array' },
+      tipDesc: { zh: '专为低延迟、超高 IOPS 的虚拟化、数据库与多媒体后期负载打造的全固态阵列。', en: 'FlashStation all-flash array built for low-latency, high-IOPS workloads.' }
+    },
+    {
+      id: 'hd',
+      label: { zh: 'HD 高密度', en: 'HD' },
+      tipTitle: { zh: 'HD 高密度存储 (High Density)', en: 'HD — High density' },
+      tipDesc: { zh: '单机超高盘位密度的机架式服务器，面向 PB 级大规模数据存储与冷归档。', en: 'High-density rackmount storage designed for petabyte-scale data and archival.' }
+    },
+    {
+      id: 'sa',
+      label: { zh: 'SA 高扩展', en: 'SA' },
+      tipTitle: { zh: 'SA 高扩展存储 (High Scalability)', en: 'SA — High scalability' },
+      tipDesc: { zh: '企业级高扩展存储系列，支持大规模连接扩展柜实现平滑容量增长。', en: 'High-scalability enterprise storage supporting massive expansion unit scaling.' }
+    },
+    {
+      id: 'uc',
+      label: { zh: 'UC', en: 'UC' },
+      tipTitle: { zh: 'UC iSCSI/FC SAN (Unified Controller)', en: 'UC — iSCSI/FC SAN' },
+      tipDesc: { zh: '双控制器 SAN 专用统一存储，主打高可用 IP SAN 与光纤通道虚拟化块存储。', en: 'Dual-controller SAN storage purpose-built for high-availability iSCSI/FC virtualization.' }
+    },
+    {
+      id: 'rs-xs',
+      label: { zh: 'RS XS+/XS', en: 'RS XS+/XS' },
+      tipTitle: { zh: 'RS XS+/XS 机架旗舰系列', en: 'RS — XS+/XS series' },
+      tipDesc: { zh: '高性能企业级机架存储，提供高速网络、PCIe 扩展槽与冗余电源支持。', en: 'High-performance enterprise RackStation with PCIe expansion and redundant power.' }
+    },
+    {
+      id: 'rs-plus',
+      label: { zh: 'RS Plus', en: 'RS Plus' },
+      tipTitle: { zh: 'RS Plus 机架主力系列', en: 'RS — Plus series' },
+      tipDesc: { zh: '面向成长型企业的全能机架式存储，兼顾计算性能、快照保护与扩展能力。', en: 'Versatile RackStation for growing businesses balancing performance and scalability.' }
+    },
+    {
+      id: 'rs-value',
+      label: { zh: 'RS 价值', en: 'RS Value' },
+      tipTitle: { zh: 'RS 价值系列 (机架入门)', en: 'RS — Value series' },
+      tipDesc: { zh: '高性价比入门级机架存储，适合中小型机房的基础文件共享与数据备份。', en: 'Cost-effective entry RackStation for SMB file sharing and routine backups.' }
+    },
+    {
+      id: 'ds-xs',
+      label: { zh: 'DS XS+/XS', en: 'DS XS+/XS' },
+      tipTitle: { zh: 'DS XS+/XS 桌面旗舰系列', en: 'DS — XS+/XS series' },
+      tipDesc: { zh: '旗舰级桌面存储，搭载高性能处理器与多盘位/高速网络及 PCIe 扩展能力。', en: 'Flagship DiskStation offering high-throughput I/O and PCIe expansion in desktop form.' }
+    },
+    {
+      id: 'ds-plus',
+      label: { zh: 'DS Plus', en: 'DS Plus' },
+      tipTitle: { zh: 'DS Plus 桌面主力系列', en: 'DS — Plus series' },
+      tipDesc: { zh: '全能桌面存储，广泛支持容器、虚拟机、Btrfs 快照、M.2 NVMe 与外置扩展柜。', en: 'All-around DiskStation supporting containers, VMs, snapshots, NVMe, and expansion units.' }
+    },
+    {
+      id: 'ds-value',
+      label: { zh: 'DS 价值', en: 'DS Value' },
+      tipTitle: { zh: 'DS 价值系列 (桌面性价比)', en: 'DS — Value series' },
+      tipDesc: { zh: '面向家庭与小型办公的高性价比桌面存储，适合影音多媒体与日常文件备份。', en: 'Budget-friendly DiskStation for home and SOHO media, sharing, and daily backup.' }
+    },
+    {
+      id: 'ds-j',
+      label: { zh: 'DS j', en: 'DS j' },
+      tipTitle: { zh: 'DS j 系列 (桌面轻量入门)', en: 'DS — j series' },
+      tipDesc: { zh: '轻量入门级桌面存储，适合个人低门槛搭建私有云、照片备份与文件同步。', en: 'Entry-level DiskStation for personal cloud, photo backup, and simple file sync.' }
+    }
+  ];
+
+  const MODELS = [
+    {
+      id: 'ds920plus',
+      name: 'DS920+',
+      line: 'ds-plus',
+      href: './models/ds920plus.html',
+      status: 'inferred',
+      searchText: 'synology ds920+ ds920plus j4125 celeron gemini lake x86_64 uhd600 quicksync 88se9235 marvell rtl8111h dx517 esata nvme',
+      soc: ['Intel J4125', 'x86_64 · 4C/4T'],
+      pcie: { zh: ['6× PCIe 2.0', '6/6 已分配'], en: ['6× PCIe 2.0', '6/6 Allocated'] },
+      bays: { zh: ['4 内置', '5 扩展'], en: ['4 Internal', '5 Expansion'] },
+      nvme: '2× PCIe 2.0 x1',
+      nic: { zh: ['2× 1GbE'], en: ['2× 1GbE'] },
+      exp: { zh: ['eSATA 6Gbps', 'DX517'], en: ['eSATA 6Gbps', 'DX517'] }
+    },
+    {
+      id: 'ds923plus',
+      name: 'DS923+',
+      line: 'ds-plus',
+      href: './models/ds923plus.html',
+      status: 'verified',
+      searchText: 'synology ds923+ ds923plus r1600 raven2 x86_64 jmb585 aqc107 10gbe e10g22-t1-mini dx517 esata asm1182e rtl8111',
+      soc: ['AMD R1600', 'x86_64 · 2C/4T'],
+      pcie: { zh: ['8× PCIe 3.0', '8/8 已分配 (x4 Mini 10G)'], en: ['8× PCIe 3.0', '8/8 Allocated (x4 Mini 10G)'] },
+      bays: { zh: ['4 内置', '5 扩展'], en: ['4 Internal', '5 Expansion'] },
+      nvme: '2× PCIe 3.0 x1',
+      nic: { zh: ['2× 1GbE', '10GbE 扩展槽'], en: ['2× 1GbE', '10GbE Slot'] },
+      exp: { zh: ['eSATA 6Gbps', 'DX517'], en: ['eSATA 6Gbps', 'DX517'] }
+    },
+    {
+      id: 'ds925plus',
+      name: 'DS925+',
+      line: 'ds-plus',
+      href: './models/ds925plus.html',
+      status: 'inferred',
+      searchText: 'synology ds925+ ds925plus v1500b v1000nk x86_64 rdj42l2 rtl8125d 2.5gbe dx525 usb-c nvme x4',
+      soc: ['AMD V1500B', 'x86_64 · 4C/8T'],
+      pcie: { zh: ['16× PCIe 3.0', '12/16 已分配'], en: ['16× PCIe 3.0', '12/16 Allocated'] },
+      bays: { zh: ['4 内置', '5 扩展'], en: ['4 Internal', '5 Expansion'] },
+      nvme: '2× PCIe 3.0 x4',
+      nic: { zh: ['2× 2.5GbE'], en: ['2× 2.5GbE'] },
+      exp: { zh: ['USB-C (专用)', 'DX525'], en: ['USB-C (Proprietary)', 'DX525'] }
+    },
+    {
+      id: 'ds1525plus',
+      name: 'DS1525+',
+      line: 'ds-plus',
+      href: './models/ds1525plus.html',
+      status: 'inferred',
+      searchText: 'synology ds1525+ ds1525plus v1500b v1000nk x86_64 rtl8125d 2.5gbe 10gbe e10g22-t1-mini aqc107 jmb585 dx525 usb-c nvme 15-bay',
+      soc: ['AMD V1500B', 'x86_64 · 4C/8T'],
+      pcie: { zh: ['16× PCIe 3.0', '10/16 已分配 (x2 Mini 10G)'], en: ['16× PCIe 3.0', '10/16 Allocated (x2 Mini 10G)'] },
+      bays: { zh: ['5 内置', '10 扩展'], en: ['5 Internal', '10 Expansion'] },
+      nvme: '2× PCIe 3.0 x2',
+      nic: { zh: ['2× 2.5GbE', '10GbE 扩展槽'], en: ['2× 2.5GbE', '10GbE Slot'] },
+      exp: { zh: ['2× USB-C (专用)', 'DX525'], en: ['2× USB-C (Proprietary)', 'DX525'] }
+    }
+  ];
+
+  const I18N = {
+    zh: {
+      pageTitle: 'Synology Hardware Topology — 群晖 NAS 交互式 PCIe / SATA 硬件拓扑图',
+      title: '群晖 NAS 硬件互联与 PCIe / SATA 拓扑图',
+      subtitle: '交互式呈现 Synology 各型号的 SoC PCIe 通道分配、SATA/NVMe 控制器走线、网络链路与扩展柜瓶颈。点击任意机型查看完整拓扑。',
+      contribBtn: '+ 贡献新机型',
+      contribHref: 'https://github.com/Einsfier/synology-hardware-topology/blob/main/CONTRIBUTING_zh.md',
+      filters: [
+        { id: 'all', label: '全部机型' },
+        {
+          id: 'verified',
+          label: '实机核验',
+          tipTitle: '实机核验',
+          tipDesc: '基于实机 lspci、syno_slot_mapping 与 sysfs 输出交叉验证，通道与盘位映射准确。'
+        },
+        {
+          id: 'inferred',
+          label: '拆解推算',
+          tipTitle: '拆解推算',
+          tipDesc: '基于官方规格与公开拆解推算，部分通道与盘位待确认。欢迎提交 Issue 粘贴 3 条实机命令输出帮助校准。'
+        }
+      ],
+      lineLabel: '产品线',
+      allLines: '全部产品线',
+      searchPlaceholder: '搜索型号、SoC 或芯片（如 R1600、JMB585）...',
+      countFmt: (shown, total) => `${shown} / ${total} 款机型`,
+      badgeVerified: '✓ 实机核验',
+      badgeInferred: '◐ 拆解推算',
+      empty: '没有找到匹配的机型，请尝试其他关键词或筛选条件。',
+      cols: ['型号', 'SoC', 'PCIe', '盘位', 'M.2 NVMe', '网络接口', '扩展接口', '数据来源'],
+      footer: '<a href="https://github.com/Einsfier/synology-hardware-topology" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;color:#94a3b8;text-decoration:none;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;"><svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>Einsfier/synology-hardware-topology</a>'
+    },
+    en: {
+      pageTitle: 'Synology Hardware Topology — Interactive PCIe & SATA Architecture Diagrams',
+      title: 'Synology NAS Hardware & PCIe / SATA Topology',
+      subtitle: 'Interactive diagrams mapping SoC PCIe lane budgets, SATA/NVMe controllers, NIC links, and expansion unit bottlenecks across Synology NAS models. Select a model to inspect.',
+      contribBtn: '+ Contribute Model',
+      contribHref: 'https://github.com/Einsfier/synology-hardware-topology/blob/main/CONTRIBUTING.md',
+      filters: [
+        { id: 'all', label: 'All Models' },
+        {
+          id: 'verified',
+          label: 'Hardware Verified',
+          tipTitle: 'Hardware Verified',
+          tipDesc: 'Cross-checked via live lspci, syno_slot_mapping, and sysfs outputs for exact lane and bay mapping.'
+        },
+        {
+          id: 'inferred',
+          label: 'Teardown + Spec',
+          tipTitle: 'Teardown + Spec',
+          tipDesc: 'Compiled from official specs and teardowns. Open an Issue with the 3 SSH command outputs to help calibrate.'
+        }
+      ],
+      lineLabel: 'Product Line',
+      allLines: 'All Lines',
+      searchPlaceholder: 'Search model, SoC, or IC (e.g. R1600, JMB585)...',
+      countFmt: (shown, total) => `${shown} / ${total} models`,
+      badgeVerified: '✓ Hardware Verified',
+      badgeInferred: '◐ Teardown + Spec',
+      empty: 'No matching models found. Try a different keyword or filter.',
+      cols: ['Model', 'SoC', 'PCIe', 'Bays', 'M.2 NVMe', 'Networking', 'Expansion', 'Status'],
+      footer: '<a href="https://github.com/Einsfier/synology-hardware-topology" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;color:#94a3b8;text-decoration:none;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;"><svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>Einsfier/synology-hardware-topology</a>'
+    }
+  };
+
+  const uiTitle = document.getElementById('uiTitle');
+  const uiSubtitle = document.getElementById('uiSubtitle');
+  const uiContrib = document.getElementById('uiContrib');
+  const filterPills = document.getElementById('filterPills');
+  const lineFilterBar = document.getElementById('lineFilterBar');
+  const lineTip = document.getElementById('lineTip');
+  const uiCount = document.getElementById('uiCount');
+  const searchInput = document.getElementById('searchInput');
+  const tableHead = document.getElementById('tableHead');
+  const tableBody = document.getElementById('tableBody');
+  const uiFooter = document.getElementById('uiFooter');
+  const btnZh = document.getElementById('btnZh');
+  const btnEn = document.getElementById('btnEn');
+
+  function renderLines(lines, isMono = false) {
+    const cls = isMono ? ' mono' : '';
+    if (lines.length === 1) {
+      return `<div class="cell-main${cls}">${lines[0]}</div>`;
+    }
+    return `<div class="cell-stack"><div class="cell-main${cls}">${lines[0]}</div><div class="cell-sub${cls}">${lines[1]}</div></div>`;
+  }
+
+  function showTip(el, title, desc) {
+    if (!title && !desc) { lineTip.style.display = 'none'; return; }
+    lineTip.innerHTML = `<div class="lt-title">${title}</div><div>${desc}</div>`;
+    lineTip.style.display = 'block';
+    const bRect = el.getBoundingClientRect();
+    const tW = lineTip.offsetWidth || 280;
+    const tH = lineTip.offsetHeight || 64;
+    let left = bRect.left + bRect.width / 2 - tW / 2;
+    left = Math.max(12, Math.min(left, window.innerWidth - tW - 12));
+    let top = bRect.bottom + 8;
+    if (top + tH > window.innerHeight - 12) top = bRect.top - tH - 8;
+    lineTip.style.left = left + 'px';
+    lineTip.style.top = top + 'px';
+  }
+
+  function hideLineTip() {
+    lineTip.style.display = 'none';
+  }
+
+  function render() {
+    const tr = I18N[currentLang];
+    document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
+    document.title = tr.pageTitle;
+    uiTitle.textContent = tr.title;
+    uiSubtitle.textContent = tr.subtitle;
+    uiContrib.textContent = tr.contribBtn;
+    uiContrib.href = tr.contribHref;
+    searchInput.placeholder = tr.searchPlaceholder;
+    uiFooter.innerHTML = tr.footer;
+    btnZh.classList.toggle('active', currentLang === 'zh');
+    btnEn.classList.toggle('active', currentLang === 'en');
+
+    filterPills.innerHTML = tr.filters.map(f =>
+      `<button type="button" class="pill-btn ${activeFilter === f.id ? 'active' : ''}" data-filter="${f.id}">${f.label}</button>`
+    ).join('');
+
+    filterPills.querySelectorAll('button').forEach(btn => {
+      const f = tr.filters.find(item => item.id === btn.dataset.filter);
+      btn.addEventListener('click', () => {
+        hideLineTip();
+        activeFilter = btn.dataset.filter;
+        render();
+      });
+      if (f && f.tipTitle) {
+        btn.addEventListener('mouseenter', () => showTip(btn, f.tipTitle, f.tipDesc));
+        btn.addEventListener('mouseleave', hideLineTip);
+        btn.addEventListener('focus', () => showTip(btn, f.tipTitle, f.tipDesc));
+        btn.addEventListener('blur', hideLineTip);
+      }
+    });
+
+    const populatedLines = new Set(MODELS.map(m => m.line));
+    const allLineBtn = `<button type="button" class="line-btn ${activeLine === 'all' ? 'active' : ''}" data-line="all">${tr.allLines}</button>`;
+    const lineBtns = PRODUCT_LINES.map(pl => {
+      const isSelected = activeLine === pl.id;
+      const isEmpty = !populatedLines.has(pl.id);
+      return `<button type="button" class="line-btn ${isSelected ? 'active' : ''} ${isEmpty ? 'empty-line' : ''}" data-line="${pl.id}" aria-pressed="${isSelected}">${pl.label[currentLang]}</button>`;
+    }).join('');
+    lineFilterBar.innerHTML = `${allLineBtn}${lineBtns}`;
+
+    lineFilterBar.querySelectorAll('button').forEach(btn => {
+      const lid = btn.dataset.line;
+      const pl = PRODUCT_LINES.find(p => p.id === lid);
+      btn.addEventListener('click', () => {
+        hideLineTip();
+        activeLine = (lid === 'all' || activeLine === lid) ? 'all' : lid;
+        render();
+      });
+      if (pl) {
+        btn.addEventListener('mouseenter', () => showTip(btn, pl.tipTitle[currentLang], pl.tipDesc[currentLang]));
+        btn.addEventListener('mouseleave', hideLineTip);
+        btn.addEventListener('focus', () => showTip(btn, pl.tipTitle[currentLang], pl.tipDesc[currentLang]));
+        btn.addEventListener('blur', hideLineTip);
+      }
+    });
+
+    const q = searchQuery.trim().toLowerCase();
+    const filtered = MODELS.filter(m => {
+      if (activeFilter !== 'all' && m.status !== activeFilter) return false;
+      if (activeLine !== 'all' && m.line !== activeLine) return false;
+      if (!q) return true;
+      const hay = `${m.name} ${m.line} ${m.soc.join(' ')} ${m.pcie[currentLang].join(' ')} ${m.bays[currentLang].join(' ')} ${m.nvme} ${m.nic[currentLang].join(' ')} ${m.exp[currentLang].join(' ')} ${m.searchText}`.toLowerCase();
+      return hay.includes(q);
+    });
+
+    uiCount.textContent = tr.countFmt(filtered.length, MODELS.length);
+    tableHead.innerHTML = tr.cols.map(c => `<th>${c}</th>`).join('');
+
+    if (filtered.length === 0) {
+      tableBody.innerHTML = `<tr><td class="empty-cell" colspan="${tr.cols.length}">${tr.empty}</td></tr>`;
+      return;
+    }
+
+    tableBody.innerHTML = filtered.map(m => {
+      const badgeCls = m.status === 'verified' ? 'badge-verified' : 'badge-inferred';
+      const badgeTxt = m.status === 'verified' ? tr.badgeVerified : tr.badgeInferred;
+      return `
+        <tr class="model-row" data-href="${m.href}">
+          <td><a class="model-link" href="${m.href}">${m.name}</a></td>
+          <td>${renderLines(m.soc, true)}</td>
+          <td>${renderLines(m.pcie[currentLang], true)}</td>
+          <td>${renderLines(m.bays[currentLang])}</td>
+          <td class="mono">${m.nvme}</td>
+          <td>${renderLines(m.nic[currentLang])}</td>
+          <td>${renderLines(m.exp[currentLang])}</td>
+          <td><span class="badge ${badgeCls}" data-status="${m.status}">${badgeTxt}</span></td>
+        </tr>
+      `;
+    }).join('');
+
+    tableBody.querySelectorAll('.badge[data-status]').forEach(badge => {
+      const f = tr.filters.find(item => item.id === badge.dataset.status);
+      if (f && f.tipTitle) {
+        badge.addEventListener('mouseenter', () => showTip(badge, f.tipTitle, f.tipDesc));
+        badge.addEventListener('mouseleave', hideLineTip);
+      }
+    });
+
+    tableBody.querySelectorAll('tr.model-row').forEach(row => {
+      row.addEventListener('click', (e) => {
+        if (e.target.closest('a')) return;
+        window.location.href = row.dataset.href;
+      });
+    });
+  }
+
+  function setLang(lang) {
+    if (lang !== 'zh' && lang !== 'en') return;
+    currentLang = lang;
+    try { localStorage.setItem('syno_topo_lang', lang); } catch (_) {}
+    render();
+  }
+
+  btnZh.addEventListener('click', () => setLang('zh'));
+  btnEn.addEventListener('click', () => setLang('en'));
+  searchInput.addEventListener('input', (e) => {
+    searchQuery = e.target.value;
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

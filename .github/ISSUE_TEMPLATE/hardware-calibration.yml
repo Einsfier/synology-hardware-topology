@@ -1,0 +1,85 @@
+name: Hardware Calibration / New Model Data（实机校准 / 新机型数据）
+description: Submit lspci, syno_slot_mapping, and sysfs outputs to calibrate an inferred model or add a new Synology NAS model / 提交 3 条实机命令输出，校准「拆解推算」机型或贡献新机型
+title: "[Hardware Data] Synology "
+labels: ["hardware-data"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve **Synology Hardware Topology**!
+        Run the following three read-only commands via SSH on your Synology NAS as `root` (if using a non-root account or hitting permission errors, switch to `root` via `sudo -i` or prefix with `sudo`) and paste the outputs below.
+
+        感谢协助校准或补充群晖硬件拓扑！请通过 SSH 以 `root` 身份登录群晖 NAS 执行以下 3 条只读命令并粘贴输出（若当前为非 `root` 账号或提示权限不足，请先通过 `sudo -i` 切换为 `root` 后执行）：
+        ```bash
+        lspci -PPvv
+        syno_slot_mapping
+        ls -al /sys/block/sata*
+        # Optional if NVMe drives are installed / 若装有 NVMe 可选附带：
+        ls -al /sys/block/nvme*
+        ```
+
+  - type: input
+    id: model
+    attributes:
+      label: Synology Model / 群晖型号
+      description: Full model name, e.g., DS925+, DS1525+, DS1821+
+      placeholder: "DS925+"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: submission_type
+    attributes:
+      label: Submission Type / 提交类型
+      options:
+        - Calibrate existing "Teardown + Spec" model / 校准现有「拆解推算」机型
+        - Add a new unlisted model / 贡献全新未收录机型
+        - Correct an existing "Hardware Verified" model / 修正现有「实机核验」机型
+    validations:
+      required: true
+
+  - type: input
+    id: hardware_notes
+    attributes:
+      label: DSM Version & Installed Add-ons / DSM 版本与已安装扩展（选填）
+      description: Optional notes such as DSM version, PCIe/10GbE card, or expansion unit attached (e.g., E10G22-T1-Mini, DX525).
+      placeholder: "DSM 7.2.2, E10G22-T1-Mini installed, no expansion unit"
+    validations:
+      required: false
+
+  - type: textarea
+    id: lspci
+    attributes:
+      label: Output of `lspci -PPvv`
+      description: Paste the full output between ```text and ``` (keep the <details> tags so the long output stays collapsed) / 请将完整输出粘贴在 ```text 与 ``` 之间，保留外层 <details> 标签以保持折叠
+      value: |
+        <details>
+        <summary>Click to expand `lspci -PPvv` output</summary>
+
+        ```text
+        Paste lspci -PPvv output here
+        ```
+
+        </details>
+    validations:
+      required: true
+
+  - type: textarea
+    id: slot_mapping
+    attributes:
+      label: Output of `syno_slot_mapping`
+      description: Full output of `syno_slot_mapping`
+      placeholder: "Paste output here..."
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: sys_block
+    attributes:
+      label: Output of `ls -al /sys/block/sata*` (and optional `nvme*`)
+      description: Full output showing PCI BDF and ATA/NVMe controller mapping
+      placeholder: "Paste output here..."
+      render: text
+    validations:
+      required: true
