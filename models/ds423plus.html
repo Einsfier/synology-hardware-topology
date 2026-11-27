@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3QgeD0iMiIgeT0iMiIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiByeD0iMTQiIGZpbGw9IiMwYTBmMWEiIHN0cm9rZT0iIzI0MzI0ZCIgc3Ryb2tlLXdpZHRoPSIzIi8+PHJlY3QgeD0iMTgiIHk9IjEyIiB3aWR0aD0iMjgiIGhlaWdodD0iMTIiIHJ4PSIzIiBmaWxsPSIjMTMxZTMzIiBzdHJva2U9IiMzOGJkZjgiIHN0cm9rZS13aWR0aD0iMyIvPjxwYXRoIGQ9Ik0zMiAyNHYxME0xNiAzNGgzMk0xNiAzNHY4TTMyIDM0djhNNDggMzR2OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzhiZGY4IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjxyZWN0IHg9IjEwIiB5PSI0MiIgd2lkdGg9IjEyIiBoZWlnaHQ9IjEwIiByeD0iMi41IiBmaWxsPSIjNjBhNWZhIi8+PHJlY3QgeD0iMjYiIHk9IjQyIiB3aWR0aD0iMTIiIGhlaWdodD0iMTAiIHJ4PSIyLjUiIGZpbGw9IiMzOGJkZjgiLz48cmVjdCB4PSI0MiIgeT0iNDIiIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMCIgcng9IjIuNSIgZmlsbD0iIzM0ZDM5OSIvPjwvc3ZnPg==" />
+<title>Synology DS423+ (Intel J4125) Hardware & PCIe/SATA Topology | 群晖 DS423+ 硬件拓扑图</title>
+<meta name="description" content="Interactive hardware topology diagram for Synology DS423+ (Intel Celeron J4125): 6 PCIe 2.0 lanes, UHD 600 iGPU, dual M.2 NVMe, dual 1GbE, 4 internal SATA bays without eSATA expansion, and comparison with DS920+ and DS923+. 群晖 DS423+ 硬件互联与 4 盘位 PCIe/SATA 拓扑图。" />
+<meta name="keywords" content="Synology DS423+, Intel Celeron J4125, Gemini Lake, UHD 600, PCIe topology, SATA topology, M.2 NVMe, DS920+, DS923+, 群晖DS423+, 群晖硬件拓扑, J4125通道分配, 核显硬解" />
+<meta name="robots" content="index, follow" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Synology DS423+ Hardware & 4-Bay PCIe/SATA Topology | 群晖 DS423+ 硬件拓扑图" />
+<meta property="og:description" content="Interactive PCIe and SATA topology diagram for Synology DS423+ (Intel J4125, UHD 600 iGPU, 4 internal bays, dual M.2 NVMe, dual 1GbE). 群晖 DS423+ 交互式硬件互联与 PCIe/SATA 拓扑图。" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Synology DS423+ Hardware Topology | 群晖 DS423+ 硬件拓扑图" />
+<meta name="twitter:description" content="Interactive PCIe/SATA interconnect diagram for Synology DS423+ (Intel J4125) with DS920+ & DS923+ comparison | 群晖 DS423+ 硬件拓扑图。" />
+<style>
+  :root {
+    --bg: #0a0f1a;
+    --panel: #111827;
+    --border: #24324d;
+    --text: #e6edf7;
+    --muted: #8fa3c4;
+    --accent: #38bdf8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", monospace;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+  }
+  .nav-bar {
+    width: 100%;
+    max-width: 1680px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+  .nav-left, .nav-models {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    text-decoration: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 11px;
+    font-weight: 600;
+    transition: all 0.15s ease;
+  }
+  .nav-link:hover {
+    color: #fff;
+    border-color: var(--accent);
+    background: #1b2840;
+  }
+  .nav-link.active {
+    color: #fff;
+    background: #1d4ed8;
+    border-color: #3b82f6;
+  }
+  .toolbar {
+    width: 100%;
+    max-width: 1680px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 18px;
+    margin-bottom: 12px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .title-group h1 {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: #f8fafc;
+  }
+  .title-group p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .lang-switch {
+    display: inline-flex;
+    background: #0d1526;
+    border: 1px solid #32476b;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .lang-switch button {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .lang-switch button.active {
+    background: #2563eb;
+    color: #ffffff;
+  }
+  .lang-switch button:not(.active):hover {
+    background: #1b2840;
+    color: #f8fafc;
+  }
+  button.action-btn {
+    background: #1b2840;
+    color: var(--text);
+    border: 1px solid #32476b;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  button.action-btn:hover {
+    background: #253859;
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .canvas-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 1680px;
+    background: #0b111e;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 54px rgba(0, 0, 0, 0.5);
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    cursor: default;
+    touch-action: manipulation;
+  }
+  #tooltip {
+    position: absolute;
+    pointer-events: none;
+    display: none;
+    max-width: min(380px, calc(100% - 20px));
+    background: rgba(11, 17, 30, 0.97);
+    border: 1px solid #38bdf8;
+    border-radius: 8px;
+    padding: 11px 13px;
+    font-size: 12px;
+    line-height: 1.55;
+    color: #e2e8f0;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+    z-index: 20;
+  }
+  #tooltip .tt-title {
+    font-weight: 700;
+    color: #38bdf8;
+    margin-bottom: 3px;
+    font-size: 13px;
+  }
+  #tooltip .tt-bdf {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    color: #94a3b8;
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+  #tooltip .tt-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid rgba(148, 163, 184, 0.14);
+    padding-top: 3px;
+    margin-top: 3px;
+  }
+  #tooltip .tt-key { color: #94a3b8; white-space: nowrap; }
+  #tooltip .tt-val { color: #f8fafc; font-weight: 600; text-align: right; }
+  #tooltip .tt-warn { color: #fbbf24; margin-top: 6px; font-size: 11.5px; }
+  #tooltip .tt-crit { color: #f87171; margin-top: 6px; font-size: 11.5px; font-weight: 600; }
+  .seo-footer {
+    width: 100%;
+    max-width: 1680px;
+    margin-top: 14px;
+    padding: 12px 18px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .seo-footer a { color: var(--accent); text-decoration: none; }
+  .seo-footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar" aria-label="Breadcrumb">
+  <div class="nav-left">
+    <a class="nav-link" id="navHome" href="../index.html">← All Models</a>
+  </div>
+  <div class="nav-models">
+    <span class="nav-link active" aria-current="page">Synology DS423+</span>
+  </div>
+</nav>
+
+<div class="toolbar">
+  <div class="title-group">
+    <h1 id="uiTitle"></h1>
+    <p id="uiSubtitle"></p>
+  </div>
+  <div class="controls">
+    <div class="lang-switch" role="group" aria-label="Language Switcher">
+      <button id="btnZh" type="button">中文</button>
+      <button id="btnEn" type="button">EN</button>
+    </div>
+    <button id="btnExport" class="action-btn" type="button"></button>
+  </div>
+</div>
+
+<div class="canvas-wrap" id="wrap">
+  <canvas id="topoCanvas" role="img" aria-label="Synology DS423+ Hardware and 4-Bay PCIe/SATA Topology Diagram"></canvas>
+  <div id="tooltip" role="tooltip"></div>
+</div>
+
+<noscript>
+  <div class="seo-footer">JavaScript is required to render the interactive Synology DS423+ (Intel Celeron J4125) PCIe/SATA topology diagram.</div>
+</noscript>
+
+<footer class="seo-footer">
+  <span id="uiFooter"></span>
+  <a id="footerHome" href="../index.html">Synology Hardware Topology</a>
+</footer>
+
+<script>
+(() => {
+  const LOGICAL_W = 1680;
+  const LOGICAL_H = 1025;
+
+  const canvas = document.getElementById('topoCanvas');
+  const ctx = canvas.getContext('2d');
+  const tooltip = document.getElementById('tooltip');
+  const wrap = document.getElementById('wrap');
+  const uiTitle = document.getElementById('uiTitle');
+  const uiSubtitle = document.getElementById('uiSubtitle');
+  const btnExport = document.getElementById('btnExport');
+  const btnZh = document.getElementById('btnZh');
+  const btnEn = document.getElementById('btnEn');
+  const navHome = document.getElementById('navHome');
+  const uiFooter = document.getElementById('uiFooter');
+  const footerHome = document.getElementById('footerHome');
+
+  const COLORS = {
+    bg: '#0b111e',
+    grid: 'rgba(148, 163, 184, 0.045)',
+    socBg: '#101a2e',
+    nodeBg: '#131e33',
+    nodeBorder: '#293b5c',
+    nodeHover: '#38bdf8',
+    pcie2x2: '#22d3ee',   // Cyan (PCIe 2.0 x2 SATA Controller*)
+    pcie2x1: '#f59e0b',   // Amber (M.2 NVMe PCIe 2.0 x1*)
+    pcie1x1: '#a78bfa',   // Violet (1GbE NIC PCIe 1.1 x1*)
+    internal: '#34d399',  // Emerald (On-Die SoC Bus)
+    sata: '#38bdf8',      // Sky (SATA III)
+    warnBg: 'rgba(245, 158, 11, 0.16)',
+    warnText: '#fbbf24',
+    critBg: 'rgba(239, 68, 68, 0.18)',
+    critText: '#f87171',
+    okBg: 'rgba(52, 211, 153, 0.14)',
+    okText: '#34d399',
+    textMain: '#f1f5f9',
+    textSub: '#94a3b8'
+  };
+
+  function detectInitialLang() {
+    try {
+      const saved = localStorage.getItem('syno_topo_lang');
+      if (saved === 'zh' || saved === 'en') return saved;
+    } catch (_) {}
+    const navLang = (navigator.language || (navigator.languages && navigator.languages[0]) || 'en').toLowerCase();
+    return navLang.startsWith('zh') ? 'zh' : 'en';
+  }
+
+  let currentLang = detectInitialLang();
+  let hoveredNode = null;
+  let pinnedNode = null;
+
+  const I18N = {
+    zh: {
+      navHome: '← 全部机型',
+      footerHome: '返回 Synology Hardware Topology 首页',
+      pageTitle: 'Synology DS423+ (Intel Celeron J4125) 硬件架构与 4 盘位拓扑图',
+      toolbarTitle: 'Synology DS423+ 硬件互联与 4 盘位拓扑图（Intel J4125 + UHD 600 核显 + 纯内置 4 盘位）',
+      toolbarSub: '依据官方规格、Gemini Lake 平台架构与同源机型拆解推算绘制（无实机 lspci，标记 * 项待实机核验）｜ 悬停或点击节点查看详情',
+      exportBtn: '导出高清 PNG',
+      exportName: 'synology-ds423plus-4bay-topology-zh.png',
+      canvasTitle: 'SYNOLOGY DS423+ 硬件架构与 4 盘位 PCIe / SATA 拓扑图',
+      canvasSub: 'Intel Celeron J4125 (Gemini Lake Refresh · 4C/4T · UHD 600 核显 · 无 eSATA 扩展口) ｜ 有效单向带宽按 PCIe 1.x/2.x (8b/10b) 计算',
+      socBanner: 'Intel Celeron J4125 SoC — geminilake 平台（6× 外置 PCIe 2.0 通道 + 片内原生 2× SATA / UHD 600 核显 / USB）',
+      socSummary: '4C/4T @ 2.0–2.7 GHz ｜ 10W TDP ｜ 内存：2GB 板载 DDR4 + 1× SODIMM（官方 6GB / 社区 18GB）｜ PCIe 预算：x1×4 + x2* = 6 / 6 Lanes*',
+      socExtLabel: '外置 PCIe 2.0 直出通道（平台上限 6 Lanes，具体 Root Port 与外置 SATA 控制器位宽按 geminilake 架构推算*）',
+      socIntLabel: 'SoC 片内集成总线（免外置 PCIe）',
+      backplaneTitle: '内置 4 盘位硬盘背板（4× 3.5"/2.5" SATA III · 热插拔 · 无 eSATA 扩展口 · 2 盘走外置 SATA，2 盘走原生 SATA*）',
+      pins: {
+        p_nvme1: 'PCIe 2.0 x1 (推算)',
+        p_nvme2: 'PCIe 2.0 x1 (推算)',
+        p_lan1:  'PCIe 2.0 x1 (推算)',
+        p_lan2:  'PCIe 2.0 x1 (推算)',
+        p_sata:  'PCIe 2.0 x2* (推算)',
+        p_pch:   '片内原生 SATA',
+        p_soc:   '片内集成外设'
+      },
+      linkSpecs: {
+        l_nvme1: { bw: '500 MB/s',  spec: 'PCIe 2.0 x1* · 5GT/s' },
+        l_nvme2: { bw: '500 MB/s',  spec: 'PCIe 2.0 x1* · 5GT/s' },
+        l_lan1:  { bw: '250 MB/s',  spec: 'PCIe 1.1 x1* · 2.5GT/s' },
+        l_lan2:  { bw: '250 MB/s',  spec: 'PCIe 1.1 x1* · 2.5GT/s' },
+        l_sata:  { bw: '1.0 GB/s*', spec: 'PCIe 2.0 x2* · 5GT/s' },
+        l_pch:   { bw: '片内直连',   spec: '2× SATA 6Gbps' },
+        l_soc:   { bw: '片内直连',   spec: 'UHD 600 / xHCI' },
+        l_hdd:   { bw: '600 MB/s',  spec: 'SATA 6Gbps' }
+      },
+      panel1Title: 'DS423+ 硬件核实依据与数据溯源（官方确认 vs 平台推算）',
+      panel1Lines: [
+        '• 官方规格已确认：Intel Celeron J4125 (4C/4T, UHD 600 核显, 无 AVX)、2GB 板载 + 1× SODIMM、4 内置盘位、无 eSATA、双 M.2 2280 NVMe、双 1GbE',
+        '• 核显与定位特征：沿用 geminilake 平台保留 Quick Sync 硬解，DSM 7.2+ 官方开放 M.2 存储池（需 Synology SNV3400/3410 系列 SSD）',
+        '• 固定 4 盘位精简：相较 DS920+ 取消 eSATA 接口与 DX517 扩展支持、板载内存由 4GB 减至 2GB，专注纯内置 4 盘位家用与影音场景',
+        '• * 平台推算项：外置 SATA 控制器具体型号（Marvell 88SE9235 或 2 口桥接芯片）与 x1/x2 位宽、网卡型号及 4 盘位映射待实机 lspci/sysfs 核验'
+      ],
+      panel2Title: '链路图例与关键瓶颈分析',
+      legend: [
+        'PCIe 2.0 x2* (1.0 GB/s)',
+        'PCIe 2.0 x1* (500 MB/s)',
+        'PCIe 1.1 x1* (250 MB/s)',
+        'SATA III 6Gbps (600 MB/s)',
+        'SoC 片内集成总线'
+      ],
+      notes: [
+        { title: '1. 网络上限 · 仅双 1GbE (无 10GbE 扩展槽)', text: '双千兆聚合上限 ~2 Gbps (~225 MB/s)；提速通常经 USB 3.2 Gen 1 外接 2.5GbE 网卡。' },
+        { title: '2. 扩展受限 · 取消 eSATA (固定 4 盘位)', text: '不支持 DX517 扩展柜，扩容只能更换更大容量硬盘；但也避免了 eSATA 端口倍增瓶颈。' },
+        { title: '3. M.2 带宽上限 · PCIe 2.0 x1* (~500 MB/s)', text: '受 J4125 平台 PCIe 2.0 限制，单槽实测约 380–450 MB/s，随机 IOPS 仍显著优于机械盘。' }
+      ],
+      cmpTitle: '同代与同源机型核心规格对比：DS423+ vs DS920+ vs DS923+',
+      cmpHeaders: ['对比维度', 'DS423+（本机）', 'DS920+（同源前代）', 'DS923+（同期高阶）'],
+      cmpRows: [
+        ['SoC / 核显', 'Intel J4125 · 4C/4T · UHD 600 硬解', 'Intel J4125 · 4C/4T · UHD 600 硬解', 'AMD R1600 · 2C/4T · 无核显'],
+        ['PCIe 通道', '6× PCIe 2.0（平台上限，推算满配*）', '6× PCIe 2.0（6/6 满配）', '8× PCIe 3.0（8/8 满配）'],
+        ['内存配置', '2GB 板载 + 1× SODIMM（官 6G / 社区 18G）', '4GB 板载 + 1× SODIMM（官 8G / 社区 20G）', '2× ECC SODIMM（标配 4G / 最高 32G）'],
+        ['盘位 / 扩展', '4 内置 · 无 eSATA（不可扩展）', '4 内置 + 5 扩展（eSATA · DX517）', '4 内置 + 5 扩展（eSATA · DX517）'],
+        ['M.2 NVMe', '2× PCIe 2.0 x1*（缓存 + 官方存储池）', '2× PCIe 2.0 x1*（官方仅限缓存）', '2× PCIe 3.0 x1（缓存 + 官方存储池）'],
+        ['网络接口', '2× 1GbE（无万兆扩展槽）', '2× 1GbE（无万兆扩展槽）', '2× 1GbE + 10GbE Mini 扩展槽'],
+        ['适用取舍', '核显硬解 + 纯 4 盘位影音/家用主力', '核显硬解 + DX517 扩展的经典均衡机', 'ECC 内存 + 万兆 + 高速 NVMe 进阶机']
+      ],
+      ttKeys: { cap: '硬件规格', sta: '链路状态', driver: '驱动/芯片', note: '架构说明' },
+      nodes: {
+        soc: {
+          title: 'Intel Celeron J4125 SoC (Gemini Lake Refresh)',
+          meta: {
+            bdf: 'DSM 平台: geminilake ｜ 14nm Goldmont Plus ｜ 4C/4T (2.0–2.7 GHz) ｜ 10W TDP',
+            cap: '6× 外置 PCIe 2.0 Lanes + 2× 原生 SATA 6Gbps + Intel UHD 600 核显 (无 AVX)',
+            sta: '内存 2GB 板载 + 1× SODIMM (官方 6GB / 社区常见 18GB) ｜ 推算通道：x1×4 + x2* = 6/6*',
+            detail: '官方规格已确认 SoC 与内存/核显配置。片内原生仅 2 路 SATA 6Gbps，因此 4 盘位必须由原生 2 口 + 外置 PCIe SATA 控制器共同提供。'
+          }
+        },
+        dev_nvme1: {
+          bdf: 'M.2 底部仓 · 槽位 1', title: 'M.2 2280 NVMe #1',
+          lines: ['底部免工具槽位（非热插拔）', '官方：缓存 / 存储池 (DSM 7.2+)', '需官方 SSD 建存储池'],
+          badge: '⚠ 平台限制: PCIe 2.0 x1* (500MB/s)',
+          meta: {
+            bdf: 'M.2 Slot #1 (PCIe 2.0 x1 平台推算，待实机 lspci 核验)', cap: 'PCIe 2.0 x1* (5GT/s, 500 MB/s 理论)',
+            sta: '单盘实际顺序读写约 380–450 MB/s（推算）', driver: 'nvme',
+            warn: 'J4125 仅支持 PCIe 2.0；DSM 7.2+ 官方支持使用 Synology SNV3400/3410 系列建立 M.2 存储池（系统 DSM 仍需驻留 SATA 盘）。'
+          }
+        },
+        dev_nvme2: {
+          bdf: 'M.2 底部仓 · 槽位 2', title: 'M.2 2280 NVMe #2',
+          lines: ['底部免工具槽位（非热插拔）', '支持 RAID 0/1 缓存或存储池', '关机断电后拆装'],
+          badge: '⚠ 平台限制: PCIe 2.0 x1* (500MB/s)',
+          meta: {
+            bdf: 'M.2 Slot #2 (PCIe 2.0 x1 平台推算，待实机 lspci 核验)', cap: 'PCIe 2.0 x1* (5GT/s, 500 MB/s 理论)',
+            sta: '单盘实际顺序读写约 380–450 MB/s（推算）', driver: 'nvme',
+            warn: '顺序带宽受 PCIe 2.0 x1 上限约束，但用于 Docker、数据库、照片缩略图或机械盘随机读写缓存仍可大幅提升响应。'
+          }
+        },
+        dev_lan1: {
+          bdf: '主板板载 (直连 SoC*)', title: '1GbE 网卡 #1 (RTL8111H*)',
+          lines: ['板载千兆网卡 LAN 1', '接口: PCIe 1.1 x1* (推算)', '支持链路聚合 / 故障转移'],
+          badge: '1.1x1* (250MB/s · 千兆满速)',
+          meta: {
+            bdf: 'Onboard NIC #1 (按 DS920+ geminilake 架构推算 Realtek RTL8111H)', cap: 'Root Port PCIe 2.0 x1* ｜ 网卡 PCIe 1.1 x1*',
+            sta: 'PCIe 1.1 x1 (250 MB/s, 1GbE 线速 125 MB/s)', driver: 'r8168* (待核验)',
+            detail: '官方规格确认双 1GbE RJ-45 接口；具体 PHY/控制器型号（如 Realtek RTL8111H）与 Root Port BDF 待实机 lspci 核验。'
+          }
+        },
+        dev_lan2: {
+          bdf: '主板板载 (直连 SoC*)', title: '1GbE 网卡 #2 (RTL8111H*)',
+          lines: ['板载千兆网卡 LAN 2', '接口: PCIe 1.1 x1* (推算)', '无内置 10GbE 扩展槽'],
+          badge: '1.1x1* (250MB/s · 无万兆槽)',
+          meta: {
+            bdf: 'Onboard NIC #2 (按 DS920+ geminilake 架构推算 Realtek RTL8111H)', cap: 'Root Port PCIe 2.0 x1* ｜ 网卡 PCIe 1.1 x1*',
+            sta: '双口聚合上限 ~2 Gbps (~225 MB/s)', driver: 'r8168* (待核验)',
+            warn: '与 DS923+ 不同，DS423+ 无专用 10GbE 网络升级槽；提速通常借助 USB 3.2 Gen 1 外接 2.5GbE 网卡。'
+          }
+        },
+        dev_sata: {
+          bdf: '主板板载 PCIe SATA (推算*)', title: '外置 PCIe SATA 控制器*',
+          lines: ['补足 2× 内置 SATA 盘位*', '同源参考: 88SE9235 / 2口桥*', '已取消 eSATA 端口引出'],
+          badge: 'PCIe 2.0 x2* (1.0 GB/s · 无 eSATA)',
+          meta: {
+            bdf: 'Onboard PCIe SATA Controller (推算项，待实机 lspci -PPvv 核验)', cap: '推算 PCIe 2.0 x2 (1.0 GB/s) 或 x1 (500 MB/s) ｜ 承载 2× SATA 6Gbps',
+            sta: '仅带 2 块内置盘，无 DX517 扩展负载（具体芯片与位宽待核验）', driver: 'ahci',
+            detail: '因 J4125 片内仅 2 口原生 SATA，DS423+ 需外置 PCIe SATA 控制器补足另 2 盘位。若沿用 DS920+ 的 Marvell 88SE9235 (x2, 1.0 GB/s) 则双盘全速无瓶颈；若为 2 口 x1 芯片 (500 MB/s) 则双机械盘并发接近 500 MB/s 上限。'
+          }
+        },
+        dev_pch_sata: {
+          bdf: 'SoC 片内集成', title: 'Intel 原生 AHCI SATA',
+          lines: ['Gemini Lake 原生 2口 AHCI', '驱动: ahci', '片内直连 2× 内置盘位*'],
+          badge: '片内直连 · 无外置 PCIe 争抢',
+          meta: {
+            bdf: 'Intel Gemini Lake Integrated SATA Controller (Intel ARK 确认 2× SATA 6Gbps)', cap: '片内直连总线 ｜ 2× 原生 SATA III 6Gbps',
+            sta: '直连 2 块内置硬盘位（具体盘位号待 sysfs 核验）', driver: 'ahci',
+            detail: 'Intel J4125 片内集成 2 个原生 SATA 6Gbps 端口，无需占用外置 PCIe 2.0 通道。'
+          }
+        },
+        dev_on_die: {
+          bdf: 'SoC 片内集成外设', title: '核显 / USB / 系统引导',
+          lines: ['• Intel UHD 600 (硬解)', '• 2× USB 3.2 Gen 1 (5G)', '• DSM 引导闪存 DOM', '• 双 92mm 风扇控制'],
+          badge: 'Quick Sync 硬件转码',
+          meta: {
+            bdf: 'Intel UHD Graphics 600 (750 MHz) + xHCI USB 3.2 Gen 1 + Boot DOM', cap: '片内核显 + 前1后1 USB-A (5Gbps) + 双 92mm 风扇',
+            sta: '官方确认 UHD 600 核显与 2× USB 3.2 Gen 1 接口', driver: 'i915 / xhci_hcd',
+            detail: '保留 Intel Quick Sync (H.264/HEVC) 硬件转码能力，是同期 DS423+ 区别于无核显 AMD 平台 DS923+ 的核心优势。'
+          }
+        },
+        hdd_1: {
+          bay: '内置盘位 1 (推算*)', title: 'SATA 盘位 1',
+          lines: ['3.5" HDD / 2.5" SSD', 'SATA III 6Gbps · 热插拔', '经外置 PCIe SATA*'],
+          meta: { bdf: 'Internal Bay 1 (推算归属外置 PCIe SATA 控制器)', sta: 'SATA III 6Gbps (热插拔)', detail: '盘位 1–4 与外置/原生 SATA 控制器的精确映射关系待实机 syno_slot_mapping 与 /sys/block/sata* 核验。' }
+        },
+        hdd_2: {
+          bay: '内置盘位 2 (推算*)', title: 'SATA 盘位 2',
+          lines: ['3.5" HDD / 2.5" SSD', 'SATA III 6Gbps · 热插拔', '经外置 PCIe SATA*'],
+          meta: { bdf: 'Internal Bay 2 (推算归属外置 PCIe SATA 控制器)', sta: 'SATA III 6Gbps (热插拔)', detail: '因取消 eSATA 扩展口，外置 SATA 控制器无需与 DX517 争抢上行带宽，纯内置读写更纯粹。' }
+        },
+        hdd_3: {
+          bay: '内置盘位 3 (推算*)', title: 'SATA 盘位 3',
+          lines: ['3.5" HDD / 2.5" SSD', 'SATA III 6Gbps · 热插拔', 'Intel 原生 SATA 直连*'],
+          meta: { bdf: 'Internal Bay 3 (推算归属 Intel J4125 原生 SATA)', sta: 'SATA III 6Gbps (热插拔)', detail: '由 J4125 片内原生 AHCI SATA 控制器直连，无外置 PCIe 通道争抢。' }
+        },
+        hdd_4: {
+          bay: '内置盘位 4 (推算*)', title: 'SATA 盘位 4',
+          lines: ['3.5" HDD / 2.5" SSD', 'SATA III 6Gbps · 热插拔', 'Intel 原生 SATA 直连*'],
+          meta: { bdf: 'Internal Bay 4 (推算归属 Intel J4125 原生 SATA)', sta: 'SATA III 6Gbps (热插拔)', detail: '由 J4125 片内原生 AHCI SATA 控制器直连，无外置 PCIe 通道争抢。' }
+        }
+      }
+    },
+
+    en: {
+      navHome: '← All Models',
+      footerHome: 'Back to Synology Hardware Topology',
+      pageTitle: 'Synology DS423+ (Intel Celeron J4125) Hardware & 4-Bay PCIe/SATA Topology',
+      toolbarTitle: 'Synology DS423+ Hardware Topology (Intel J4125 + UHD 600 iGPU + 4 Internal Bays)',
+      toolbarSub: 'Compiled from official specs, Gemini Lake architecture & sibling teardowns (* = platform-inferred pending lspci/sysfs)  |  Hover or tap any node',
+      exportBtn: 'Export PNG',
+      exportName: 'synology-ds423plus-4bay-topology-en.png',
+      canvasTitle: 'SYNOLOGY DS423+ HARDWARE & 4-BAY PCIe / SATA TOPOLOGY',
+      canvasSub: 'Intel Celeron J4125 (Gemini Lake Refresh · 4C/4T · UHD 600 iGPU · No eSATA Expansion)  |  Effective unidirectional BW (8b/10b for Gen1/2)',
+      socBanner: 'Intel Celeron J4125 SoC — geminilake Platform (6× External PCIe 2.0 Lanes + On-Die 2× Native SATA / UHD 600 iGPU / USB)',
+      socSummary: '4C/4T @ 2.0–2.7 GHz | 10W TDP | RAM: 2GB Soldered DDR4 + 1× SODIMM (6GB official / 18GB community) | PCIe Budget: x1×4 + x2* = 6 / 6 Lanes*',
+      socExtLabel: 'External PCIe 2.0 Direct Lanes (6-Lane Platform Ceiling; Root Ports & Discrete SATA Width Inferred from geminilake*)',
+      socIntLabel: 'On-Die Integrated Bus (No External PCIe)',
+      backplaneTitle: 'Internal 4-Bay Backplane (4× 3.5"/2.5" SATA III · Hot-Swap · No eSATA Port · 2 Bays via PCIe SATA, 2 Bays via Native SATA*)',
+      pins: {
+        p_nvme1: 'PCIe 2.0 x1 (Inferred)',
+        p_nvme2: 'PCIe 2.0 x1 (Inferred)',
+        p_lan1:  'PCIe 2.0 x1 (Inferred)',
+        p_lan2:  'PCIe 2.0 x1 (Inferred)',
+        p_sata:  'PCIe 2.0 x2* (Inferred)',
+        p_pch:   'On-Die Native SATA',
+        p_soc:   'On-Die Peripherals'
+      },
+      linkSpecs: {
+        l_nvme1: { bw: '500 MB/s',  spec: 'PCIe 2.0 x1* · 5GT/s' },
+        l_nvme2: { bw: '500 MB/s',  spec: 'PCIe 2.0 x1* · 5GT/s' },
+        l_lan1:  { bw: '250 MB/s',  spec: 'PCIe 1.1 x1* · 2.5GT/s' },
+        l_lan2:  { bw: '250 MB/s',  spec: 'PCIe 1.1 x1* · 2.5GT/s' },
+        l_sata:  { bw: '1.0 GB/s*', spec: 'PCIe 2.0 x2* · 5GT/s' },
+        l_pch:   { bw: 'On-Die Bus', spec: '2× SATA 6Gbps' },
+        l_soc:   { bw: 'On-Die Bus', spec: 'UHD 600 / xHCI' },
+        l_hdd:   { bw: '600 MB/s',  spec: 'SATA 6Gbps' }
+      },
+      panel1Title: 'DS423+ Hardware Provenance (Official Spec Confirmed vs Platform Inferred)',
+      panel1Lines: [
+        '• Official Spec Confirmed: Intel Celeron J4125 (4C/4T, UHD 600 iGPU, no AVX), 2GB soldered + 1× SODIMM, 4 internal bays, no eSATA, dual M.2 NVMe, dual 1GbE',
+        '• iGPU & DSM 7.2+ Storage Pools: Retains Quick Sync HW transcoding on geminilake; officially supports M.2 storage pools (Synology SNV3400/3410 SSDs)',
+        '• Fixed 4-Bay Positioning: Drops eSATA/DX517 expansion and trims soldered RAM from 4GB (DS920+) to 2GB to target compact 4-bay home/media workloads',
+        '• * Platform-Inferred Items: Exact discrete SATA controller IC (88SE9235 vs 2-port bridge) & x1/x2 link width, NIC IC, and bay mapping await raw lspci/sysfs'
+      ],
+      panel2Title: 'Link Legend & Key Bottlenecks',
+      legend: [
+        'PCIe 2.0 x2* (1.0 GB/s)',
+        'PCIe 2.0 x1* (500 MB/s)',
+        'PCIe 1.1 x1* (250 MB/s)',
+        'SATA III 6Gbps (600 MB/s)',
+        'On-Die Integrated SoC Bus'
+      ],
+      notes: [
+        { title: '1. Network Ceiling · Dual 1GbE Only (No 10GbE Slot)', text: 'Dual GbE LACP tops out at ~2 Gbps (~225 MB/s); USB 3.2 Gen 1 2.5GbE dongles are common.' },
+        { title: '2. Fixed Capacity · No eSATA Expansion Port', text: 'Cannot attach DX517; capacity scales only by swapping drives, avoiding eSATA PM bottlenecks.' },
+        { title: '3. M.2 Cap · PCIe 2.0 x1* (~500 MB/s)', text: 'J4125 Gen2 x1 limits sequential I/O to ~380–450 MB/s/slot, still ideal for random IOPS.' }
+      ],
+      cmpTitle: 'Sibling & Generation Comparison: DS423+ vs DS920+ vs DS923+',
+      cmpHeaders: ['Attribute', 'DS423+ (This Model)', 'DS920+ (Predecessor)', 'DS923+ (Higher Tier)'],
+      cmpRows: [
+        ['SoC / iGPU', 'Intel J4125 · 4C/4T · UHD 600 QSV', 'Intel J4125 · 4C/4T · UHD 600 QSV', 'AMD R1600 · 2C/4T · Headless'],
+        ['PCIe Lanes', '6× PCIe 2.0 (Platform cap, inferred*)', '6× PCIe 2.0 (6/6 Allocated)', '8× PCIe 3.0 (8/8 Allocated)'],
+        ['Memory', '2GB onboard + 1× SODIMM (6G / 18G*)', '4GB onboard + 1× SODIMM (8G / 20G*)', '2× ECC SODIMM (4GB std / 32GB max)'],
+        ['Bays / Exp', '4 Internal · No eSATA (Non-expandable)', '4 Internal + 5 Exp (eSATA · DX517)', '4 Internal + 5 Exp (eSATA · DX517)'],
+        ['M.2 NVMe', '2× PCIe 2.0 x1* (Cache + Official Pool)', '2× PCIe 2.0 x1* (Cache-Only Official)', '2× PCIe 3.0 x1 (Cache + Official Pool)'],
+        ['Networking', '2× 1GbE (No 10GbE Slot)', '2× 1GbE (No 10GbE Slot)', '2× 1GbE + 10GbE Mini Slot'],
+        ['Trade-off', 'Quick Sync iGPU in fixed 4-bay chassis', 'Quick Sync iGPU + DX517 expansion', 'ECC RAM + 10GbE + faster Gen3 NVMe']
+      ],
+      ttKeys: { cap: 'Spec', sta: 'Link / Role', driver: 'Driver / IC', note: 'Notes' },
+      nodes: {
+        soc: {
+          title: 'Intel Celeron J4125 SoC (Gemini Lake Refresh)',
+          meta: {
+            bdf: 'DSM Platform: geminilake | 14nm Goldmont Plus | 4C/4T (2.0–2.7 GHz) | 10W TDP',
+            cap: '6× External PCIe 2.0 Lanes + 2× Native SATA 6Gbps + Intel UHD 600 iGPU (No AVX)',
+            sta: 'RAM: 2GB soldered + 1× SODIMM (6GB official / 18GB community) | Inferred: x1×4 + x2* = 6/6*',
+            detail: 'SoC, memory layout, and iGPU are officially confirmed. Because J4125 integrates only 2 native SATA 6Gbps ports, a discrete PCIe SATA controller is required for 4 bays.'
+          }
+        },
+        dev_nvme1: {
+          bdf: 'Bottom M.2 Bay · Slot 1', title: 'M.2 2280 NVMe #1',
+          lines: ['Tool-less Bottom Bay (No Hot-Swap)', 'Official: Cache / Pool (DSM 7.2+)', 'Synology SSD Required for Pool'],
+          badge: '⚠ Platform Cap: PCIe 2.0 x1* (500 MB/s)',
+          meta: {
+            bdf: 'M.2 Slot #1 (PCIe 2.0 x1 platform-inferred; pending raw lspci)', cap: 'PCIe 2.0 x1* (5GT/s, 500 MB/s raw)',
+            sta: '~380–450 MB/s practical sequential I/O (inferred)', driver: 'nvme',
+            warn: 'J4125 is limited to PCIe 2.0. DSM 7.2+ officially allows creating M.2 storage pools with Synology SNV3400/3410 SSDs (DSM OS still resides on SATA bays).'
+          }
+        },
+        dev_nvme2: {
+          bdf: 'Bottom M.2 Bay · Slot 2', title: 'M.2 2280 NVMe #2',
+          lines: ['Tool-less Bottom Bay (No Hot-Swap)', 'RAID 0/1 Cache or Storage Pool', 'Power Off Before Servicing'],
+          badge: '⚠ Platform Cap: PCIe 2.0 x1* (500 MB/s)',
+          meta: {
+            bdf: 'M.2 Slot #2 (PCIe 2.0 x1 platform-inferred; pending raw lspci)', cap: 'PCIe 2.0 x1* (5GT/s, 500 MB/s raw)',
+            sta: '~380–450 MB/s practical sequential I/O (inferred)', driver: 'nvme',
+            warn: 'Sequential throughput is capped by PCIe 2.0 x1, yet random IOPS for Docker, databases, thumbnails, and HDD caching remain vastly faster than spinning disks.'
+          }
+        },
+        dev_lan1: {
+          bdf: 'Onboard (Direct to SoC*)', title: '1GbE NIC #1 (RTL8111H*)',
+          lines: ['Onboard GbE LAN 1', 'Interface: PCIe 1.1 x1* (Inferred)', 'LACP / Failover Support'],
+          badge: '1.1x1* (250 MB/s · Full GbE)',
+          meta: {
+            bdf: 'Onboard NIC #1 (Inferred Realtek RTL8111H from DS920+ geminilake lineage)', cap: 'Root Port PCIe 2.0 x1* | NIC PCIe 1.1 x1*',
+            sta: 'PCIe 1.1 x1 (250 MB/s; 1GbE line rate 125 MB/s)', driver: 'r8168* (pending)',
+            detail: 'Dual 1GbE RJ-45 ports are officially confirmed; exact Ethernet controller IC and Root Port BDF await live lspci verification.'
+          }
+        },
+        dev_lan2: {
+          bdf: 'Onboard (Direct to SoC*)', title: '1GbE NIC #2 (RTL8111H*)',
+          lines: ['Onboard GbE LAN 2', 'Interface: PCIe 1.1 x1* (Inferred)', 'No Internal 10GbE Slot'],
+          badge: '1.1x1* (250 MB/s · No 10G Slot)',
+          meta: {
+            bdf: 'Onboard NIC #2 (Inferred Realtek RTL8111H from DS920+ geminilake lineage)', cap: 'Root Port PCIe 2.0 x1* | NIC PCIe 1.1 x1*',
+            sta: 'Combined ~2 Gbps (~225 MB/s rated)', driver: 'r8168* (pending)',
+            warn: 'Unlike DS923+, DS423+ lacks a 10GbE Mini upgrade slot; users seeking higher throughput commonly attach a USB 3.2 Gen 1 2.5GbE adapter.'
+          }
+        },
+        dev_sata: {
+          bdf: 'Onboard PCIe SATA (Inferred*)', title: 'Discrete PCIe SATA Ctrl*',
+          lines: ['Serves 2× Internal Bays*', 'Ref: 88SE9235 / 2-Port Bridge*', 'eSATA Port Omitted'],
+          badge: 'PCIe 2.0 x2* (1.0 GB/s · No eSATA)',
+          meta: {
+            bdf: 'Onboard PCIe SATA Controller (Inferred; pending live lspci -PPvv)', cap: 'Inferred PCIe 2.0 x2 (1.0 GB/s) or x1 (500 MB/s) | 2× SATA 6Gbps',
+            sta: 'Dedicated to 2 internal bays with zero DX517 load (IC & width pending)', driver: 'ahci',
+            detail: 'J4125 provides only 2 native SATA ports, requiring a discrete PCIe SATA controller for the other 2 bays. If retaining DS920+\'s 88SE9235 (x2, 1.0 GB/s), both bays run unthrottled; a 2-port x1 bridge (500 MB/s) would sit near dual-HDD peak.'
+          }
+        },
+        dev_pch_sata: {
+          bdf: 'SoC On-Die Integrated', title: 'Intel Native AHCI SATA',
+          lines: ['Gemini Lake 2-Port AHCI', 'Driver: ahci', 'Direct to 2× Internal Bays*'],
+          badge: 'On-Die Direct · No PCIe Cap',
+          meta: {
+            bdf: 'Intel Gemini Lake Integrated SATA Controller (Intel ARK: 2× SATA 6Gbps)', cap: 'On-Die Bus | 2× Native SATA III 6Gbps',
+            sta: 'Direct to 2 internal bays (exact bay indices pending sysfs dump)', driver: 'ahci',
+            detail: 'Intel J4125 integrates 2 native SATA 6Gbps ports on-die without consuming external PCIe 2.0 lanes.'
+          }
+        },
+        dev_on_die: {
+          bdf: 'SoC On-Die Peripherals', title: 'iGPU / USB / Boot DOM',
+          lines: ['• Intel UHD 600 (QSV)', '• 2× USB 3.2 Gen 1 (5G)', '• DSM Boot DOM', '• Dual 92mm Fan Ctrl'],
+          badge: 'Quick Sync HW Transcoding',
+          meta: {
+            bdf: 'Intel UHD Graphics 600 (750 MHz) + xHCI USB 3.2 Gen 1 + Boot DOM', cap: 'Integrated iGPU + 1 Front / 1 Rear USB-A (5Gbps) + Dual 92mm Fans',
+            sta: 'Official specs confirm UHD 600 iGPU and 2× USB 3.2 Gen 1 ports', driver: 'i915 / xhci_hcd',
+            detail: 'Preserves Intel Quick Sync (H.264/HEVC) hardware transcoding, the primary differentiator against the headless AMD R1600 DS923+.'
+          }
+        },
+        hdd_1: {
+          bay: 'Internal Bay 1 (Inferred*)', title: 'SATA Bay 1',
+          lines: ['3.5" HDD / 2.5" SSD', 'SATA III 6Gbps · Hot-Swap', 'Via Discrete PCIe SATA*'],
+          meta: { bdf: 'Internal Bay 1 (Inferred on Discrete PCIe SATA Controller)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'Exact bay-to-controller mapping across Bays 1–4 awaits live syno_slot_mapping and /sys/block/sata* verification.' }
+        },
+        hdd_2: {
+          bay: 'Internal Bay 2 (Inferred*)', title: 'SATA Bay 2',
+          lines: ['3.5" HDD / 2.5" SSD', 'SATA III 6Gbps · Hot-Swap', 'Via Discrete PCIe SATA*'],
+          meta: { bdf: 'Internal Bay 2 (Inferred on Discrete PCIe SATA Controller)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'With eSATA omitted, the discrete SATA controller serves internal bays only without DX517 uplink contention.' }
+        },
+        hdd_3: {
+          bay: 'Internal Bay 3 (Inferred*)', title: 'SATA Bay 3',
+          lines: ['3.5" HDD / 2.5" SSD', 'SATA III 6Gbps · Hot-Swap', 'Intel Native SATA Direct*'],
+          meta: { bdf: 'Internal Bay 3 (Inferred on Intel Native SATA)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'Directly connected to Intel J4125 on-die AHCI SATA controller with zero external PCIe contention.' }
+        },
+        hdd_4: {
+          bay: 'Internal Bay 4 (Inferred*)', title: 'SATA Bay 4',
+          lines: ['3.5" HDD / 2.5" SSD', 'SATA III 6Gbps · Hot-Swap', 'Intel Native SATA Direct*'],
+          meta: { bdf: 'Internal Bay 4 (Inferred on Intel Native SATA)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'Directly connected to Intel J4125 on-die AHCI SATA controller with zero external PCIe contention.' }
+        }
+      }
+    }
+  };
+
+  const socPins = {
+    p_nvme1: { x: 140,    y: 186, color: COLORS.pcie2x1 },
+    p_nvme2: { x: 360,    y: 186, color: COLORS.pcie2x1 },
+    p_lan1:  { x: 580,    y: 186, color: COLORS.pcie1x1 },
+    p_lan2:  { x: 790,    y: 186, color: COLORS.pcie1x1 },
+    p_sata:  { x: 1035,   y: 186, color: COLORS.pcie2x2 },
+    p_pch:   { x: 1297.5, y: 186, color: COLORS.internal },
+    p_soc:   { x: 1540,   y: 186, color: COLORS.internal }
+  };
+
+  const nodes = [
+    { id: 'soc',          x: 40,   y: 74,  w: 1600, h: 112, type: 'soc' },
+    { id: 'dev_nvme1',    x: 40,   y: 304, w: 200,  h: 144, type: 'chip', color: COLORS.pcie2x1,  badgeLevel: 'warn' },
+    { id: 'dev_nvme2',    x: 260,  y: 304, w: 200,  h: 144, type: 'chip', color: COLORS.pcie2x1,  badgeLevel: 'warn' },
+    { id: 'dev_lan1',     x: 485,  y: 304, w: 190,  h: 144, type: 'chip', color: COLORS.pcie1x1,  badgeLevel: 'ok' },
+    { id: 'dev_lan2',     x: 695,  y: 304, w: 190,  h: 144, type: 'chip', color: COLORS.pcie1x1,  badgeLevel: 'warn' },
+    { id: 'dev_sata',     x: 920,  y: 304, w: 230,  h: 144, type: 'chip', color: COLORS.pcie2x2,  badgeLevel: 'ok' },
+    { id: 'dev_pch_sata', x: 1185, y: 304, w: 225,  h: 144, type: 'chip', color: COLORS.internal, badgeLevel: 'ok' },
+    { id: 'dev_on_die',   x: 1440, y: 304, w: 200,  h: 158, type: 'chip', color: COLORS.internal, badgeLevel: 'ok' },
+    { id: 'hdd_1',        x: 938,  y: 552, w: 158,  h: 112, type: 'hdd',  color: COLORS.sata },
+    { id: 'hdd_2',        x: 1112, y: 552, w: 158,  h: 112, type: 'hdd',  color: COLORS.sata },
+    { id: 'hdd_3',        x: 1286, y: 552, w: 158,  h: 112, type: 'hdd',  color: COLORS.internal },
+    { id: 'hdd_4',        x: 1460, y: 552, w: 158,  h: 112, type: 'hdd',  color: COLORS.internal }
+  ];
+
+  const links = [
+    { id: 'l_nvme1', specKey: 'l_nvme1', from: 'soc', pin: 'p_nvme1', to: 'dev_nvme1',    color: COLORS.pcie2x1,  width: 3 },
+    { id: 'l_nvme2', specKey: 'l_nvme2', from: 'soc', pin: 'p_nvme2', to: 'dev_nvme2',    color: COLORS.pcie2x1,  width: 3 },
+    { id: 'l_lan1',  specKey: 'l_lan1',  from: 'soc', pin: 'p_lan1',  to: 'dev_lan1',     color: COLORS.pcie1x1,  width: 2.5 },
+    { id: 'l_lan2',  specKey: 'l_lan2',  from: 'soc', pin: 'p_lan2',  to: 'dev_lan2',     color: COLORS.pcie1x1,  width: 2.5 },
+    { id: 'l_sata',  specKey: 'l_sata',  from: 'soc', pin: 'p_sata',  to: 'dev_sata',     color: COLORS.pcie2x2,  width: 4 },
+    { id: 'l_pch',   specKey: 'l_pch',   from: 'soc', pin: 'p_pch',   to: 'dev_pch_sata', color: COLORS.internal, width: 4.5, dashed: true },
+    { id: 'l_soc',   specKey: 'l_soc',   from: 'soc', pin: 'p_soc',   to: 'dev_on_die',   color: COLORS.internal, width: 4.5, dashed: true },
+    { id: 'l_hdd1',  specKey: 'l_hdd',   from: 'dev_sata',     to: 'hdd_1', color: COLORS.sata,     width: 2.5, mode: 'sata_drop', srcX: 1017, midY: 476, pillY: 512 },
+    { id: 'l_hdd2',  specKey: 'l_hdd',   from: 'dev_sata',     to: 'hdd_2', color: COLORS.sata,     width: 2.5, mode: 'sata_drop', srcX: 1115, midY: 476, pillY: 512 },
+    { id: 'l_hdd3',  specKey: 'l_hdd',   from: 'dev_pch_sata', to: 'hdd_3', color: COLORS.internal, width: 2.5, mode: 'sata_drop', srcX: 1365, midY: 476, pillY: 512 },
+    { id: 'l_hdd4',  specKey: 'l_hdd',   from: 'dev_pch_sata', to: 'hdd_4', color: COLORS.internal, width: 2.5, mode: 'sata_drop', srcX: 1395, midY: 482, pillY: 516 }
+  ];
+
+  function t() { return I18N[currentLang]; }
+  function getNode(id) { return nodes.find(n => n.id === id); }
+
+  function getRelatedIds(nodeId) {
+    if (!nodeId || nodeId === 'soc') return null;
+    const set = new Set([nodeId]);
+    let changed = true;
+    while (changed) {
+      changed = false;
+      for (const l of links) {
+        if (set.has(l.to) && !set.has(l.from)) { set.add(l.from); changed = true; }
+      }
+    }
+    const down = new Set([nodeId]);
+    changed = true;
+    while (changed) {
+      changed = false;
+      for (const l of links) {
+        if (down.has(l.from) && !down.has(l.to)) { down.add(l.to); set.add(l.to); changed = true; }
+      }
+    }
+    return set;
+  }
+
+  function roundRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function drawArrow(x, y, dir, color) {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    if (dir === 'down') {
+      ctx.moveTo(x, y); ctx.lineTo(x - 5, y - 9); ctx.lineTo(x + 5, y - 9);
+    } else if (dir === 'right') {
+      ctx.moveTo(x, y); ctx.lineTo(x - 9, y - 5); ctx.lineTo(x - 9, y + 5);
+    }
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawGrid() {
+    ctx.fillStyle = COLORS.bg;
+    ctx.fillRect(0, 0, LOGICAL_W, LOGICAL_H);
+    ctx.strokeStyle = COLORS.grid;
+    ctx.lineWidth = 1;
+    for (let x = 0; x <= LOGICAL_W; x += 28) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, LOGICAL_H); ctx.stroke();
+    }
+    for (let y = 0; y <= LOGICAL_H; y += 28) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(LOGICAL_W, y); ctx.stroke();
+    }
+  }
+
+  function drawHeader() {
+    const tr = t();
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = '700 20px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.canvasTitle, 40, 36, 1600);
+
+    ctx.fillStyle = COLORS.textSub;
+    ctx.font = '12.5px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.canvasSub, 40, 56, 1600);
+  }
+
+  function drawEnclosures() {
+    const tr = t();
+    roundRect(920, 540, 720, 156, 12);
+    ctx.save();
+    ctx.fillStyle = 'rgba(56, 189, 248, 0.035)';
+    ctx.fill();
+    ctx.setLineDash([6, 4]);
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.42)';
+    ctx.lineWidth = 1.4;
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = '#7dd3fc';
+    ctx.font = '700 11.5px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.backplaneTitle, 938, 684, 684);
+  }
+
+  function drawSoCNode(isHover) {
+    const tr = t();
+    const s = getNode('soc');
+    roundRect(s.x, s.y, s.w, s.h, 14);
+    ctx.fillStyle = COLORS.socBg;
+    ctx.fill();
+    ctx.lineWidth = isHover ? 2.2 : 1.7;
+    ctx.strokeStyle = isHover ? COLORS.nodeHover : 'rgba(59, 130, 246, 0.65)';
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(59, 130, 246, 0.16)';
+    roundRect(s.x + 1, s.y + 1, s.w - 2, 30, 12);
+    ctx.fill();
+
+    ctx.fillStyle = '#93c5fd';
+    ctx.font = '700 13px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.socBanner, s.x + 16, s.y + 21, s.w - 32);
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11.5px ui-monospace, Menlo, "PingFang SC", sans-serif';
+    ctx.fillText(tr.socSummary, s.x + 16, s.y + 52, s.w - 32);
+
+    ctx.save();
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.25)';
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(1168, s.y + 66);
+    ctx.lineTo(1168, s.y + s.h - 4);
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = '#60a5fa';
+    ctx.font = '600 10.5px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.socExtLabel, s.x + 16, s.y + 74, 1100);
+    ctx.fillStyle = '#34d399';
+    ctx.fillText(tr.socIntLabel, 1185, s.y + 74, 435);
+
+    ctx.textAlign = 'center';
+    for (const key in socPins) {
+      const p = socPins[key];
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = '600 10.5px ui-monospace, Menlo, "PingFang SC", sans-serif';
+      ctx.fillText(tr.pins[key], p.x, p.y - 10, 165);
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 4.5, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = '#0b111e';
+      ctx.stroke();
+    }
+    ctx.textAlign = 'left';
+  }
+
+  function drawSpeedPill(cx, cy, bw, spec, color, compact = false, customW = null) {
+    const w = customW || (compact ? 96 : 144);
+    const h = compact ? 28 : 34;
+    roundRect(cx - w / 2, cy - h / 2, w, h, 5);
+    ctx.fillStyle = '#0d1526';
+    ctx.fill();
+    ctx.lineWidth = 1.1;
+    ctx.strokeStyle = color;
+    ctx.stroke();
+
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = compact ? '700 10px ui-monospace, Menlo, sans-serif' : '700 11px ui-monospace, Menlo, sans-serif';
+    ctx.fillText(bw, cx, cy - 1.5, w - 8);
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = compact ? '9.5px "Segoe UI", "PingFang SC", sans-serif' : '10px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(spec, cx, cy + 10.5, w - 8);
+    ctx.textAlign = 'left';
+  }
+
+  function drawLinks(activeSet) {
+    const specs = t().linkSpecs;
+    for (const l of links) {
+      const sp = specs[l.specKey];
+      const isActive = !activeSet || (activeSet.has(l.from) && activeSet.has(l.to));
+      ctx.save();
+      ctx.globalAlpha = isActive ? 1 : 0.16;
+      ctx.strokeStyle = l.color;
+      ctx.lineWidth = (isActive && activeSet) ? l.width + 1.2 : l.width;
+      if (l.dashed) ctx.setLineDash([6, 4]);
+
+      const dst = getNode(l.to);
+
+      if (l.pin) {
+        const p = socPins[l.pin];
+        const x2 = dst.x + dst.w / 2;
+        const y2 = dst.y;
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y + 4);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        drawArrow(x2, y2, 'down', l.color);
+        drawSpeedPill((p.x + x2) / 2, (p.y + y2) / 2, sp.bw, sp.spec, l.color);
+      } else if (l.mode === 'sata_drop') {
+        const src = getNode(l.from);
+        const x1 = l.srcX;
+        const y1 = src.y + src.h;
+        const x2 = dst.x + dst.w / 2;
+        const y2 = dst.y;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        if (Math.abs(x1 - x2) > 1) {
+          ctx.lineTo(x1, l.midY); ctx.lineTo(x2, l.midY);
+        }
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        drawArrow(x2, y2, 'down', l.color);
+        drawSpeedPill(x2, l.pillY, sp.bw, sp.spec, l.color, true, 96);
+      }
+
+      ctx.restore();
+    }
+  }
+
+  function drawNodes(activeSet) {
+    const trNodes = t().nodes;
+    drawSoCNode(hoveredNode && hoveredNode.id === 'soc');
+
+    for (const n of nodes) {
+      if (n.type === 'soc') continue;
+      const nt = trNodes[n.id];
+      const isHover = hoveredNode && hoveredNode.id === n.id;
+      const isActive = !activeSet || activeSet.has(n.id);
+      const innerMaxW = n.w - 20;
+
+      ctx.save();
+      ctx.globalAlpha = isActive ? 1 : 0.25;
+
+      roundRect(n.x, n.y, n.w, n.h, 8);
+      ctx.fillStyle = n.type === 'hdd' ? '#111b2e' : COLORS.nodeBg;
+      ctx.fill();
+
+      ctx.lineWidth = isHover ? 2.2 : 1.3;
+      ctx.strokeStyle = isHover ? COLORS.nodeHover : (n.color || COLORS.nodeBorder);
+      ctx.stroke();
+
+      ctx.fillStyle = n.color;
+      roundRect(n.x + 1, n.y + 1, n.w - 2, 4, 2);
+      ctx.fill();
+
+      if (n.type === 'chip') {
+        ctx.fillStyle = n.color;
+        ctx.font = '700 10.5px ui-monospace, Menlo, sans-serif';
+        ctx.fillText(nt.bdf, n.x + 10, n.y + 20, innerMaxW);
+
+        ctx.fillStyle = COLORS.textMain;
+        ctx.font = '700 13px "Segoe UI", "PingFang SC", sans-serif';
+        ctx.fillText(nt.title, n.x + 10, n.y + 39, innerMaxW);
+
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '10.8px "Segoe UI", "PingFang SC", sans-serif';
+        nt.lines.forEach((line, idx) => {
+          ctx.fillText(line, n.x + 10, n.y + 58 + idx * 16, innerMaxW);
+        });
+
+        if (nt.badge) {
+          const by = n.y + n.h - 26;
+          roundRect(n.x + 8, by, n.w - 16, 19, 4);
+          if (n.badgeLevel === 'crit') {
+            ctx.fillStyle = COLORS.critBg;
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(248, 113, 113, 0.45)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.fillStyle = COLORS.critText;
+          } else if (n.badgeLevel === 'warn') {
+            ctx.fillStyle = COLORS.warnBg;
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(251, 191, 36, 0.4)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.fillStyle = COLORS.warnText;
+          } else {
+            ctx.fillStyle = COLORS.okBg;
+            ctx.fill();
+            ctx.fillStyle = COLORS.okText;
+          }
+          ctx.font = '700 10px "Segoe UI", "PingFang SC", sans-serif';
+          ctx.fillText(nt.badge, n.x + 13, by + 13, n.w - 26);
+        }
+      } else if (n.type === 'hdd') {
+        ctx.fillStyle = n.color;
+        ctx.font = '700 10px "Segoe UI", "PingFang SC", sans-serif';
+        ctx.fillText(nt.bay, n.x + 10, n.y + 21, innerMaxW);
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '700 13.5px "Segoe UI", sans-serif';
+        ctx.fillText(nt.title, n.x + 10, n.y + 41, innerMaxW);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '10.5px "Segoe UI", "PingFang SC", sans-serif';
+        nt.lines.forEach((line, idx) => {
+          ctx.fillText(line, n.x + 10, n.y + 60 + idx * 16, innerMaxW);
+        });
+      }
+
+      ctx.restore();
+    }
+  }
+
+  function drawInfoPanels() {
+    const tr = t();
+
+    // Panel 1: Provenance & Architecture Highlights (Left Middle)
+    roundRect(40, 540, 845, 156, 10);
+    ctx.fillStyle = '#101829';
+    ctx.fill();
+    ctx.strokeStyle = '#24324d';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#38bdf8';
+    ctx.font = '700 12.5px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.panel1Title, 56, 566, 812);
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11.2px "Segoe UI", "PingFang SC", sans-serif';
+    tr.panel1Lines.forEach((txt, i) => {
+      ctx.fillText(txt, 56, 594 + i * 24, 812);
+    });
+
+    // Panel 2: Link Legend & Key Bottlenecks (Bottom Left)
+    roundRect(40, 720, 560, 272, 12);
+    ctx.fillStyle = '#101829';
+    ctx.fill();
+    ctx.strokeStyle = '#24324d';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = '700 13px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.panel2Title, 56, 746, 528);
+
+    const legendMeta = [
+      { color: COLORS.pcie2x2,  x: 56,  y: 774, maxW: 215 },
+      { color: COLORS.pcie2x1,  x: 316, y: 774, maxW: 235 },
+      { color: COLORS.pcie1x1,  x: 56,  y: 798, maxW: 215 },
+      { color: COLORS.sata,     x: 316, y: 798, maxW: 235 },
+      { color: COLORS.internal, x: 56,  y: 822, maxW: 260, dashed: true }
+    ];
+
+    ctx.font = '600 11px "Segoe UI", "PingFang SC", sans-serif';
+    legendMeta.forEach((it, idx) => {
+      ctx.save();
+      ctx.strokeStyle = it.color;
+      ctx.lineWidth = 3.2;
+      if (it.dashed) ctx.setLineDash([5, 3]);
+      ctx.beginPath();
+      ctx.moveTo(it.x, it.y - 4);
+      ctx.lineTo(it.x + 24, it.y - 4);
+      ctx.stroke();
+      ctx.restore();
+      ctx.fillStyle = '#e2e8f0';
+      ctx.fillText(tr.legend[idx], it.x + 32, it.y, it.maxW);
+    });
+
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.16)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(56, 838);
+    ctx.lineTo(584, 838);
+    ctx.stroke();
+
+    const noteColors = [COLORS.critText, COLORS.warnText, COLORS.warnText];
+    let ny = 860;
+    tr.notes.forEach((nt, idx) => {
+      ctx.fillStyle = noteColors[idx];
+      ctx.font = '700 11.2px "Segoe UI", "PingFang SC", sans-serif';
+      ctx.fillText(nt.title, 56, ny, 528);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '10.8px "Segoe UI", "PingFang SC", sans-serif';
+      ctx.fillText(nt.text, 56, ny + 17, 528);
+      ny += 45;
+    });
+
+    // Panel 3: Comparison Table — DS423+ vs DS920+ vs DS923+ (Bottom Right)
+    const tx = 624;
+    const ty = 720;
+    const tw = 1016;
+    const th = 272;
+
+    roundRect(tx, ty, tw, th, 12);
+    ctx.fillStyle = '#101829';
+    ctx.fill();
+    ctx.strokeStyle = '#24324d';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = '700 13px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.cmpTitle, tx + 16, ty + 26, tw - 32);
+
+    const colX = [tx + 16, tx + 132, tx + 428, tx + 724];
+    const colW = [108, 286, 286, 276];
+    const headerY = ty + 40;
+    const rowH = 29;
+
+    // Header bar
+    roundRect(tx + 12, headerY, tw - 24, 24, 5);
+    ctx.fillStyle = 'rgba(56, 189, 248, 0.10)';
+    ctx.fill();
+
+    // Highlight column for DS423+
+    ctx.fillStyle = 'rgba(56, 189, 248, 0.055)';
+    ctx.fillRect(colX[1] - 6, headerY, colW[1] + 10, 24 + tr.cmpRows.length * rowH);
+
+    ctx.font = '700 11px "Segoe UI", "PingFang SC", sans-serif';
+    tr.cmpHeaders.forEach((h, ci) => {
+      ctx.fillStyle = ci === 1 ? '#38bdf8' : '#cbd5e1';
+      ctx.fillText(h, colX[ci], headerY + 16, colW[ci]);
+    });
+
+    tr.cmpRows.forEach((row, ri) => {
+      const ry = headerY + 24 + ri * rowH;
+      if (ri % 2 === 1) {
+        ctx.fillStyle = 'rgba(148, 163, 184, 0.035)';
+        ctx.fillRect(tx + 12, ry, tw - 24, rowH);
+      }
+      ctx.strokeStyle = 'rgba(148, 163, 184, 0.10)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(tx + 12, ry);
+      ctx.lineTo(tx + tw - 12, ry);
+      ctx.stroke();
+
+      row.forEach((cell, ci) => {
+        if (ci === 0) {
+          ctx.fillStyle = '#94a3b8';
+          ctx.font = '700 10.8px "Segoe UI", "PingFang SC", sans-serif';
+        } else if (ci === 1) {
+          ctx.fillStyle = '#f8fafc';
+          ctx.font = '600 10.8px "Segoe UI", "PingFang SC", sans-serif';
+        } else {
+          ctx.fillStyle = '#cbd5e1';
+          ctx.font = '10.8px "Segoe UI", "PingFang SC", sans-serif';
+        }
+        ctx.fillText(cell, colX[ci], ry + 19, colW[ci]);
+      });
+    });
+  }
+
+  function syncToolbarUI() {
+    const tr = t();
+    document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
+    document.title = tr.pageTitle;
+    navHome.textContent = tr.navHome;
+    uiTitle.textContent = tr.toolbarTitle;
+    uiSubtitle.textContent = tr.toolbarSub;
+    btnExport.textContent = tr.exportBtn;
+    uiFooter.innerHTML = '<a href="https://github.com/Einsfier/synology-hardware-topology" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;color:#94a3b8;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;"><svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>Einsfier/synology-hardware-topology</a>';
+    footerHome.textContent = tr.footerHome;
+    btnZh.classList.toggle('active', currentLang === 'zh');
+    btnEn.classList.toggle('active', currentLang === 'en');
+  }
+
+  function render() {
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = LOGICAL_W * dpr;
+    canvas.height = LOGICAL_H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    drawGrid();
+    drawHeader();
+    drawEnclosures();
+    drawInfoPanels();
+
+    const activeNode = pinnedNode || hoveredNode;
+    const activeSet = activeNode ? getRelatedIds(activeNode.id) : null;
+    drawLinks(activeSet);
+    drawNodes(activeSet);
+
+    ctx.fillStyle = '#64748b';
+    ctx.font = '11px ui-monospace, Menlo, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText('github.com/Einsfier/synology-hardware-topology', LOGICAL_W - 40, LOGICAL_H - 13);
+    ctx.textAlign = 'left';
+  }
+
+  function setLang(lang) {
+    if (lang !== 'zh' && lang !== 'en') return;
+    currentLang = lang;
+    try { localStorage.setItem('syno_topo_lang', lang); } catch (_) {}
+    pinnedNode = null;
+    hoveredNode = null;
+    tooltip.style.display = 'none';
+    syncToolbarUI();
+    render();
+  }
+
+  function hitTest(mx, my) {
+    for (let i = nodes.length - 1; i >= 0; i--) {
+      const n = nodes[i];
+      if (mx >= n.x && mx <= n.x + n.w && my >= n.y && my <= n.y + n.h) return n;
+    }
+    return null;
+  }
+
+  function updateTooltip(node, clientX, clientY) {
+    if (!node) {
+      tooltip.style.display = 'none';
+      return;
+    }
+    const tr = t();
+    const nt = tr.nodes[node.id];
+    if (!nt || !nt.meta) {
+      tooltip.style.display = 'none';
+      return;
+    }
+    const m = nt.meta;
+    const k = tr.ttKeys;
+    let html = `<div class="tt-title">${nt.title}</div>`;
+    if (m.bdf) html += `<div class="tt-bdf">${m.bdf}</div>`;
+    if (m.cap) html += `<div class="tt-row"><span class="tt-key">${k.cap}</span><span class="tt-val">${m.cap}</span></div>`;
+    if (m.sta) html += `<div class="tt-row"><span class="tt-key">${k.sta}</span><span class="tt-val">${m.sta}</span></div>`;
+    if (m.driver) html += `<div class="tt-row"><span class="tt-key">${k.driver}</span><span class="tt-val">${m.driver}</span></div>`;
+    if (m.detail) html += `<div style="margin-top:6px;color:#cbd5e1;font-size:11.5px;">${m.detail}</div>`;
+    if (m.warn) html += `<div class="tt-warn">⚠ ${m.warn}</div>`;
+    if (m.crit) html += `<div class="tt-crit">⛔ ${m.crit}</div>`;
+
+    tooltip.innerHTML = html;
+    tooltip.style.display = 'block';
+
+    const rect = wrap.getBoundingClientRect();
+    const ttW = tooltip.offsetWidth || 340;
+    const ttH = tooltip.offsetHeight || 180;
+    let left = clientX - rect.left + 16;
+    let top = clientY - rect.top + 16;
+    if (left + ttW + 10 > rect.width) left = clientX - rect.left - ttW - 16;
+    if (top + ttH + 10 > rect.height) top = clientY - rect.top - ttH - 16;
+    left = Math.max(8, Math.min(left, Math.max(8, rect.width - ttW - 8)));
+    top = Math.max(8, Math.min(top, Math.max(8, rect.height - ttH - 8)));
+    tooltip.style.left = left + 'px';
+    tooltip.style.top = top + 'px';
+  }
+
+  function getLogicalCoords(e) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+      mx: (e.clientX - rect.left) * (LOGICAL_W / rect.width),
+      my: (e.clientY - rect.top) * (LOGICAL_H / rect.height)
+    };
+  }
+
+  canvas.addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse' || pinnedNode) return;
+    const { mx, my } = getLogicalCoords(e);
+    const hit = hitTest(mx, my);
+    canvas.style.cursor = hit ? 'pointer' : 'default';
+    if (hit !== hoveredNode) {
+      hoveredNode = hit;
+      render();
+    }
+    updateTooltip(hit, e.clientX, e.clientY);
+  });
+
+  canvas.addEventListener('pointerdown', (e) => {
+    const { mx, my } = getLogicalCoords(e);
+    const hit = hitTest(mx, my);
+    if (!hit) {
+      if (pinnedNode || hoveredNode) {
+        pinnedNode = null;
+        hoveredNode = null;
+        tooltip.style.display = 'none';
+        render();
+      }
+      return;
+    }
+    if (pinnedNode && pinnedNode.id === hit.id) {
+      pinnedNode = null;
+      if (e.pointerType !== 'mouse') {
+        hoveredNode = null;
+        tooltip.style.display = 'none';
+      }
+    } else {
+      pinnedNode = hit;
+      hoveredNode = hit;
+      updateTooltip(hit, e.clientX, e.clientY);
+    }
+    render();
+  });
+
+  canvas.addEventListener('pointerleave', (e) => {
+    if (e.pointerType !== 'mouse' || pinnedNode) return;
+    hoveredNode = null;
+    tooltip.style.display = 'none';
+    render();
+  });
+
+  document.addEventListener('pointerdown', (e) => {
+    if (pinnedNode && !wrap.contains(e.target)) {
+      pinnedNode = null;
+      hoveredNode = null;
+      tooltip.style.display = 'none';
+      render();
+    }
+  });
+
+  btnZh.addEventListener('click', () => setLang('zh'));
+  btnEn.addEventListener('click', () => setLang('en'));
+
+  btnExport.addEventListener('click', () => {
+    pinnedNode = null;
+    hoveredNode = null;
+    tooltip.style.display = 'none';
+    render();
+    const link = document.createElement('a');
+    link.download = t().exportName;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
+
+  window.addEventListener('resize', render);
+  syncToolbarUI();
+  render();
+})();
+</script>
+</body>
+</html>
