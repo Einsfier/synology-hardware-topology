@@ -289,6 +289,15 @@
     text-decoration: none;
     font-weight: 700;
     font-size: 14px;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+  .model-date {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11px;
+    color: #64748b;
+    line-height: 1.3;
+    white-space: nowrap;
   }
   tbody tr.model-row:hover .model-link {
     color: var(--accent);
@@ -489,120 +498,9 @@
 
   const MODELS = [
     {
-      id: 'ds220plus',
-      name: 'DS220+',
-      line: 'ds-plus',
-      href: './models/ds220plus.html',
-      status: 'inferred',
-      searchText: 'synology ds220+ ds220plus j4025 celeron gemini lake geminilake x86_64 uhd600 quicksync rtl8111h 1gbe 2-bay native sata',
-      soc: ['Intel J4025', 'x86_64 · 2C/2T'],
-      pcie: { zh: ['6× PCIe 2.0', '2/6 已分配'], en: ['6× PCIe 2.0', '2/6 Allocated'] },
-      bays: { zh: ['2 内置'], en: ['2 Internal'] },
-      nvme: '—',
-      nic: { zh: ['2× 1GbE'], en: ['2× 1GbE'] },
-      exp: { zh: ['—'], en: ['—'] }
-    },
-    {
-      id: 'ds224plus',
-      name: 'DS224+',
-      line: 'ds-plus',
-      href: './models/ds224plus.html',
-      status: 'inferred',
-      searchText: 'synology ds224+ ds224plus j4125 celeron gemini lake geminilake x86_64 uhd600 quicksync rtl8111h 1gbe 2-bay native sata ds220+',
-      soc: ['Intel J4125', 'x86_64 · 4C/4T'],
-      pcie: { zh: ['6× PCIe 2.0', '2/6 已分配'], en: ['6× PCIe 2.0', '2/6 Allocated'] },
-      bays: { zh: ['2 内置'], en: ['2 Internal'] },
-      nvme: '—',
-      nic: { zh: ['2× 1GbE'], en: ['2× 1GbE'] },
-      exp: { zh: ['—'], en: ['—'] }
-    },
-    {
-      id: 'ds423plus',
-      name: 'DS423+',
-      line: 'ds-plus',
-      href: './models/ds423plus.html',
-      status: 'inferred',
-      searchText: 'synology ds423+ ds423plus j4125 celeron geminilake gemini lake x86_64 uhd600 quicksync rtl8111h nvme 4-bay',
-      soc: ['Intel J4125', 'x86_64 · 4C/4T'],
-      pcie: { zh: ['6× PCIe 2.0', '6/6 已分配'], en: ['6× PCIe 2.0', '6/6 Allocated'] },
-      bays: { zh: ['4 内置'], en: ['4 Internal'] },
-      nvme: '2× PCIe 2.0 x1',
-      nic: { zh: ['2× 1GbE'], en: ['2× 1GbE'] },
-      exp: { zh: ['—'], en: ['—'] }
-    },
-    {
-      id: 'ds723plus',
-      name: 'DS723+',
-      line: 'ds-plus',
-      href: './models/ds723plus.html',
-      status: 'inferred',
-      searchText: 'synology ds723+ ds723plus r1600 raven2 x86_64 jmb582 aqc107 10gbe e10g22-t1-mini dx517 esata asm1182e rtl8111 nvme 7-bay',
-      soc: ['AMD R1600', 'x86_64 · 2C/4T'],
-      pcie: { zh: ['8× PCIe 3.0', '8/8 已分配 (x4 Mini 10G)'], en: ['8× PCIe 3.0', '8/8 Allocated (x4 Mini 10G)'] },
-      bays: { zh: ['2 内置', '5 扩展'], en: ['2 Internal', '5 Expansion'] },
-      nvme: '2× PCIe 3.0 x1',
-      nic: { zh: ['2× 1GbE', '10GbE 扩展槽'], en: ['2× 1GbE', '10GbE Slot'] },
-      exp: { zh: ['eSATA 6Gbps', 'DX517'], en: ['eSATA 6Gbps', 'DX517'] }
-    },
-    {
-      id: 'ds918plus',
-      name: 'DS918+',
-      line: 'ds-plus',
-      href: './models/ds918plus.html',
-      status: 'inferred',
-      searchText: 'synology ds918+ ds918plus j3455 celeron apollo lake apollolake x86_64 hd500 quicksync 88se9215 marvell i211 wgi211at dx517 esata nvme ddr3l',
-      soc: ['Intel J3455', 'x86_64 · 4C/4T'],
-      pcie: { zh: ['6× PCIe 2.0', '5/6 已分配'], en: ['6× PCIe 2.0', '5/6 Allocated'] },
-      bays: { zh: ['4 内置', '5 扩展'], en: ['4 Internal', '5 Expansion'] },
-      nvme: '2× PCIe 2.0 x1',
-      nic: { zh: ['2× 1GbE'], en: ['2× 1GbE'] },
-      exp: { zh: ['eSATA 6Gbps', 'DX517'], en: ['eSATA 6Gbps', 'DX517'] }
-    },
-    {
-      id: 'ds920plus',
-      name: 'DS920+',
-      line: 'ds-plus',
-      href: './models/ds920plus.html',
-      status: 'inferred',
-      searchText: 'synology ds920+ ds920plus j4125 celeron gemini lake x86_64 uhd600 quicksync 88se9235 marvell rtl8111h dx517 esata nvme',
-      soc: ['Intel J4125', 'x86_64 · 4C/4T'],
-      pcie: { zh: ['6× PCIe 2.0', '6/6 已分配'], en: ['6× PCIe 2.0', '6/6 Allocated'] },
-      bays: { zh: ['4 内置', '5 扩展'], en: ['4 Internal', '5 Expansion'] },
-      nvme: '2× PCIe 2.0 x1',
-      nic: { zh: ['2× 1GbE'], en: ['2× 1GbE'] },
-      exp: { zh: ['eSATA 6Gbps', 'DX517'], en: ['eSATA 6Gbps', 'DX517'] }
-    },
-    {
-      id: 'ds923plus',
-      name: 'DS923+',
-      line: 'ds-plus',
-      href: './models/ds923plus.html',
-      status: 'verified',
-      searchText: 'synology ds923+ ds923plus r1600 raven2 x86_64 jmb585 aqc107 10gbe e10g22-t1-mini dx517 esata asm1182e rtl8111',
-      soc: ['AMD R1600', 'x86_64 · 2C/4T'],
-      pcie: { zh: ['8× PCIe 3.0', '8/8 已分配 (x4 Mini 10G)'], en: ['8× PCIe 3.0', '8/8 Allocated (x4 Mini 10G)'] },
-      bays: { zh: ['4 内置', '5 扩展'], en: ['4 Internal', '5 Expansion'] },
-      nvme: '2× PCIe 3.0 x1',
-      nic: { zh: ['2× 1GbE', '10GbE 扩展槽'], en: ['2× 1GbE', '10GbE Slot'] },
-      exp: { zh: ['eSATA 6Gbps', 'DX517'], en: ['eSATA 6Gbps', 'DX517'] }
-    },
-    {
-      id: 'ds925plus',
-      name: 'DS925+',
-      line: 'ds-plus',
-      href: './models/ds925plus.html',
-      status: 'inferred',
-      searchText: 'synology ds925+ ds925plus v1500b v1000nk x86_64 rdj42l2 rtl8125d 2.5gbe dx525 usb-c nvme x4',
-      soc: ['AMD V1500B', 'x86_64 · 4C/8T'],
-      pcie: { zh: ['16× PCIe 3.0', '12/16 已分配'], en: ['16× PCIe 3.0', '12/16 Allocated'] },
-      bays: { zh: ['4 内置', '5 扩展'], en: ['4 Internal', '5 Expansion'] },
-      nvme: '2× PCIe 3.0 x4',
-      nic: { zh: ['2× 2.5GbE'], en: ['2× 2.5GbE'] },
-      exp: { zh: ['USB-C (专用)', 'DX525'], en: ['USB-C (Proprietary)', 'DX525'] }
-    },
-    {
       id: 'ds1525plus',
       name: 'DS1525+',
+      released: '2025-06',
       line: 'ds-plus',
       href: './models/ds1525plus.html',
       status: 'inferred',
@@ -615,22 +513,69 @@
       exp: { zh: ['2× USB-C (专用)', 'DX525'], en: ['2× USB-C (Proprietary)', 'DX525'] }
     },
     {
-      id: 'ds1821plus',
-      name: 'DS1821+',
+      id: 'ds925plus',
+      name: 'DS925+',
+      released: '2025-04',
       line: 'ds-plus',
-      href: './models/ds1821plus.html',
+      href: './models/ds925plus.html',
       status: 'inferred',
-      searchText: 'synology ds1821+ ds1821plus v1500b v1000 x86_64 pcie x8 x4 jmb585 asm1806 rtl8111h dx517 esata nvme 18-bay',
+      searchText: 'synology ds925+ ds925plus v1500b v1000nk x86_64 rdj42l2 rtl8125d 2.5gbe dx525 usb-c nvme x4',
       soc: ['AMD V1500B', 'x86_64 · 4C/8T'],
-      pcie: { zh: ['16× PCIe 3.0', '14/16 已分配 (x4 通用槽)'], en: ['16× PCIe 3.0', '14/16 Allocated (x4 Open Slot)'] },
-      bays: { zh: ['8 内置', '10 扩展'], en: ['8 Internal', '10 Expansion'] },
-      nvme: '2× PCIe 3.0 x2',
-      nic: { zh: ['4× 1GbE'], en: ['4× 1GbE'] },
-      exp: { zh: ['2× eSATA 6Gbps', 'DX517'], en: ['2× eSATA 6Gbps', 'DX517'] }
+      pcie: { zh: ['16× PCIe 3.0', '12/16 已分配'], en: ['16× PCIe 3.0', '12/16 Allocated'] },
+      bays: { zh: ['4 内置', '5 扩展'], en: ['4 Internal', '5 Expansion'] },
+      nvme: '2× PCIe 3.0 x4',
+      nic: { zh: ['2× 2.5GbE'], en: ['2× 2.5GbE'] },
+      exp: { zh: ['USB-C (专用)', 'DX525'], en: ['USB-C (Proprietary)', 'DX525'] }
+    },
+    {
+      id: 'ds224plus',
+      name: 'DS224+',
+      released: '2023-07',
+      line: 'ds-plus',
+      href: './models/ds224plus.html',
+      status: 'inferred',
+      searchText: 'synology ds224+ ds224plus j4125 celeron gemini lake geminilake x86_64 uhd600 quicksync rtl8111h 1gbe 2-bay native sata ds220+',
+      soc: ['Intel J4125', 'x86_64 · 4C/4T'],
+      pcie: { zh: ['6× PCIe 2.0', '2/6 已分配'], en: ['6× PCIe 2.0', '2/6 Allocated'] },
+      bays: { zh: ['2 内置'], en: ['2 Internal'] },
+      nvme: '—',
+      nic: { zh: ['2× 1GbE'], en: ['2× 1GbE'] },
+      exp: { zh: ['—'], en: ['—'] }
+    },
+    {
+      id: 'ds223j',
+      name: 'DS223j',
+      released: '2023-06',
+      line: 'ds-j',
+      href: './models/ds223j.html',
+      status: 'inferred',
+      searchText: 'synology ds223j realtek rtd1619b arm64 cortex-a55 1gb ddr4 1gbe rtl8211f btrfs j-series 2-bay',
+      soc: ['Realtek RTD1619B', 'ARM64 · 4C/4T'],
+      pcie: { zh: ['片内直连 (ARM)', '无外置 PCIe 槽'], en: ['On-Die Bus (ARM)', 'No External PCIe'] },
+      bays: { zh: ['2 内置'], en: ['2 Internal'] },
+      nvme: '—',
+      nic: { zh: ['1× 1GbE'], en: ['1× 1GbE'] },
+      exp: { zh: ['—'], en: ['—'] }
+    },
+    {
+      id: 'ds423plus',
+      name: 'DS423+',
+      released: '2023-03',
+      line: 'ds-plus',
+      href: './models/ds423plus.html',
+      status: 'inferred',
+      searchText: 'synology ds423+ ds423plus j4125 celeron geminilake gemini lake x86_64 uhd600 quicksync rtl8111h nvme 4-bay',
+      soc: ['Intel J4125', 'x86_64 · 4C/4T'],
+      pcie: { zh: ['6× PCIe 2.0', '6/6 已分配'], en: ['6× PCIe 2.0', '6/6 Allocated'] },
+      bays: { zh: ['4 内置'], en: ['4 Internal'] },
+      nvme: '2× PCIe 2.0 x1',
+      nic: { zh: ['2× 1GbE'], en: ['2× 1GbE'] },
+      exp: { zh: ['—'], en: ['—'] }
     },
     {
       id: 'ds423',
       name: 'DS423',
+      released: '2023-03',
       line: 'ds-value',
       href: './models/ds423.html',
       status: 'inferred',
@@ -643,18 +588,94 @@
       exp: { zh: ['—'], en: ['—'] }
     },
     {
-      id: 'ds223j',
-      name: 'DS223j',
-      line: 'ds-j',
-      href: './models/ds223j.html',
+      id: 'ds723plus',
+      name: 'DS723+',
+      released: '2023-01',
+      line: 'ds-plus',
+      href: './models/ds723plus.html',
       status: 'inferred',
-      searchText: 'synology ds223j realtek rtd1619b arm64 cortex-a55 1gb ddr4 1gbe rtl8211f btrfs j-series 2-bay',
-      soc: ['Realtek RTD1619B', 'ARM64 · 4C/4T'],
-      pcie: { zh: ['片内直连 (ARM)', '无外置 PCIe 槽'], en: ['On-Die Bus (ARM)', 'No External PCIe'] },
+      searchText: 'synology ds723+ ds723plus r1600 raven2 x86_64 jmb582 aqc107 10gbe e10g22-t1-mini dx517 esata asm1182e rtl8111 nvme 7-bay',
+      soc: ['AMD R1600', 'x86_64 · 2C/4T'],
+      pcie: { zh: ['8× PCIe 3.0', '8/8 已分配 (x4 Mini 10G)'], en: ['8× PCIe 3.0', '8/8 Allocated (x4 Mini 10G)'] },
+      bays: { zh: ['2 内置', '5 扩展'], en: ['2 Internal', '5 Expansion'] },
+      nvme: '2× PCIe 3.0 x1',
+      nic: { zh: ['2× 1GbE', '10GbE 扩展槽'], en: ['2× 1GbE', '10GbE Slot'] },
+      exp: { zh: ['eSATA 6Gbps', 'DX517'], en: ['eSATA 6Gbps', 'DX517'] }
+    },
+    {
+      id: 'ds923plus',
+      name: 'DS923+',
+      released: '2022-11',
+      line: 'ds-plus',
+      href: './models/ds923plus.html',
+      status: 'verified',
+      searchText: 'synology ds923+ ds923plus r1600 raven2 x86_64 jmb585 aqc107 10gbe e10g22-t1-mini dx517 esata asm1182e rtl8111',
+      soc: ['AMD R1600', 'x86_64 · 2C/4T'],
+      pcie: { zh: ['8× PCIe 3.0', '8/8 已分配 (x4 Mini 10G)'], en: ['8× PCIe 3.0', '8/8 Allocated (x4 Mini 10G)'] },
+      bays: { zh: ['4 内置', '5 扩展'], en: ['4 Internal', '5 Expansion'] },
+      nvme: '2× PCIe 3.0 x1',
+      nic: { zh: ['2× 1GbE', '10GbE 扩展槽'], en: ['2× 1GbE', '10GbE Slot'] },
+      exp: { zh: ['eSATA 6Gbps', 'DX517'], en: ['eSATA 6Gbps', 'DX517'] }
+    },
+    {
+      id: 'ds1821plus',
+      name: 'DS1821+',
+      released: '2020-12',
+      line: 'ds-plus',
+      href: './models/ds1821plus.html',
+      status: 'inferred',
+      searchText: 'synology ds1821+ ds1821plus v1500b v1000 x86_64 pcie x8 x4 jmb585 asm1806 rtl8111h dx517 esata nvme 18-bay',
+      soc: ['AMD V1500B', 'x86_64 · 4C/8T'],
+      pcie: { zh: ['16× PCIe 3.0', '14/16 已分配 (x4 通用槽)'], en: ['16× PCIe 3.0', '14/16 Allocated (x4 Open Slot)'] },
+      bays: { zh: ['8 内置', '10 扩展'], en: ['8 Internal', '10 Expansion'] },
+      nvme: '2× PCIe 3.0 x2',
+      nic: { zh: ['4× 1GbE'], en: ['4× 1GbE'] },
+      exp: { zh: ['2× eSATA 6Gbps', 'DX517'], en: ['2× eSATA 6Gbps', 'DX517'] }
+    },
+    {
+      id: 'ds920plus',
+      name: 'DS920+',
+      released: '2020-06',
+      line: 'ds-plus',
+      href: './models/ds920plus.html',
+      status: 'inferred',
+      searchText: 'synology ds920+ ds920plus j4125 celeron gemini lake x86_64 uhd600 quicksync 88se9235 marvell rtl8111h dx517 esata nvme',
+      soc: ['Intel J4125', 'x86_64 · 4C/4T'],
+      pcie: { zh: ['6× PCIe 2.0', '6/6 已分配'], en: ['6× PCIe 2.0', '6/6 Allocated'] },
+      bays: { zh: ['4 内置', '5 扩展'], en: ['4 Internal', '5 Expansion'] },
+      nvme: '2× PCIe 2.0 x1',
+      nic: { zh: ['2× 1GbE'], en: ['2× 1GbE'] },
+      exp: { zh: ['eSATA 6Gbps', 'DX517'], en: ['eSATA 6Gbps', 'DX517'] }
+    },
+    {
+      id: 'ds220plus',
+      name: 'DS220+',
+      released: '2020-06',
+      line: 'ds-plus',
+      href: './models/ds220plus.html',
+      status: 'inferred',
+      searchText: 'synology ds220+ ds220plus j4025 celeron gemini lake geminilake x86_64 uhd600 quicksync rtl8111h 1gbe 2-bay native sata',
+      soc: ['Intel J4025', 'x86_64 · 2C/2T'],
+      pcie: { zh: ['6× PCIe 2.0', '2/6 已分配'], en: ['6× PCIe 2.0', '2/6 Allocated'] },
       bays: { zh: ['2 内置'], en: ['2 Internal'] },
       nvme: '—',
-      nic: { zh: ['1× 1GbE'], en: ['1× 1GbE'] },
+      nic: { zh: ['2× 1GbE'], en: ['2× 1GbE'] },
       exp: { zh: ['—'], en: ['—'] }
+    },
+    {
+      id: 'ds918plus',
+      name: 'DS918+',
+      released: '2017-09',
+      line: 'ds-plus',
+      href: './models/ds918plus.html',
+      status: 'inferred',
+      searchText: 'synology ds918+ ds918plus j3455 celeron apollo lake apollolake x86_64 hd500 quicksync 88se9215 marvell i211 wgi211at dx517 esata nvme ddr3l',
+      soc: ['Intel J3455', 'x86_64 · 4C/4T'],
+      pcie: { zh: ['6× PCIe 2.0', '5/6 已分配'], en: ['6× PCIe 2.0', '5/6 Allocated'] },
+      bays: { zh: ['4 内置', '5 扩展'], en: ['4 Internal', '5 Expansion'] },
+      nvme: '2× PCIe 2.0 x1',
+      nic: { zh: ['2× 1GbE'], en: ['2× 1GbE'] },
+      exp: { zh: ['eSATA 6Gbps', 'DX517'], en: ['eSATA 6Gbps', 'DX517'] }
     }
   ];
 
@@ -826,9 +847,9 @@
       if (activeFilter !== 'all' && m.status !== activeFilter) return false;
       if (activeLine !== 'all' && m.line !== activeLine) return false;
       if (!q) return true;
-      const hay = `${m.name} ${m.line} ${m.soc.join(' ')} ${m.pcie[currentLang].join(' ')} ${m.bays[currentLang].join(' ')} ${m.nvme} ${m.nic[currentLang].join(' ')} ${m.exp[currentLang].join(' ')} ${m.searchText}`.toLowerCase();
+      const hay = `${m.name} ${m.released || ''} ${m.line} ${m.soc.join(' ')} ${m.pcie[currentLang].join(' ')} ${m.bays[currentLang].join(' ')} ${m.nvme} ${m.nic[currentLang].join(' ')} ${m.exp[currentLang].join(' ')} ${m.searchText}`.toLowerCase();
       return hay.includes(q);
-    });
+    }).sort((a, b) => (b.released || '').localeCompare(a.released || '') || a.name.localeCompare(b.name));
 
     uiCount.textContent = tr.countFmt(filtered.length, MODELS.length);
     tableHead.innerHTML = tr.cols.map(c => `<th>${c}</th>`).join('');
@@ -841,9 +862,12 @@
     tableBody.innerHTML = filtered.map(m => {
       const badgeCls = m.status === 'verified' ? 'badge-verified' : 'badge-inferred';
       const badgeTxt = m.status === 'verified' ? tr.badgeVerified : tr.badgeInferred;
+      const modelCell = m.released
+        ? `<div class="cell-stack"><a class="model-link" href="${m.href}">${m.name}</a><div class="model-date">${m.released}</div></div>`
+        : `<a class="model-link" href="${m.href}">${m.name}</a>`;
       return `
         <tr class="model-row" data-href="${m.href}">
-          <td><a class="model-link" href="${m.href}">${m.name}</a></td>
+          <td>${modelCell}</td>
           <td>${renderLines(m.soc, true)}</td>
           <td>${renderLines(m.pcie[currentLang], true)}</td>
           <td>${renderLines(m.bays[currentLang])}</td>

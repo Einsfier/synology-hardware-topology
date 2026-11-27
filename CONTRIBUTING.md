@@ -65,6 +65,7 @@ lrwxrwxrwx 1 root root 0 ... /sys/block/sata3 -> ../devices/pci0000:00/0000:00:0
 {
   id: 'ds1525plus',
   name: 'DS1525+',                       // Omit "Synology" prefix
+  released: '2025-06',                   // Official release YYYY-MM (list auto-sorts descending)
   line: 'ds-plus',                       // pas | fs | hd | sa | uc | rs-xs | rs-plus | rs-value | ds-xs | ds-plus | ds-value | ds-j
   href: './models/ds1525plus.html',
   status: 'inferred',                    // 'verified' | 'inferred'
