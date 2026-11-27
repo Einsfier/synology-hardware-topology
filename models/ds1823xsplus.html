@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3QgeD0iMiIgeT0iMiIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiByeD0iMTQiIGZpbGw9IiMwYTBmMWEiIHN0cm9rZT0iIzI0MzI0ZCIgc3Ryb2tlLXdpZHRoPSIzIi8+PHJlY3QgeD0iMTgiIHk9IjEyIiB3aWR0aD0iMjgiIGhlaWdodD0iMTIiIHJ4PSIzIiBmaWxsPSIjMTMxZTMzIiBzdHJva2U9IiMzOGJkZjgiIHN0cm9rZS13aWR0aD0iMyIvPjxwYXRoIGQ9Ik0zMiAyNHYxME0xNiAzNGgzMk0xNiAzNHY4TTMyIDM0djhNNDggMzR2OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzhiZGY4IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjxyZWN0IHg9IjEwIiB5PSI0MiIgd2lkdGg9IjEyIiBoZWlnaHQ9IjEwIiByeD0iMi41IiBmaWxsPSIjNjBhNWZhIi8+PHJlY3QgeD0iMjYiIHk9IjQyIiB3aWR0aD0iMTIiIGhlaWdodD0iMTAiIHJ4PSIyLjUiIGZpbGw9IiMzOGJkZjgiLz48cmVjdCB4PSI0MiIgeT0iNDIiIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMCIgcng9IjIuNSIgZmlsbD0iIzM0ZDM5OSIvPjwvc3ZnPg==" />
+<title>Synology DS1823xs+ (AMD V1780B) Hardware & PCIe/SATA Topology | 群晖 DS1823xs+ 硬件拓扑图</title>
+<meta name="description" content="Interactive hardware topology diagram for Synology DS1823xs+ (AMD Ryzen Embedded V1780B): 16 PCIe 3.0 lanes, PCIe 3.0 x8 (x4 link) expansion slot, dual M.2 NVMe, onboard 10GbE RJ-45 + dual 1GbE + dedicated OOB management port, 8-bay SATA + dual DX517 18-bay expansion. 群晖 DS1823xs+ 硬件互联与 18 盘位 PCIe/SATA 拓扑图。" />
+<meta name="keywords" content="Synology DS1823xs+, AMD V1780B, v1000, PCIe topology, SATA topology, 10GbE, OOB management, PCIe x8 x4 slot, M.2 NVMe, DX517, eSATA, 18-bay, ECC DDR4, 群晖DS1823xs+, 群晖硬件拓扑, 18盘位扩展, 带外管理" />
+<meta name="robots" content="index, follow" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Synology DS1823xs+ Hardware & 18-Bay PCIe/SATA Topology | 群晖 DS1823xs+ 硬件拓扑图" />
+<meta property="og:description" content="Interactive PCIe, SATA, 10GbE, OOB management, and dual DX517 topology diagram for Synology DS1823xs+. 群晖 DS1823xs+ 交互式硬件互联与 18 盘位拓扑图。" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Synology DS1823xs+ Hardware Topology | 群晖 DS1823xs+ 硬件拓扑图" />
+<meta name="twitter:description" content="Interactive 18-bay PCIe/SATA/10GbE/OOB topology diagram for Synology DS1823xs+ (AMD V1780B) | 群晖 DS1823xs+ 硬件拓扑图。" />
+<style>
+  :root {
+    --bg: #0a0f1a;
+    --panel: #111827;
+    --border: #24324d;
+    --text: #e6edf7;
+    --muted: #8fa3c4;
+    --accent: #38bdf8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", monospace;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+  }
+  .nav-bar {
+    width: 100%;
+    max-width: 1680px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+  .nav-left, .nav-models {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    text-decoration: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 11px;
+    font-weight: 600;
+    transition: all 0.15s ease;
+  }
+  .nav-link:hover {
+    color: #fff;
+    border-color: var(--accent);
+    background: #1b2840;
+  }
+  .nav-link.active {
+    color: #fff;
+    background: #1d4ed8;
+    border-color: #3b82f6;
+  }
+  .toolbar {
+    width: 100%;
+    max-width: 1680px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 18px;
+    margin-bottom: 12px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .title-group h1 {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: #f8fafc;
+  }
+  .title-group p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .lang-switch {
+    display: inline-flex;
+    background: #0d1526;
+    border: 1px solid #32476b;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .lang-switch button {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .lang-switch button.active {
+    background: #2563eb;
+    color: #ffffff;
+  }
+  .lang-switch button:not(.active):hover {
+    background: #1b2840;
+    color: #f8fafc;
+  }
+  button.action-btn {
+    background: #1b2840;
+    color: var(--text);
+    border: 1px solid #32476b;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  button.action-btn:hover {
+    background: #253859;
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .canvas-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 1680px;
+    background: #0b111e;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 54px rgba(0, 0, 0, 0.5);
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    cursor: default;
+    touch-action: manipulation;
+  }
+  #tooltip {
+    position: absolute;
+    pointer-events: none;
+    display: none;
+    max-width: min(380px, calc(100% - 20px));
+    background: rgba(11, 17, 30, 0.97);
+    border: 1px solid #38bdf8;
+    border-radius: 8px;
+    padding: 11px 13px;
+    font-size: 12px;
+    line-height: 1.55;
+    color: #e2e8f0;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+    z-index: 20;
+  }
+  #tooltip .tt-title {
+    font-weight: 700;
+    color: #38bdf8;
+    margin-bottom: 3px;
+    font-size: 13px;
+  }
+  #tooltip .tt-bdf {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    color: #94a3b8;
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+  #tooltip .tt-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid rgba(148, 163, 184, 0.14);
+    padding-top: 3px;
+    margin-top: 3px;
+  }
+  #tooltip .tt-key { color: #94a3b8; white-space: nowrap; }
+  #tooltip .tt-val { color: #f8fafc; font-weight: 600; text-align: right; }
+  #tooltip .tt-warn { color: #fbbf24; margin-top: 6px; font-size: 11.5px; }
+  #tooltip .tt-crit { color: #f87171; margin-top: 6px; font-size: 11.5px; font-weight: 600; }
+  .seo-footer {
+    width: 100%;
+    max-width: 1680px;
+    margin-top: 14px;
+    padding: 12px 18px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .seo-footer a { color: var(--accent); text-decoration: none; }
+  .seo-footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar" aria-label="Breadcrumb">
+  <div class="nav-left">
+    <a class="nav-link" id="navHome" href="../index.html">← All Models</a>
+  </div>
+  <div class="nav-models">
+    <span class="nav-link active" aria-current="page">Synology DS1823xs+</span>
+  </div>
+</nav>
+
+<div class="toolbar">
+  <div class="title-group">
+    <h1 id="uiTitle"></h1>
+    <p id="uiSubtitle"></p>
+  </div>
+  <div class="controls">
+    <div class="lang-switch" role="group" aria-label="Language Switcher">
+      <button id="btnZh" type="button">中文</button>
+      <button id="btnEn" type="button">EN</button>
+    </div>
+    <button id="btnExport" class="action-btn" type="button"></button>
+  </div>
+</div>
+
+<div class="canvas-wrap" id="wrap">
+  <canvas id="topoCanvas" role="img" aria-label="Synology DS1823xs+ Hardware and 18-Bay PCIe/SATA/10GbE/OOB Topology Diagram"></canvas>
+  <div id="tooltip" role="tooltip"></div>
+</div>
+
+<noscript>
+  <div class="seo-footer">JavaScript is required to render the interactive Synology DS1823xs+ (AMD Ryzen Embedded V1780B) 18-bay PCIe/SATA/10GbE/OOB topology diagram.</div>
+</noscript>
+
+<footer class="seo-footer">
+  <span id="uiFooter"></span>
+  <a id="footerHome" href="../index.html">Synology Hardware Topology</a>
+</footer>
+
+<script>
+(() => {
+  const LOGICAL_W = 1680;
+  const LOGICAL_H = 1025;
+
+  const canvas = document.getElementById('topoCanvas');
+  const ctx = canvas.getContext('2d');
+  const tooltip = document.getElementById('tooltip');
+  const wrap = document.getElementById('wrap');
+  const uiTitle = document.getElementById('uiTitle');
+  const uiSubtitle = document.getElementById('uiSubtitle');
+  const btnExport = document.getElementById('btnExport');
+  const btnZh = document.getElementById('btnZh');
+  const btnEn = document.getElementById('btnEn');
+  const navHome = document.getElementById('navHome');
+  const uiFooter = document.getElementById('uiFooter');
+  const footerHome = document.getElementById('footerHome');
+
+  const COLORS = {
+    bg: '#0b111e',
+    grid: 'rgba(148, 163, 184, 0.045)',
+    socBg: '#101a2e',
+    nodeBg: '#131e33',
+    nodeBorder: '#293b5c',
+    nodeHover: '#38bdf8',
+    pcie3x4: '#38bdf8',   // Sky (Standard PCIe 3.0 x8/x4 Open Slot)
+    pcie3x2: '#22d3ee',   // Cyan (M.2 Gen3 x2)
+    nic10g: '#f59e0b',    // Amber (Onboard 10GbE RJ-45 Gen3 x2*)
+    pcie3sata: '#60a5fa', // Blue (Dual Discrete SATA Controllers Gen3 x2*)
+    pcie1x1: '#a78bfa',   // Violet (Dual 1GbE RJ-45)
+    oob: '#2dd4bf',       // Teal (Independent OOB Management)
+    internal: '#34d399',  // Emerald (On-Die Bus / FCH SATA)
+    sata: '#38bdf8',      // Sky (SATA III)
+    esata: '#fb7185',     // Rose (eSATA / DX517)
+    warnBg: 'rgba(245, 158, 11, 0.16)',
+    warnText: '#fbbf24',
+    critBg: 'rgba(239, 68, 68, 0.18)',
+    critText: '#f87171',
+    okBg: 'rgba(52, 211, 153, 0.14)',
+    okText: '#34d399',
+    textMain: '#f1f5f9',
+    textSub: '#94a3b8'
+  };
+
+  function detectInitialLang() {
+    try {
+      const saved = localStorage.getItem('syno_topo_lang');
+      if (saved === 'zh' || saved === 'en') return saved;
+    } catch (_) {}
+    const navLang = (navigator.language || (navigator.languages && navigator.languages[0]) || 'en').toLowerCase();
+    return navLang.startsWith('zh') ? 'zh' : 'en';
+  }
+
+  let currentLang = detectInitialLang();
+  let hoveredNode = null;
+  let pinnedNode = null;
+
+  const I18N = {
+    zh: {
+      navHome: '← 全部机型',
+      footerHome: '返回 Synology Hardware Topology 首页',
+      pageTitle: 'Synology DS1823xs+ (AMD V1780B) 硬件架构与 18 盘位 PCIe/SATA 拓扑图',
+      toolbarTitle: 'Synology DS1823xs+ 硬件互联与 18 盘位拓扑图（8× 内置 SATA + 2× DX517 扩展 = 18 盘位）',
+      toolbarSub: '数据来源：拆解推算（官方规格确认 V1780B / 板载 10GbE / OOB / PCIe x8(x4) 槽；控制器型号与通道分配待实机 lspci / syno_slot_mapping / sysfs 核验）｜ 悬停或点击节点查看详情',
+      exportBtn: '导出高清 PNG',
+      exportName: 'synology-ds1823xsplus-18bay-topology-zh.png',
+      canvasTitle: 'SYNOLOGY DS1823xs+ 硬件架构与 18 盘位扩展拓扑图',
+      canvasSub: 'AMD Ryzen Embedded V1780B (4C/8T · 3.35–3.6GHz · 45W TDP · 16× PCIe 3.0) ｜ PCIe 3.0 x8 (x4 电气) 通用槽 + 板载 10GbE + 2× 1GbE + 独立 OOB + 双 M.2 + 双 DX517',
+      socBanner: 'AMD Ryzen Embedded V1780B SoC — v1000 平台（16× 外置 PCIe 3.0 通道 + 2× 片内虚拟总线）',
+      socSummary: '内存：2× DDR4 ECC SODIMM (标配8GB/最高32GB) ｜ 无核显 ｜ PCIe 预算：x4(通用槽) + x2×2*(M.2) + x2*(10GbE) + x2*(双千兆) + x2×2*(双SATA) = 16 / 16 Lanes*',
+      socExtLabel: '外置 PCIe 3.0 直出通道（16 通道满配：标准 PCIe 3.0 x8/x4 槽 + 双 M.2 + 板载 10GbE + 双 1GbE + 双独立 SATA）',
+      socIntLabel: '片内 Infinity Fabric 虚拟总线',
+      backplaneTitle: '内置 8 盘位硬盘背板（8× 3.5"/2.5" SATA III · 热插拔 · 推算盘位 1–4 走 SATA 控制器 #1，5–6 走控制器 #2，7–8 走 FCH 直连）',
+      dx1Title: '扩展柜 #1：Synology DX517（eSATA 6Gbps · 5 盘位）',
+      dx2Title: '扩展柜 #2：Synology DX517（eSATA 6Gbps · 5 盘位）',
+      expPort1: 'eSATA #1',
+      expPort2: 'eSATA #2',
+      pins: {
+        p_pcie:  'PCIe 3.0 x4 (通用槽)',
+        p_nvme1: 'PCIe 3.0 x2* (M.2 #1)',
+        p_nvme2: 'PCIe 3.0 x2* (M.2 #2)',
+        p_gbe:   'PCIe x2* (双千兆)',
+        p_10g:   'PCIe 3.0 x2* (10GbE)',
+        p_sata1: 'PCIe 3.0 x2* (SATA#1)',
+        p_sata2: 'PCIe 3.0 x2* (SATA#2)',
+        p_fch:   '片内 Bus B (FCH)',
+        p_busA:  '片内 Bus A (USB)'
+      },
+      linkSpecs: {
+        l_pcie:  { bw: '3.94 GB/s',  spec: 'PCIe 3.0 x4 · 8GT/s' },
+        l_nvme1: { bw: '1.97 GB/s*', spec: 'PCIe 3.0 x2 · 8GT/s' },
+        l_nvme2: { bw: '1.97 GB/s*', spec: 'PCIe 3.0 x2 · 8GT/s' },
+        l_gbe:   { bw: '1.00 GB/s*', spec: 'PCIe 2.0 x2 / 2×x1*' },
+        l_10g:   { bw: '1.97 GB/s*', spec: 'PCIe 3.0 x2 · 8GT/s' },
+        l_sata1: { bw: '1.97 GB/s*', spec: 'PCIe 3.0 x2 · 8GT/s' },
+        l_sata2: { bw: '1.97 GB/s*', spec: 'PCIe 3.0 x2 · 8GT/s' },
+        l_fch:   { bw: '15.75 GB/s', spec: '片内直连 · 3.0 x16' },
+        l_busA:  { bw: '15.75 GB/s', spec: '片内直连 · 3.0 x16' },
+        l_lan:   { bw: '125 MB/s',   spec: '1GbE 端口' },
+        l_hdd:   { bw: '600 MB/s',   spec: 'SATA 6G' },
+        l_exp1:  { bw: '600 MB/s',   spec: 'eSATA #1' },
+        l_exp2:  { bw: '600 MB/s',   spec: 'eSATA #2' },
+        l_ext:   { bw: '6Gbps',      spec: '5盘共享' }
+      },
+      panel1Title: 'DS1823xs+ 架构核实与推算边界（数据来源：拆解推算）',
+      panel1Lines: [
+        '• 官方确认：V1780B (4C/8T 3.35–3.6GHz 45W)、8GB ECC (最高32GB)、PCIe 3.0 x8 (x4 电气) 槽、双 M.2、板载 10GbE + 2× 1GbE + OOB、3× USB 3.2、双 eSATA',
+        '• 拆解推算：双 M.2 为 3.0 x2*；板载 10GbE 走 3.0 x2*；双千兆走 PCIe x2*；8 内置 + 2 eSATA 推算由双 5 口 SATA 控制器 (x2×2*) + 片内 FCH (2 口) 承载',
+        '• 待核验项：网卡/SATA 控制器精确芯片型号、PCIe 实际协商速率与盘位归属待实机执行 lspci、syno_slot_mapping 与 sysfs 校准'
+      ],
+      panel2Title: '链路图例与关键瓶颈分析',
+      legend: [
+        'PCIe 3.0 x4 · 通用扩展槽 (~3.94 GB/s)',
+        'PCIe 3.0 x2* · M.2 / SATA (~1.97 GB/s)',
+        'PCIe 3.0 x2* · 板载 10GbE (~1.97 GB/s)',
+        'PCIe x2* / OOB · 双千兆与独立带外管理',
+        'SATA III / eSATA 6Gbps (600 MB/s)',
+        '片内虚拟总线 3.0 x16 (~15.75 GB/s)'
+      ],
+      notes: [
+        { title: '1. 强瓶颈 · 单台 DX517 5 盘共享单路 eSATA 6Gbps', text: '内置 Marvell 88SM9705 1转5 端口倍增器，5 盘并发上限 ~600 MB/s (~120 MB/s/盘)。' },
+        { title: '2. 企业定位 · 板载 10GbE + 独立 OOB + PCIe x8 (x4 电气) 槽', text: '开箱即享万兆与硬件级带外管理；PCIe 通用槽仍可再扩展双口 10G/25G 或光纤通道卡。' },
+        { title: '3. 性能提示 · V1780B (45W) 高频 + 双 M.2 推算 3.0 x2*', text: '相比 V1500B 单核频率大幅提升；板载 M.2 推算 ~1.97 GB/s，如需满速 x4 可走 PCIe 槽。' }
+      ],
+      ttKeys: { cap: '硬件规格', sta: '链路状态', driver: '驱动 / 芯片' },
+      nodes: {
+        soc: {
+          title: 'AMD Ryzen Embedded V1780B SoC (Great Horned Owl)',
+          meta: {
+            bdf: 'DSM Platform: v1000 ｜ 官方规格确认',
+            cap: '4C/8T @ 3.35–3.6GHz · 45W TDP · 16× PCIe 3.0 Lanes · 无核显',
+            sta: '内存 2× DDR4 ECC SODIMM (标配 8GB / 最高 32GB) ｜ 推算 16 / 16 通道满配',
+            detail: '相比 Plus 系列常见的 V1500B (2.2GHz 16W)，V1780B 主频跃升至 3.35–3.6GHz (45W TDP)，面向高并发 SMB/虚拟化/数据库负载；提供 16 条外置 PCIe 3.0 通道与片内 2 路原生 FCH SATA。'
+          }
+        },
+        dev_pcie: {
+          bdf: '标准半高扩展槽 (官方确认)', title: 'PCIe 3.0 x8 (x4 电气)',
+          lines: ['物理 x8 · 电气 x4 链路', '支持 10GbE / 25GbE 网卡', '支持光纤通道 / 扩展卡'],
+          badge: '3.94 GB/s · 官方 x4 链路',
+          meta: {
+            bdf: 'Standard Low-Profile PCIe 3.0 x8 Slot (x4 Link) — 官方规格确认',
+            cap: '物理 x8 插槽 ｜ 电气 PCIe 3.0 x4 (~3.94 GB/s)',
+            sta: '开放通用槽（支持 E10G21/E10G30/E25G30 及光纤通道网卡）',
+            driver: '随扩展卡驱动加载',
+            detail: '官方规格明确为 Gen3 x8 插槽（x4 链路），提供 ~3.94 GB/s 有效单向带宽；因板载已集成 1× 10GbE，该槽可留作双口 10GbE、25GbE SFP28 或 Fibre Channel 扩展。'
+          }
+        },
+        dev_nvme1: {
+          bdf: '内置主板仓 · M.2 槽位 1', title: 'M.2 2280 NVMe #1',
+          lines: ['缓存 / NVMe 存储池', '社区推算: 3.0 x2*', '非热插拔 (机身内侧)'],
+          badge: '~1.97 GB/s* (待 lspci)',
+          meta: {
+            bdf: 'Internal M.2 2280 NVMe Slot #1 (官方确认槽位；x2 宽度为拆解推算)',
+            cap: 'PCIe 3.0 x2* (~1.97 GB/s)',
+            sta: 'CPU 直出 PCIe 3.0 通道（精确宽度与 BDF 待实机 lspci 与 sysfs 确认）',
+            driver: 'nvme',
+            detail: '支持 M.2 2280 NVMe SSD 读写缓存与原生存储池；因 V1780B 16 条外置通道需同时兼顾 x4 扩展槽、板载 10GbE、双千兆与双 SATA 控制器，板载 M.2 推算为 Gen3 x2。'
+          }
+        },
+        dev_nvme2: {
+          bdf: '内置主板仓 · M.2 槽位 2', title: 'M.2 2280 NVMe #2',
+          lines: ['缓存 / NVMe 存储池', '社区推算: 3.0 x2*', '非热插拔 (机身内侧)'],
+          badge: '~1.97 GB/s* (待 lspci)',
+          meta: {
+            bdf: 'Internal M.2 2280 NVMe Slot #2 (官方确认槽位；x2 宽度为拆解推算)',
+            cap: 'PCIe 3.0 x2* (~1.97 GB/s)',
+            sta: 'CPU 直出 PCIe 3.0 通道（精确宽度与 BDF 待实机 lspci 与 sysfs 确认）',
+            driver: 'nvme',
+            detail: '可与 M.2 #1 组建 RAID 1 读写缓存或全闪存高速存储池，适合虚拟机、Docker 与热数据访问。'
+          }
+        },
+        dev_gbe: {
+          bdf: '板载双千兆子系统 (推算)', title: '双口 1GbE 控制器*',
+          lines: ['2× 1GbE RJ-45 汇聚', '推算: PCIe x2* / 2×x1*', '芯片待实机 lspci 核验'],
+          badge: '双千兆满速无瓶颈',
+          meta: {
+            bdf: 'Onboard Dual 1GbE Subsystem (官方确认 2× 1GbE；芯片型号与布线推算)',
+            cap: '推算 PCIe 2.0/1.1 x2* 或双路 x1* (≥ 500 MB/s)',
+            sta: '承载 2× 1GbE RJ-45 (LAN 1 / LAN 2)，具体控制器型号待实机 lspci 确认',
+            driver: 'igb / r8168 (待 lspci 核验)',
+            detail: '提供 2 个标准 1GbE 数据网口，支持链路聚合 (LACP) 与故障转移，与板载 10GbE 及独立 OOB 管理口分离。'
+          }
+        },
+        dev_10g: {
+          bdf: '板载万兆网口 (官方确认)', title: '板载 10GbE RJ-45',
+          lines: ['10G/5G/2.5G/1G 电口', '推算: PCIe 3.0 x2*', '芯片待实机 lspci 核验'],
+          badge: '1.97 GB/s* · 跑满 10GbE',
+          meta: {
+            bdf: 'Onboard 10GBASE-T RJ-45 NIC (官方确认板载 10GbE；芯片型号推算)',
+            cap: '推算 PCIe 3.0 x2* (~1.97 GB/s) · 支持 10G/5G/2.5G/1G/100M',
+            sta: '10GbE 全双工单向 1.25 GB/s，Gen3 x2 上行留有充裕余量',
+            driver: 'atlantic / ixgbe (待 lspci 核验)',
+            detail: 'xs+ 系列核心卖点之一：无需占用 PCIe 槽即可开箱获得原生 10GbE 电口，控制器通常采用 Marvell AQtion 或 Intel 方案，精确芯片型号与链路宽度待实机 lspci 核验。'
+          }
+        },
+        dev_sata1: {
+          bdf: '独立 SATA 控制器 #1 (推算)', title: '独立 SATA 控制器 #1*',
+          lines: ['5口 AHCI · 支持 PM*', '驱动: ahci', '推算: 内置 1–4 + eSATA #1'],
+          badge: '3.0 x2* (1.97 GB/s · 充裕)',
+          meta: {
+            bdf: 'Discrete PCIe SATA Controller #1 (平台推算；芯片型号与盘位待核验)',
+            cap: '推算 PCIe 3.0 x2* (~1.97 GB/s) · 5× SATA 6Gbps',
+            sta: '推算承载内置盘位 1–4 (4口) + eSATA #1 / DX517 #1 (1口)',
+            driver: 'ahci (芯片型号待 lspci 核验)',
+            warn: '精确控制器芯片与盘位归属待实机执行 lspci、syno_slot_mapping 与 sysfs 确认；常规机械盘并发读写在 1.97 GB/s 上行下无明显瓶颈。'
+          }
+        },
+        dev_sata2: {
+          bdf: '独立 SATA 控制器 #2 (推算)', title: '独立 SATA 控制器 #2*',
+          lines: ['5口 AHCI · 支持 PM*', '驱动: ahci', '推算: 内置 5–6 + eSATA #2'],
+          badge: '3.0 x2* (1.97 GB/s · 富余)',
+          meta: {
+            bdf: 'Discrete PCIe SATA Controller #2 (平台推算；芯片型号与盘位待核验)',
+            cap: '推算 PCIe 3.0 x2* (~1.97 GB/s) · 5× SATA 6Gbps (推算启用 3 口)',
+            sta: '推算承载内置盘位 5–6 (2口) + eSATA #2 / DX517 #2 (1口)',
+            driver: 'ahci (芯片型号待 lspci 核验)',
+            detail: '与控制器 #1 分担两路 eSATA 与 6 个内置盘位，避免两台 DX517 扩展柜共用单颗控制器；具体映射待实机 syno_slot_mapping 与 sysfs 核验。'
+          }
+        },
+        dev_fch_sata: {
+          bdf: 'SoC 片内 Bus B (平台推算)', title: 'AMD FCH 原生 SATA',
+          lines: ['SoC 集成 2口 AHCI 控制器', '驱动: ahci', '推算直连内置盘位 7 / 8'],
+          badge: '片内直连 · 无总线瓶颈',
+          meta: {
+            bdf: 'On-Die AMD FCH SATA (V1780B 原生 2× SATA 6Gbps)',
+            cap: '片内虚拟 PCIe 3.0 x16 (15.75 GB/s)',
+            sta: '2× 原生 SATA 6Gbps（推算直连内置盘位 7、8）',
+            driver: 'ahci',
+            detail: 'AMD V1780B 片内原生集成 2 路 SATA 6Gbps，与双独立 SATA 控制器共同组成 8 内置 + 2 eSATA = 10 路 SATA 存储子系统，精确盘位待 sysfs 核验。'
+          }
+        },
+        dev_busA: {
+          bdf: 'SoC 片内 Bus A', title: 'SoC 片内外设群',
+          lines: ['• 3× USB 3.2 Gen1 (5G)', '• DSM 引导 DOM 闪存', '• AMD PSP 安全加密', '• 双 120mm 风扇管理'],
+          badge: '3× USB-A (5G) + DOM',
+          meta: {
+            bdf: 'On-Die xHCI + Boot DOM (官方确认 3× USB 3.2 Gen 1)',
+            cap: '片内虚拟 PCIe 3.0 x16 (15.75 GB/s)',
+            sta: '3× USB 3.2 Gen 1 (5Gbps) + 系统引导 DOM 闪存',
+            driver: 'xhci_hcd',
+            detail: '提供 3 个 USB 3.2 Gen 1 接口用于外接存储、UPS 通信与扩展设备，同时管理 DSM 引导闪存与双 120mm 散热风扇。'
+          }
+        },
+        dev_oob: {
+          bdf: '独立带外管理子系统 (官方确认)', title: 'OOB 带外管理口 (1GbE RJ-45)',
+          lines: ['独立管理 MCU / BMC · 待机供电独立运行', '主机关机 / DSM 宕机仍可远程开关机与查日志'],
+          badge: '硬件级独立管理 · 不占用外置 PCIe 通道',
+          meta: {
+            bdf: 'Dedicated Out-of-Band (OOB) Management Port — 官方规格确认',
+            cap: '独立 1GbE RJ-45 管理口 ｜ 经低速管理总线与 SoC 交互 (0× PCIe 通道)',
+            sta: '脱离 DSM 操作系统独立运行（支持远程电源控制、硬件重启、控制台/日志诊断）',
+            driver: '独立嵌入式管理固件 (非 DSM 网卡驱动)',
+            detail: 'DS1823xs+ 区别于 Plus 系列的重要企业级特性：OOB 管理口由独立管理芯片与待机电源供电，不与业务网卡混用，也不消耗 V1780B 的 16 条高速 PCIe 3.0 通道。'
+          }
+        },
+        dev_lan1: {
+          bdf: '主板板载数据网口 (官方确认)', title: '1GbE RJ-45 · LAN 1',
+          lines: ['千兆数据网口 (1GbE)', '支持 LACP / 故障转移'],
+          badge: '1GbE 全双工 (125 MB/s)',
+          meta: { bdf: 'Onboard 1GbE RJ-45 Port 1 (官方规格确认)', cap: '1GbE 全双工 (125 MB/s)', sta: '与 LAN 2 独立于 10GbE 与 OOB 管理口，支持链路聚合', driver: '待实机 lspci 核验', detail: '适合多网段隔离、集群心跳、备份专网或管理流量分流。' }
+        },
+        dev_lan2: {
+          bdf: '主板板载数据网口 (官方确认)', title: '1GbE RJ-45 · LAN 2',
+          lines: ['千兆数据网口 (1GbE)', '支持 LACP / 故障转移'],
+          badge: '1GbE 全双工 (125 MB/s)',
+          meta: { bdf: 'Onboard 1GbE RJ-45 Port 2 (官方规格确认)', cap: '1GbE 全双工 (125 MB/s)', sta: '支持与 LAN 1 组建双千兆聚合或故障转移', driver: '待实机 lspci 核验', detail: '高速业务流量建议使用板载 10GbE 或 PCIe 扩展槽 10G/25G 网卡。' }
+        },
+        hdd_1: { bay: '盘位 1', title: 'SATA 盘位 1', lines: ['3.5" / 2.5"', 'SATA 6Gbps', '推算: SATA#1'], meta: { bdf: 'Internal Bay 1 (推算经 SATA 控制器 #1)', sta: 'SATA III 6Gbps (热插拔)', detail: '推算挂载于独立 SATA 控制器 #1，精确盘位归属待实机 syno_slot_mapping 与 sysfs 核验。' } },
+        hdd_2: { bay: '盘位 2', title: 'SATA 盘位 2', lines: ['3.5" / 2.5"', 'SATA 6Gbps', '推算: SATA#1'], meta: { bdf: 'Internal Bay 2 (推算经 SATA 控制器 #1)', sta: 'SATA III 6Gbps (热插拔)', detail: '推算挂载于独立 SATA 控制器 #1，支持 3.5" SATA HDD 与 2.5" SATA SSD。' } },
+        hdd_3: { bay: '盘位 3', title: 'SATA 盘位 3', lines: ['3.5" / 2.5"', 'SATA 6Gbps', '推算: SATA#1'], meta: { bdf: 'Internal Bay 3 (推算经 SATA 控制器 #1)', sta: 'SATA III 6Gbps (热插拔)', detail: '推算挂载于独立 SATA 控制器 #1，8 盘位适合 RAID 6 / RAID 10 / RAID F1。' } },
+        hdd_4: { bay: '盘位 4', title: 'SATA 盘位 4', lines: ['3.5" / 2.5"', 'SATA 6Gbps', '推算: SATA#1'], meta: { bdf: 'Internal Bay 4 (推算经 SATA 控制器 #1)', sta: 'SATA III 6Gbps (热插拔)', detail: '推算挂载于独立 SATA 控制器 #1，具体控制器映射待实机 sysfs 核验。' } },
+        hdd_5: { bay: '盘位 5', title: 'SATA 盘位 5', lines: ['3.5" / 2.5"', 'SATA 6Gbps', '推算: SATA#2'], meta: { bdf: 'Internal Bay 5 (推算经 SATA 控制器 #2)', sta: 'SATA III 6Gbps (热插拔)', detail: '推算挂载于独立 SATA 控制器 #2，与盘位 6 及 eSATA #2 共享 PCIe 3.0 x2* 上行。' } },
+        hdd_6: { bay: '盘位 6', title: 'SATA 盘位 6', lines: ['3.5" / 2.5"', 'SATA 6Gbps', '推算: SATA#2'], meta: { bdf: 'Internal Bay 6 (推算经 SATA 控制器 #2)', sta: 'SATA III 6Gbps (热插拔)', detail: '推算挂载于独立 SATA 控制器 #2，带宽充裕。' } },
+        hdd_7: { bay: '盘位 7', title: 'SATA 盘位 7', lines: ['3.5" / 2.5"', 'SATA 6Gbps', '推算: FCH直连'], meta: { bdf: 'Internal Bay 7 (推算直连 AMD FCH 原生 SATA)', sta: 'SATA III 6Gbps (热插拔)', detail: '推算由 SoC 片内原生 FCH SATA 控制器直连，无外置 PCIe 总线争抢。' } },
+        hdd_8: { bay: '盘位 8', title: 'SATA 盘位 8', lines: ['3.5" / 2.5"', 'SATA 6Gbps', '推算: FCH直连'], meta: { bdf: 'Internal Bay 8 (推算直连 AMD FCH 原生 SATA)', sta: 'SATA III 6Gbps (热插拔)', detail: '推算由 SoC 片内原生 FCH SATA 控制器直连，无外置 PCIe 总线争抢。' } },
+        dev_pm1: {
+          bdf: 'DX517 #1 内置端口倍增芯片 (Port Multiplier)', title: 'Marvell 88SM9705 (1转5 PM) #1',
+          lines: ['eSATA #1 (6Gbps) → 拆分 5 路 SATA 6Gbps'],
+          badge: '⚠ 强瓶颈: 5盘共享单路 eSATA 6Gbps (~600 MB/s)',
+          meta: {
+            bdf: 'eSATA Port 1 → DX517 #1 Marvell 88SM9705',
+            cap: '上行 1× eSATA 6Gbps (~600 MB/s) ｜ 下行 5× SATA 6Gbps',
+            sta: 'FIS-based Port Multiplier 复用',
+            crit: '5 块扩展盘总吞吐受限于单条 eSATA 线缆（有效上限 ~600 MB/s，全盘并发约 ~120 MB/s/盘）；强烈建议在 DX517 #1 上建立独立存储池，避免跨机箱组 RAID。'
+          }
+        },
+        dev_pm2: {
+          bdf: 'DX517 #2 内置端口倍增芯片 (Port Multiplier)', title: 'Marvell 88SM9705 (1转5 PM) #2',
+          lines: ['eSATA #2 (6Gbps) → 拆分 5 路 SATA 6Gbps'],
+          badge: '⚠ 强瓶颈: 5盘共享单路 eSATA 6Gbps (~600 MB/s)',
+          meta: {
+            bdf: 'eSATA Port 2 → DX517 #2 Marvell 88SM9705',
+            cap: '上行 1× eSATA 6Gbps (~600 MB/s) ｜ 下行 5× SATA 6Gbps',
+            sta: 'FIS-based Port Multiplier 复用',
+            crit: 'DS1823xs+ 支持同时连接 2 台 DX517 扩展至 18 盘位；每台 DX517 应各自建立独立存储池，降低线缆松动掉盘风险。'
+          }
+        },
+        ext1_1: { bay: 'DX1 · E1', title: '扩展盘 1', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #1 Bay 1 (总第 9 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s)', detail: '经 DX517 #1 Marvell 88SM9705 接入，建议独立建池用于归档或备份。' } },
+        ext1_2: { bay: 'DX1 · E2', title: '扩展盘 2', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #1 Bay 2 (总第 10 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s)', detail: '经 DX517 #1 接入，与 E1/E3–E5 共享单路 eSATA 6Gbps 上行。' } },
+        ext1_3: { bay: 'DX1 · E3', title: '扩展盘 3', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #1 Bay 3 (总第 11 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s)', detail: '经 DX517 #1 接入，与 E1–E2/E4–E5 共享单路 eSATA 6Gbps 上行。' } },
+        ext1_4: { bay: 'DX1 · E4', title: '扩展盘 4', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #1 Bay 4 (总第 12 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s)', detail: '经 DX517 #1 接入，与 E1–E3/E5 共享单路 eSATA 6Gbps 上行。' } },
+        ext1_5: { bay: 'DX1 · E5', title: '扩展盘 5', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #1 Bay 5 (总第 13 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s)', detail: '经 DX517 #1 接入，单扩展柜合计 13 盘位。' } },
+        ext2_1: { bay: 'DX2 · E6', title: '扩展盘 6', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #2 Bay 1 (总第 14 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s)', detail: '经 DX517 #2 Marvell 88SM9705 接入，建议与 DX517 #1 分开建池。' } },
+        ext2_2: { bay: 'DX2 · E7', title: '扩展盘 7', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #2 Bay 2 (总第 15 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s)', detail: '经 DX517 #2 接入，与 E6/E8–E10 共享单路 eSATA 6Gbps 上行。' } },
+        ext2_3: { bay: 'DX2 · E8', title: '扩展盘 8', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #2 Bay 3 (总第 16 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s)', detail: '经 DX517 #2 接入，与 E6–E7/E9–E10 共享单路 eSATA 6Gbps 上行。' } },
+        ext2_4: { bay: 'DX2 · E9', title: '扩展盘 9', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #2 Bay 4 (总第 17 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s)', detail: '经 DX517 #2 接入，与 E6–E8/E10 共享单路 eSATA 6Gbps 上行。' } },
+        ext2_5: { bay: 'DX2 · E10', title: '扩展盘 10', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #2 Bay 5 (总第 18 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s)', detail: '经 DX517 #2 接入，全系统最高扩展至 8 + 5 + 5 = 18 盘位。' } }
+      }
+    },
+
+    en: {
+      navHome: '← All Models',
+      footerHome: 'Back to Synology Hardware Topology',
+      pageTitle: 'Synology DS1823xs+ (AMD V1780B) Hardware & 18-Bay PCIe/SATA Topology',
+      toolbarTitle: 'Synology DS1823xs+ Hardware Topology (8× Internal SATA + 2× DX517 = 18 Bays)',
+      toolbarSub: 'Source: Teardown + Spec (Official V1780B / Onboard 10GbE / OOB / PCIe x8(x4) Slot; exact ICs & lane/bay split pending live lspci / syno_slot_mapping / sysfs)  |  Hover or tap to inspect',
+      exportBtn: 'Export PNG',
+      exportName: 'synology-ds1823xsplus-18bay-topology-en.png',
+      canvasTitle: 'SYNOLOGY DS1823xs+ HARDWARE & 18-BAY EXPANSION TOPOLOGY',
+      canvasSub: 'AMD Ryzen Embedded V1780B (4C/8T · 3.35–3.6GHz · 45W TDP · 16× PCIe 3.0)  |  PCIe 3.0 x8 (x4 Link) Slot + Onboard 10GbE + 2× 1GbE + Dedicated OOB + Dual M.2 + Dual DX517',
+      socBanner: 'AMD Ryzen Embedded V1780B SoC — v1000 Platform (16× External PCIe 3.0 Lanes + 2× On-Die Virtual x16 Links)',
+      socSummary: 'RAM: 2× DDR4 ECC SODIMM (8GB std / 32GB max) | Headless | PCIe Budget: x4(Open Slot) + x2×2*(M.2) + x2*(10GbE) + x2*(Dual GbE) + x2×2*(Dual SATA) = 16 / 16 Lanes*',
+      socExtLabel: 'External PCIe 3.0 Direct Lanes (16/16 Fully Allocated: PCIe 3.0 x8/x4 Open Slot + Dual M.2 + 10GbE + Dual 1GbE + Dual SATA)',
+      socIntLabel: 'On-Die Infinity Fabric Virtual Bus',
+      backplaneTitle: 'Internal 8-Bay Backplane (8× 3.5"/2.5" SATA III · Hot-Swap · Inferred: Bays 1–4 via SATA Ctrl #1, 5–6 via Ctrl #2, 7–8 via FCH)',
+      dx1Title: 'Expansion #1: Synology DX517 (eSATA 6Gbps · 5 Bays)',
+      dx2Title: 'Expansion #2: Synology DX517 (eSATA 6Gbps · 5 Bays)',
+      expPort1: 'eSATA #1',
+      expPort2: 'eSATA #2',
+      pins: {
+        p_pcie:  'PCIe 3.0 x4 (Open)',
+        p_nvme1: 'PCIe 3.0 x2* (M.2 #1)',
+        p_nvme2: 'PCIe 3.0 x2* (M.2 #2)',
+        p_gbe:   'PCIe x2* (2× GbE)',
+        p_10g:   'PCIe 3.0 x2* (10GbE)',
+        p_sata1: 'PCIe 3.0 x2* (SATA#1)',
+        p_sata2: 'PCIe 3.0 x2* (SATA#2)',
+        p_fch:   'On-Die Bus B (FCH)',
+        p_busA:  'On-Die Bus A (USB)'
+      },
+      linkSpecs: {
+        l_pcie:  { bw: '3.94 GB/s',  spec: 'PCIe 3.0 x4 · 8GT/s' },
+        l_nvme1: { bw: '1.97 GB/s*', spec: 'PCIe 3.0 x2 · 8GT/s' },
+        l_nvme2: { bw: '1.97 GB/s*', spec: 'PCIe 3.0 x2 · 8GT/s' },
+        l_gbe:   { bw: '1.00 GB/s*', spec: 'PCIe 2.0 x2 / 2×x1*' },
+        l_10g:   { bw: '1.97 GB/s*', spec: 'PCIe 3.0 x2 · 8GT/s' },
+        l_sata1: { bw: '1.97 GB/s*', spec: 'PCIe 3.0 x2 · 8GT/s' },
+        l_sata2: { bw: '1.97 GB/s*', spec: 'PCIe 3.0 x2 · 8GT/s' },
+        l_fch:   { bw: '15.75 GB/s', spec: 'On-Die · 3.0 x16' },
+        l_busA:  { bw: '15.75 GB/s', spec: 'On-Die · 3.0 x16' },
+        l_lan:   { bw: '125 MB/s',   spec: '1GbE Port' },
+        l_hdd:   { bw: '600 MB/s',   spec: 'SATA 6G' },
+        l_exp1:  { bw: '600 MB/s',   spec: 'eSATA #1' },
+        l_exp2:  { bw: '600 MB/s',   spec: 'eSATA #2' },
+        l_ext:   { bw: '6Gbps',      spec: 'Shared' }
+      },
+      panel1Title: 'DS1823xs+ Architecture & Provenance (Source: Teardown + Spec)',
+      panel1Lines: [
+        '• Official Specs: V1780B (4C/8T 3.35–3.6GHz 45W), 8GB ECC (32GB max), PCIe 3.0 x8 (x4 link) slot, dual M.2, 10GbE + 2× 1GbE + OOB, 3× USB 3.2, dual eSATA',
+        '• Teardown + Spec Inferred: Dual M.2 at 3.0 x2*; onboard 10GbE at 3.0 x2*; dual 1GbE at x2*; 10 SATA ports via dual 5-port SATA controllers (x2×2*) + FCH (2 ports)',
+        '• Pending Verification: Exact NIC/SATA controller ICs, negotiated PCIe widths, and bay-to-port map pending live lspci, syno_slot_mapping, and sysfs'
+      ],
+      panel2Title: 'Link Legend & Key Bottlenecks',
+      legend: [
+        'PCIe 3.0 x4 · Open Slot (~3.94 GB/s)',
+        'PCIe 3.0 x2* · M.2 / SATA (~1.97 GB/s)',
+        'PCIe 3.0 x2* · Onboard 10GbE (~1.97 GB/s)',
+        'PCIe x2* / OOB · Dual 1GbE & Out-of-Band',
+        'SATA III / eSATA 6Gbps (600 MB/s)',
+        'On-Die Virtual Bus 3.0 x16 (~15.75 GB/s)'
+      ],
+      notes: [
+        { title: '1. Severe · Each DX517 Shares One eSATA 6Gbps Link', text: 'Built-in Marvell 88SM9705 1-to-5 PM caps 5 drives at ~600 MB/s (~120 MB/s/drive).' },
+        { title: '2. Enterprise · Onboard 10GbE + OOB + PCIe x8 (x4 Link)', text: 'Built-in 10GbE & hardware OOB out of the box; open PCIe slot remains free for 25GbE/FC.' },
+        { title: '3. Performance · 45W V1780B + Dual M.2 Inferred 3.0 x2*', text: 'High clock boost over V1500B; onboard M.2 inferred ~1.97 GB/s (use PCIe slot for full x4).' }
+      ],
+      ttKeys: { cap: 'Spec', sta: 'Link / Role', driver: 'Driver / IC' },
+      nodes: {
+        soc: {
+          title: 'AMD Ryzen Embedded V1780B SoC (Great Horned Owl)',
+          meta: {
+            bdf: 'DSM Platform: v1000  |  Official Spec Verified',
+            cap: '4C/8T @ 3.35–3.6GHz · 45W TDP · 16× PCIe 3.0 Lanes · Headless',
+            sta: 'RAM: 2× DDR4 ECC SODIMM (8GB std / 32GB max) | 16 / 16 Lanes Inferred Allocated',
+            detail: 'Steps up significantly in clock speed (3.35–3.6GHz, 45W TDP) over the V1500B (2.2GHz, 16W) for SMB virtualization and heavy workloads, exposing 16 external PCIe 3.0 lanes plus 2 on-die FCH SATA ports.'
+          }
+        },
+        dev_pcie: {
+          bdf: 'Standard Low-Profile Slot (Official)', title: 'PCIe 3.0 x8 (x4 Link)',
+          lines: ['Physical x8 · Electrical x4', 'Fits 10GbE / 25GbE NICs', 'Fits Fibre Channel / Add-in'],
+          badge: '3.94 GB/s · Official x4 Link',
+          meta: {
+            bdf: 'Standard Low-Profile PCIe 3.0 x8 Slot (x4 Electrical) — Official Spec',
+            cap: 'Physical x8 Slot | Electrical PCIe 3.0 x4 (~3.94 GB/s)',
+            sta: 'Open expansion slot (supports E10G21/E10G30/E25G30 & Fibre Channel cards)',
+            driver: 'Loaded per add-in card',
+            detail: 'Official datasheet specifies a Gen3 x8 slot wired as an x4 link (~3.94 GB/s unidirectional). With 10GbE already onboard, this slot stays free for dual-10GbE, 25GbE SFP28, or Fibre Channel.'
+          }
+        },
+        dev_nvme1: {
+          bdf: 'Internal Bay · M.2 Slot 1', title: 'M.2 2280 NVMe #1',
+          lines: ['Cache / Storage Pool', 'Community Inf.: 3.0 x2*', 'Non-Hot-Swap (Internal)'],
+          badge: '~1.97 GB/s* (Pending lspci)',
+          meta: {
+            bdf: 'Internal M.2 2280 NVMe Slot #1 (Official Slot; x2 width inferred)',
+            cap: 'PCIe 3.0 x2* (~1.97 GB/s)',
+            sta: 'Direct CPU PCIe 3.0 lanes (exact width & BDF pending live lspci and sysfs)',
+            driver: 'nvme',
+            detail: 'Supports M.2 2280 NVMe cache and storage pools. Given the 16-lane V1780B budget across x4 open slot, 10GbE, dual 1GbE, and dual SATA controllers, onboard M.2 is inferred at Gen3 x2.'
+          }
+        },
+        dev_nvme2: {
+          bdf: 'Internal Bay · M.2 Slot 2', title: 'M.2 2280 NVMe #2',
+          lines: ['Cache / Storage Pool', 'Community Inf.: 3.0 x2*', 'Non-Hot-Swap (Internal)'],
+          badge: '~1.97 GB/s* (Pending lspci)',
+          meta: {
+            bdf: 'Internal M.2 2280 NVMe Slot #2 (Official Slot; x2 width inferred)',
+            cap: 'PCIe 3.0 x2* (~1.97 GB/s)',
+            sta: 'Direct CPU PCIe 3.0 lanes (exact width & BDF pending live lspci and sysfs)',
+            driver: 'nvme',
+            detail: 'Pairs with M.2 #1 for RAID 1 SSD cache or an independent all-flash NVMe storage pool for VMs, containers, and hot data.'
+          }
+        },
+        dev_gbe: {
+          bdf: 'Onboard Dual-GbE (Inferred)', title: 'Dual 1GbE Controller*',
+          lines: ['2× 1GbE RJ-45 Fanout', 'Inf.: PCIe x2* / 2×x1*', 'IC Pending Live lspci'],
+          badge: 'Full Dual-1GbE Headroom',
+          meta: {
+            bdf: 'Onboard Dual 1GbE Subsystem (2× 1GbE official; IC & wiring inferred)',
+            cap: 'Inferred PCIe 2.0/1.1 x2* or 2× x1* (≥ 500 MB/s)',
+            sta: 'Drives 2× 1GbE RJ-45 (LAN 1 / LAN 2); exact NIC IC pending live lspci',
+            driver: 'igb / r8168 (pending live lspci)',
+            detail: 'Provides two standard 1GbE RJ-45 data ports with Link Aggregation (LACP) and failover, separate from the onboard 10GbE and dedicated OOB port.'
+          }
+        },
+        dev_10g: {
+          bdf: 'Onboard 10GbE NIC (Official)', title: 'Onboard 10GbE RJ-45',
+          lines: ['10G/5G/2.5G/1G Base-T', 'Inf.: PCIe 3.0 x2*', 'IC Pending Live lspci'],
+          badge: '1.97 GB/s* · Full 10GbE',
+          meta: {
+            bdf: 'Onboard 10GBASE-T RJ-45 NIC (10GbE official; IC & lane width inferred)',
+            cap: 'Inferred PCIe 3.0 x2* (~1.97 GB/s) · 10G/5G/2.5G/1G/100M',
+            sta: '10GbE full-duplex requires 1.25 GB/s unidirectional; Gen3 x2 provides ample headroom',
+            driver: 'atlantic / ixgbe (pending live lspci)',
+            detail: 'Key xs+ differentiator delivering native 10GbE RJ-45 without consuming the PCIe slot. Typically implemented with a Marvell AQtion or Intel 10GbE controller; exact IC pending live lspci.'
+          }
+        },
+        dev_sata1: {
+          bdf: 'Discrete SATA Ctrl #1 (Inferred)', title: 'Discrete SATA Ctrl #1*',
+          lines: ['5-Port AHCI · PM Capable*', 'Driver: ahci', 'Inf.: Bays 1–4 + eSATA #1'],
+          badge: '3.0 x2* (1.97 GB/s · Ample)',
+          meta: {
+            bdf: 'Discrete PCIe SATA Controller #1 (Platform-inferred; IC & bay map pending)',
+            cap: 'Inferred PCIe 3.0 x2* (~1.97 GB/s) · 5× SATA 6Gbps',
+            sta: 'Inferred: Internal Bays 1–4 (4 ports) + eSATA #1 / DX517 #1 (1 port)',
+            driver: 'ahci (exact IC pending live lspci)',
+            warn: 'Exact controller IC and bay assignment are pending live lspci, syno_slot_mapping, and sysfs verification; 1.97 GB/s provides ample headroom for HDD arrays.'
+          }
+        },
+        dev_sata2: {
+          bdf: 'Discrete SATA Ctrl #2 (Inferred)', title: 'Discrete SATA Ctrl #2*',
+          lines: ['5-Port AHCI · PM Capable*', 'Driver: ahci', 'Inf.: Bays 5–6 + eSATA #2'],
+          badge: '3.0 x2* (1.97 GB/s · Ample)',
+          meta: {
+            bdf: 'Discrete PCIe SATA Controller #2 (Platform-inferred; IC & bay map pending)',
+            cap: 'Inferred PCIe 3.0 x2* (~1.97 GB/s) · 5× SATA 6Gbps (3 ports inferred active)',
+            sta: 'Inferred: Internal Bays 5–6 (2 ports) + eSATA #2 / DX517 #2 (1 port)',
+            driver: 'ahci (exact IC pending live lspci)',
+            detail: 'Balances the two eSATA expansion ports across two independent SATA controllers to avoid DX517 contention; exact mapping pending live syno_slot_mapping and sysfs.'
+          }
+        },
+        dev_fch_sata: {
+          bdf: 'SoC On-Die Bus B (Inferred)', title: 'AMD FCH Native SATA',
+          lines: ['On-Die 2-Port AHCI', 'Driver: ahci', 'Inf.: Direct to Bays 7 & 8'],
+          badge: 'On-Die Direct · No Bottleneck',
+          meta: {
+            bdf: 'On-Die AMD FCH SATA (Native V1780B 2× SATA 6Gbps)',
+            cap: 'On-Die Virtual PCIe 3.0 x16 (15.75 GB/s)',
+            sta: '2× Native SATA 6Gbps (inferred to Internal Bays 7–8)',
+            driver: 'ahci',
+            detail: 'V1780B integrates 2 native SATA 6Gbps ports on-die, combining with dual discrete SATA controllers for 8 internal + 2 eSATA = 10 SATA ports; exact bay map pending sysfs.'
+          }
+        },
+        dev_busA: {
+          bdf: 'SoC On-Die Bus A', title: 'SoC On-Die Peripherals',
+          lines: ['• 3× USB 3.2 Gen 1 (5G)', '• DSM Boot DOM Flash', '• AMD PSP Crypto', '• Dual 120mm Fan Ctrl'],
+          badge: '3× USB-A (5G) + DOM',
+          meta: {
+            bdf: 'On-Die xHCI + Boot DOM (Official 3× USB 3.2 Gen 1)',
+            cap: 'On-Die Virtual PCIe 3.0 x16 (15.75 GB/s)',
+            sta: '3× USB 3.2 Gen 1 (5Gbps) + System Boot DOM Flash',
+            driver: 'xhci_hcd',
+            detail: 'Provides 3 USB 3.2 Gen 1 ports for external storage, UPS, or USB devices, alongside DSM boot flash and dual 120mm chassis fan control.'
+          }
+        },
+        dev_oob: {
+          bdf: 'Dedicated OOB Subsystem (Official)', title: 'OOB Management Port (1GbE RJ-45)',
+          lines: ['Independent MCU / BMC · Standby Power', 'Remote Power Cycle, Reset & Logs Even Offline'],
+          badge: 'Hardware-Level OOB · 0 External PCIe Lanes',
+          meta: {
+            bdf: 'Dedicated Out-of-Band (OOB) Management Port — Official Spec',
+            cap: 'Dedicated 1GbE RJ-45 | Low-Speed Mgmt Bus to SoC (0 PCIe Lanes)',
+            sta: 'Operates independently of DSM OS (remote power on/off, hard reset, system logs)',
+            driver: 'Standalone Embedded Management Firmware',
+            detail: 'Enterprise xs+ feature powered by standby rail and an independent management controller; isolated from data NICs and consumes zero of V1780B\'s 16 PCIe 3.0 lanes.'
+          }
+        },
+        dev_lan1: {
+          bdf: 'Onboard Data NIC (Official)', title: '1GbE RJ-45 · LAN 1',
+          lines: ['1GbE Data Port', 'LACP / Failover Ready'],
+          badge: '1GbE Full-Duplex (125 MB/s)',
+          meta: { bdf: 'Onboard 1GbE RJ-45 Port 1 (Official Spec)', cap: '1GbE Full-Duplex (125 MB/s)', sta: 'Separate from 10GbE and OOB ports; supports Link Aggregation', driver: 'Pending live lspci', detail: 'Useful for VLAN isolation, cluster heartbeat, or dedicated management/backup networks.' }
+        },
+        dev_lan2: {
+          bdf: 'Onboard Data NIC (Official)', title: '1GbE RJ-45 · LAN 2',
+          lines: ['1GbE Data Port', 'LACP / Failover Ready'],
+          badge: '1GbE Full-Duplex (125 MB/s)',
+          meta: { bdf: 'Onboard 1GbE RJ-45 Port 2 (Official Spec)', cap: '1GbE Full-Duplex (125 MB/s)', sta: 'Pairs with LAN 1 for 2× 1GbE aggregation or failover', driver: 'Pending live lspci', detail: 'Use the onboard 10GbE port or a PCIe 10G/25G NIC for high-throughput workloads.' }
+        },
+        hdd_1: { bay: 'Bay 1', title: 'SATA Bay 1', lines: ['3.5" / 2.5"', 'SATA 6Gbps', 'Inf: SATA#1'], meta: { bdf: 'Internal Bay 1 (Inferred via SATA Ctrl #1)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'Inferred on Discrete SATA Controller #1; exact mapping pending live syno_slot_mapping and sysfs.' } },
+        hdd_2: { bay: 'Bay 2', title: 'SATA Bay 2', lines: ['3.5" / 2.5"', 'SATA 6Gbps', 'Inf: SATA#1'], meta: { bdf: 'Internal Bay 2 (Inferred via SATA Ctrl #1)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'Inferred on Discrete SATA Controller #1; supports 3.5" SATA HDD and 2.5" SATA SSD.' } },
+        hdd_3: { bay: 'Bay 3', title: 'SATA Bay 3', lines: ['3.5" / 2.5"', 'SATA 6Gbps', 'Inf: SATA#1'], meta: { bdf: 'Internal Bay 3 (Inferred via SATA Ctrl #1)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'Inferred on Discrete SATA Controller #1; 8 internal bays suit RAID 6, RAID 10, or RAID F1.' } },
+        hdd_4: { bay: 'Bay 4', title: 'SATA Bay 4', lines: ['3.5" / 2.5"', 'SATA 6Gbps', 'Inf: SATA#1'], meta: { bdf: 'Internal Bay 4 (Inferred via SATA Ctrl #1)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'Inferred on Discrete SATA Controller #1; exact bay-to-controller map pending live sysfs.' } },
+        hdd_5: { bay: 'Bay 5', title: 'SATA Bay 5', lines: ['3.5" / 2.5"', 'SATA 6Gbps', 'Inf: SATA#2'], meta: { bdf: 'Internal Bay 5 (Inferred via SATA Ctrl #2)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'Inferred on Discrete SATA Controller #2, sharing the PCIe 3.0 x2* uplink with Bay 6 and eSATA #2.' } },
+        hdd_6: { bay: 'Bay 6', title: 'SATA Bay 6', lines: ['3.5" / 2.5"', 'SATA 6Gbps', 'Inf: SATA#2'], meta: { bdf: 'Internal Bay 6 (Inferred via SATA Ctrl #2)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'Inferred on Discrete SATA Controller #2 with ample uplink bandwidth.' } },
+        hdd_7: { bay: 'Bay 7', title: 'SATA Bay 7', lines: ['3.5" / 2.5"', 'SATA 6Gbps', 'Inf: FCH'], meta: { bdf: 'Internal Bay 7 (Inferred AMD FCH Native SATA)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'Inferred direct attachment to SoC on-die FCH SATA with zero external PCIe contention.' } },
+        hdd_8: { bay: 'Bay 8', title: 'SATA Bay 8', lines: ['3.5" / 2.5"', 'SATA 6Gbps', 'Inf: FCH'], meta: { bdf: 'Internal Bay 8 (Inferred AMD FCH Native SATA)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'Inferred direct attachment to SoC on-die FCH SATA with zero external PCIe contention.' } },
+        dev_pm1: {
+          bdf: 'DX517 #1 Built-in SATA Port Multiplier', title: 'Marvell 88SM9705 (1-to-5 PM) #1',
+          lines: ['Splits eSATA #1 (6Gbps) into 5× SATA 6Gbps'],
+          badge: '⚠ Severe: 5 Bays Share ~600 MB/s eSATA',
+          meta: {
+            bdf: 'eSATA Port 1 → DX517 #1 Marvell 88SM9705',
+            cap: 'Uplink 1× eSATA 6Gbps (~600 MB/s) | 5× Downstream',
+            sta: 'FIS-based Port Multiplier',
+            crit: 'All 5 drives share a single eSATA 6Gbps cable (~600 MB/s total, ~120 MB/s/drive). Create an independent storage pool on DX517 #1 instead of spanning RAID across enclosures.'
+          }
+        },
+        dev_pm2: {
+          bdf: 'DX517 #2 Built-in SATA Port Multiplier', title: 'Marvell 88SM9705 (1-to-5 PM) #2',
+          lines: ['Splits eSATA #2 (6Gbps) into 5× SATA 6Gbps'],
+          badge: '⚠ Severe: 5 Bays Share ~600 MB/s eSATA',
+          meta: {
+            bdf: 'eSATA Port 2 → DX517 #2 Marvell 88SM9705',
+            cap: 'Uplink 1× eSATA 6Gbps (~600 MB/s) | 5× Downstream',
+            sta: 'FIS-based Port Multiplier',
+            crit: 'DS1823xs+ supports up to two DX517 units for 18 bays total. Keep each DX517 as an independent storage pool to avoid cross-enclosure disconnects.'
+          }
+        },
+        ext1_1: { bay: 'DX1 · E1', title: 'Ext Bay 1', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #1 Bay 1 (Drive #9)', sta: 'SATA 6Gbps (600 MB/s Shared)', detail: 'DX517 #1 Bay 1 via Marvell 88SM9705; best kept as an independent pool.' } },
+        ext1_2: { bay: 'DX1 · E2', title: 'Ext Bay 2', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #1 Bay 2 (Drive #10)', sta: 'SATA 6Gbps (600 MB/s Shared)', detail: 'DX517 #1 Bay 2; shares eSATA #1 6Gbps uplink with E1, E3–E5.' } },
+        ext1_3: { bay: 'DX1 · E3', title: 'Ext Bay 3', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #1 Bay 3 (Drive #11)', sta: 'SATA 6Gbps (600 MB/s Shared)', detail: 'DX517 #1 Bay 3; shares eSATA #1 6Gbps uplink with E1–E2, E4–E5.' } },
+        ext1_4: { bay: 'DX1 · E4', title: 'Ext Bay 4', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #1 Bay 4 (Drive #12)', sta: 'SATA 6Gbps (600 MB/s Shared)', detail: 'DX517 #1 Bay 4; shares eSATA #1 6Gbps uplink with E1–E3, E5.' } },
+        ext1_5: { bay: 'DX1 · E5', title: 'Ext Bay 5', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #1 Bay 5 (Drive #13)', sta: 'SATA 6Gbps (600 MB/s Shared)', detail: 'DX517 #1 Bay 5; brings total capacity to 13 bays with one DX517.' } },
+        ext2_1: { bay: 'DX2 · E6', title: 'Ext Bay 6', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #2 Bay 1 (Drive #14)', sta: 'SATA 6Gbps (600 MB/s Shared)', detail: 'DX517 #2 Bay 1 via Marvell 88SM9705; keep separate from DX517 #1 pool.' } },
+        ext2_2: { bay: 'DX2 · E7', title: 'Ext Bay 7', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #2 Bay 2 (Drive #15)', sta: 'SATA 6Gbps (600 MB/s Shared)', detail: 'DX517 #2 Bay 2; shares eSATA #2 6Gbps uplink with E6, E8–E10.' } },
+        ext2_3: { bay: 'DX2 · E8', title: 'Ext Bay 8', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #2 Bay 3 (Drive #16)', sta: 'SATA 6Gbps (600 MB/s Shared)', detail: 'DX517 #2 Bay 3; shares eSATA #2 6Gbps uplink with E6–E7, E9–E10.' } },
+        ext2_4: { bay: 'DX2 · E9', title: 'Ext Bay 9', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #2 Bay 4 (Drive #17)', sta: 'SATA 6Gbps (600 MB/s Shared)', detail: 'DX517 #2 Bay 4; shares eSATA #2 6Gbps uplink with E6–E8, E10.' } },
+        ext2_5: { bay: 'DX2 · E10', title: 'Ext Bay 10', lines: ['SATA 6Gbps'], meta: { bdf: 'DX517 #2 Bay 5 (Drive #18)', sta: 'SATA 6Gbps (600 MB/s Shared)', detail: 'DX517 #2 Bay 5; brings total capacity to 8 + 5 + 5 = 18 bays.' } }
+      }
+    }
+  };
+
+  const socPins = {
+    p_pcie:  { x: 129,  y: 176, color: COLORS.pcie3x4 },
+    p_nvme1: { x: 303,  y: 176, color: COLORS.pcie3x2 },
+    p_nvme2: { x: 463,  y: 176, color: COLORS.pcie3x2 },
+    p_gbe:   { x: 621,  y: 176, color: COLORS.pcie1x1 },
+    p_10g:   { x: 784,  y: 176, color: COLORS.nic10g },
+    p_sata1: { x: 962,  y: 176, color: COLORS.pcie3sata },
+    p_sata2: { x: 1148, y: 176, color: COLORS.pcie3sata },
+    p_fch:   { x: 1351, y: 176, color: COLORS.internal },
+    p_busA:  { x: 1546, y: 176, color: COLORS.internal }
+  };
+
+  const nodes = [
+    { id: 'soc',          x: 40,   y: 70,  w: 1600, h: 106, type: 'soc' },
+
+    // Row 1: Direct SoC devices & controllers (y=266..392)
+    { id: 'dev_pcie',     x: 40,   y: 266, w: 178,  h: 126, type: 'chip', color: COLORS.pcie3x4,   badgeLevel: 'ok' },
+    { id: 'dev_nvme1',    x: 228,  y: 266, w: 150,  h: 126, type: 'chip', color: COLORS.pcie3x2,   badgeLevel: 'ok' },
+    { id: 'dev_nvme2',    x: 388,  y: 266, w: 150,  h: 126, type: 'chip', color: COLORS.pcie3x2,   badgeLevel: 'ok' },
+    { id: 'dev_gbe',      x: 548,  y: 266, w: 146,  h: 126, type: 'chip', color: COLORS.pcie1x1,   badgeLevel: 'ok' },
+    { id: 'dev_10g',      x: 704,  y: 266, w: 160,  h: 126, type: 'chip', color: COLORS.nic10g,    badgeLevel: 'ok' },
+    { id: 'dev_sata1',    x: 874,  y: 266, w: 176,  h: 126, type: 'chip', color: COLORS.pcie3sata, badgeLevel: 'ok' },
+    { id: 'dev_sata2',    x: 1060, y: 266, w: 176,  h: 126, type: 'chip', color: COLORS.pcie3sata, badgeLevel: 'ok' },
+    { id: 'dev_fch_sata', x: 1260, y: 266, w: 182,  h: 126, type: 'chip', color: COLORS.internal,  badgeLevel: 'ok' },
+    { id: 'dev_busA',     x: 1452, y: 266, w: 188,  h: 140, type: 'chip', color: COLORS.internal,  badgeLevel: 'ok' },
+
+    // Row 2 Left: Dedicated OOB Management + Dual 1GbE Ports (x=40..684, y=474..566)
+    { id: 'dev_oob',      x: 40,   y: 474, w: 290,  h: 92,  type: 'chip', color: COLORS.oob,       badgeLevel: 'ok' },
+    { id: 'dev_lan1',     x: 344,  y: 474, w: 164,  h: 92,  type: 'chip', color: COLORS.pcie1x1,   badgeLevel: 'ok' },
+    { id: 'dev_lan2',     x: 520,  y: 474, w: 164,  h: 92,  type: 'chip', color: COLORS.pcie1x1,   badgeLevel: 'ok' },
+
+    // Row 2 Right: Internal 8-Bay SATA Backplane (x=796..1640, y=496..602)
+    { id: 'hdd_1',        x: 810,  y: 496, w: 95,   h: 106, type: 'hdd',  color: COLORS.sata },
+    { id: 'hdd_2',        x: 913,  y: 496, w: 95,   h: 106, type: 'hdd',  color: COLORS.sata },
+    { id: 'hdd_3',        x: 1016, y: 496, w: 95,   h: 106, type: 'hdd',  color: COLORS.sata },
+    { id: 'hdd_4',        x: 1119, y: 496, w: 95,   h: 106, type: 'hdd',  color: COLORS.sata },
+    { id: 'hdd_5',        x: 1222, y: 496, w: 95,   h: 106, type: 'hdd',  color: COLORS.pcie3sata },
+    { id: 'hdd_6',        x: 1325, y: 496, w: 95,   h: 106, type: 'hdd',  color: COLORS.pcie3sata },
+    { id: 'hdd_7',        x: 1428, y: 496, w: 95,   h: 106, type: 'hdd',  color: COLORS.internal },
+    { id: 'hdd_8',        x: 1531, y: 496, w: 95,   h: 106, type: 'hdd',  color: COLORS.internal },
+
+    // Expansion Unit #1 (DX517 #1)
+    { id: 'dev_pm1',      x: 652,  y: 738, w: 340,  h: 88,  type: 'chip', color: COLORS.esata, badgeLevel: 'crit' },
+    { id: 'ext1_1',       x: 570,  y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata },
+    { id: 'ext1_2',       x: 672,  y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata },
+    { id: 'ext1_3',       x: 774,  y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata },
+    { id: 'ext1_4',       x: 876,  y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata },
+    { id: 'ext1_5',       x: 978,  y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata },
+
+    // Expansion Unit #2 (DX517 #2)
+    { id: 'dev_pm2',      x: 1204, y: 738, w: 340,  h: 88,  type: 'chip', color: COLORS.esata, badgeLevel: 'crit' },
+    { id: 'ext2_1',       x: 1122, y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata },
+    { id: 'ext2_2',       x: 1224, y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata },
+    { id: 'ext2_3',       x: 1326, y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata },
+    { id: 'ext2_4',       x: 1428, y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata },
+    { id: 'ext2_5',       x: 1530, y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata }
+  ];
+
+  const links = [
+    // SoC to Row 1
+    { id: 'l_pcie',  specKey: 'l_pcie',  from: 'soc', pin: 'p_pcie',  to: 'dev_pcie',     color: COLORS.pcie3x4,   width: 4.5 },
+    { id: 'l_nvme1', specKey: 'l_nvme1', from: 'soc', pin: 'p_nvme1', to: 'dev_nvme1',    color: COLORS.pcie3x2,   width: 4 },
+    { id: 'l_nvme2', specKey: 'l_nvme2', from: 'soc', pin: 'p_nvme2', to: 'dev_nvme2',    color: COLORS.pcie3x2,   width: 4 },
+    { id: 'l_gbe',   specKey: 'l_gbe',   from: 'soc', pin: 'p_gbe',   to: 'dev_gbe',      color: COLORS.pcie1x1,   width: 3.5 },
+    { id: 'l_10g',   specKey: 'l_10g',   from: 'soc', pin: 'p_10g',   to: 'dev_10g',      color: COLORS.nic10g,    width: 4 },
+    { id: 'l_sata1', specKey: 'l_sata1', from: 'soc', pin: 'p_sata1', to: 'dev_sata1',    color: COLORS.pcie3sata, width: 4 },
+    { id: 'l_sata2', specKey: 'l_sata2', from: 'soc', pin: 'p_sata2', to: 'dev_sata2',    color: COLORS.pcie3sata, width: 4 },
+    { id: 'l_fch',   specKey: 'l_fch',   from: 'soc', pin: 'p_fch',   to: 'dev_fch_sata', color: COLORS.internal,  width: 4.5, dashed: true },
+    { id: 'l_busA',  specKey: 'l_busA',  from: 'soc', pin: 'p_busA',  to: 'dev_busA',     color: COLORS.internal,  width: 4.5, dashed: true },
+
+    // Dual 1GbE Controller to LAN 1 & LAN 2
+    { id: 'l_lan1',  specKey: 'l_lan',   from: 'dev_gbe', to: 'dev_lan1', color: COLORS.pcie1x1, width: 2.3, mode: 'lan_fan', srcX: 621, midY: 420, pillY: 446 },
+    { id: 'l_lan2',  specKey: 'l_lan',   from: 'dev_gbe', to: 'dev_lan2', color: COLORS.pcie1x1, width: 2.3, mode: 'lan_fan', srcX: 621, midY: 420, pillY: 446 },
+
+    // Internal 8 SATA drops
+    { id: 'l_hdd1',  specKey: 'l_hdd',   from: 'dev_sata1',    to: 'hdd_1', color: COLORS.sata,      width: 2.3, mode: 'sata_drop', srcX: 918,  midY: 424, pillY: 472 },
+    { id: 'l_hdd2',  specKey: 'l_hdd',   from: 'dev_sata1',    to: 'hdd_2', color: COLORS.sata,      width: 2.3, mode: 'sata_drop', srcX: 956,  midY: 424, pillY: 472 },
+    { id: 'l_hdd3',  specKey: 'l_hdd',   from: 'dev_sata1',    to: 'hdd_3', color: COLORS.sata,      width: 2.3, mode: 'sata_drop', srcX: 994,  midY: 424, pillY: 472 },
+    { id: 'l_hdd4',  specKey: 'l_hdd',   from: 'dev_sata1',    to: 'hdd_4', color: COLORS.sata,      width: 2.3, mode: 'sata_drop', srcX: 1032, midY: 424, pillY: 472 },
+    { id: 'l_hdd5',  specKey: 'l_hdd',   from: 'dev_sata2',    to: 'hdd_5', color: COLORS.pcie3sata, width: 2.3, mode: 'sata_drop', srcX: 1148, midY: 436, pillY: 472 },
+    { id: 'l_hdd6',  specKey: 'l_hdd',   from: 'dev_sata2',    to: 'hdd_6', color: COLORS.pcie3sata, width: 2.3, mode: 'sata_drop', srcX: 1200, midY: 436, pillY: 472 },
+    { id: 'l_hdd7',  specKey: 'l_hdd',   from: 'dev_fch_sata', to: 'hdd_7', color: COLORS.internal,  width: 2.3, mode: 'sata_drop', srcX: 1351, midY: 446, pillY: 472 },
+    { id: 'l_hdd8',  specKey: 'l_hdd',   from: 'dev_fch_sata', to: 'hdd_8', color: COLORS.internal,  width: 2.3, mode: 'sata_drop', srcX: 1406, midY: 446, pillY: 472 },
+
+    // Dual eSATA routes through center corridor (x=716 & x=756) to DX517 #1 & #2
+    { id: 'l_exp1',  specKey: 'l_exp1',  from: 'dev_sata1', to: 'dev_pm1', color: COLORS.esata, width: 3.2, mode: 'dual_exp_route', srcX: 890,  exitY: 402, corridorX: 716, busY: 673, entryX: 596,  pillX: 656, pillY: 673 },
+    { id: 'l_exp2',  specKey: 'l_exp2',  from: 'dev_sata2', to: 'dev_pm2', color: COLORS.esata, width: 3.2, mode: 'dual_exp_route', srcX: 1076, exitY: 410, corridorX: 756, busY: 673, entryX: 1148, pillX: 952, pillY: 673 },
+
+    // DX517 #1 fanout
+    { id: 'l_ext1_1', specKey: 'l_ext', from: 'dev_pm1', to: 'ext1_1', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 },
+    { id: 'l_ext1_2', specKey: 'l_ext', from: 'dev_pm1', to: 'ext1_2', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 },
+    { id: 'l_ext1_3', specKey: 'l_ext', from: 'dev_pm1', to: 'ext1_3', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 },
+    { id: 'l_ext1_4', specKey: 'l_ext', from: 'dev_pm1', to: 'ext1_4', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 },
+    { id: 'l_ext1_5', specKey: 'l_ext', from: 'dev_pm1', to: 'ext1_5', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 },
+
+    // DX517 #2 fanout
+    { id: 'l_ext2_1', specKey: 'l_ext', from: 'dev_pm2', to: 'ext2_1', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 },
+    { id: 'l_ext2_2', specKey: 'l_ext', from: 'dev_pm2', to: 'ext2_2', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 },
+    { id: 'l_ext2_3', specKey: 'l_ext', from: 'dev_pm2', to: 'ext2_3', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 },
+    { id: 'l_ext2_4', specKey: 'l_ext', from: 'dev_pm2', to: 'ext2_4', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 },
+    { id: 'l_ext2_5', specKey: 'l_ext', from: 'dev_pm2', to: 'ext2_5', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 }
+  ];
+
+  function t() { return I18N[currentLang]; }
+  function getNode(id) { return nodes.find(n => n.id === id); }
+
+  function getRelatedIds(nodeId) {
+    if (!nodeId || nodeId === 'soc') return null;
+    const set = new Set([nodeId]);
+    let changed = true;
+    while (changed) {
+      changed = false;
+      for (const l of links) {
+        if (set.has(l.to) && !set.has(l.from)) { set.add(l.from); changed = true; }
+      }
+    }
+    const down = new Set([nodeId]);
+    changed = true;
+    while (changed) {
+      changed = false;
+      for (const l of links) {
+        if (down.has(l.from) && !down.has(l.to)) { down.add(l.to); set.add(l.to); changed = true; }
+      }
+    }
+    return set;
+  }
+
+  function roundRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function drawArrow(x, y, dir, color) {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    if (dir === 'down') {
+      ctx.moveTo(x, y); ctx.lineTo(x - 5, y - 9); ctx.lineTo(x + 5, y - 9);
+    } else if (dir === 'right') {
+      ctx.moveTo(x, y); ctx.lineTo(x - 9, y - 5); ctx.lineTo(x - 9, y + 5);
+    }
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawGrid() {
+    ctx.fillStyle = COLORS.bg;
+    ctx.fillRect(0, 0, LOGICAL_W, LOGICAL_H);
+    ctx.strokeStyle = COLORS.grid;
+    ctx.lineWidth = 1;
+    for (let x = 0; x <= LOGICAL_W; x += 28) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, LOGICAL_H); ctx.stroke();
+    }
+    for (let y = 0; y <= LOGICAL_H; y += 28) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(LOGICAL_W, y); ctx.stroke();
+    }
+  }
+
+  function drawHeader() {
+    const tr = t();
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = '700 20px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.canvasTitle, 40, 34, 1600);
+
+    ctx.fillStyle = COLORS.textSub;
+    ctx.font = '12.5px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.canvasSub, 40, 54, 1600);
+  }
+
+  function drawEnclosures() {
+    const tr = t();
+    // Internal 8-bay backplane container (title placed below bays to avoid incoming SATA lines)
+    roundRect(796, 488, 844, 158, 12);
+    ctx.save();
+    ctx.fillStyle = 'rgba(56, 189, 248, 0.035)';
+    ctx.fill();
+    ctx.setLineDash([6, 4]);
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.42)';
+    ctx.lineWidth = 1.4;
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = '#7dd3fc';
+    ctx.font = '700 11px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.backplaneTitle, 810, 633, 816);
+
+    // DX517 #1 container
+    roundRect(556, 700, 532, 288, 14);
+    ctx.save();
+    ctx.fillStyle = 'rgba(251, 113, 133, 0.04)';
+    ctx.fill();
+    ctx.setLineDash([7, 5]);
+    ctx.strokeStyle = 'rgba(251, 113, 133, 0.5)';
+    ctx.lineWidth = 1.6;
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = '#fda4af';
+    ctx.font = '700 12px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.dx1Title, 652, 722, 422);
+
+    // DX517 #2 container
+    roundRect(1108, 700, 532, 288, 14);
+    ctx.save();
+    ctx.fillStyle = 'rgba(251, 113, 133, 0.04)';
+    ctx.fill();
+    ctx.setLineDash([7, 5]);
+    ctx.strokeStyle = 'rgba(251, 113, 133, 0.5)';
+    ctx.lineWidth = 1.6;
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = '#fda4af';
+    ctx.font = '700 12px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.dx2Title, 1204, 722, 422);
+  }
+
+  function drawPortMarkers() {
+    const tr = t();
+    const markers = [
+      { cx: 596,  label: tr.expPort1 },
+      { cx: 1148, label: tr.expPort2 }
+    ];
+    for (const m of markers) {
+      roundRect(m.cx - 38, 690, 76, 20, 4);
+      ctx.fillStyle = '#2a121d';
+      ctx.fill();
+      ctx.strokeStyle = COLORS.esata;
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+      ctx.fillStyle = '#fda4af';
+      ctx.font = '700 10px ui-monospace, Menlo, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(m.label, m.cx, 703.5, 68);
+      ctx.textAlign = 'left';
+    }
+  }
+
+  function drawSoCNode(isHover) {
+    const tr = t();
+    const s = getNode('soc');
+    roundRect(s.x, s.y, s.w, s.h, 14);
+    ctx.fillStyle = COLORS.socBg;
+    ctx.fill();
+    ctx.lineWidth = isHover ? 2.2 : 1.7;
+    ctx.strokeStyle = isHover ? COLORS.nodeHover : 'rgba(59, 130, 246, 0.65)';
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(59, 130, 246, 0.16)';
+    roundRect(s.x + 1, s.y + 1, s.w - 2, 28, 12);
+    ctx.fill();
+
+    ctx.fillStyle = '#93c5fd';
+    ctx.font = '700 13px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.socBanner, s.x + 16, s.y + 19.5, s.w - 32);
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11.4px ui-monospace, Menlo, "PingFang SC", sans-serif';
+    ctx.fillText(tr.socSummary, s.x + 16, s.y + 49, s.w - 32);
+
+    ctx.save();
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.25)';
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(1248, s.y + 62);
+    ctx.lineTo(1248, s.y + s.h - 4);
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = '#60a5fa';
+    ctx.font = '600 10.5px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.socExtLabel, s.x + 16, s.y + 71, 1185);
+    ctx.fillStyle = '#34d399';
+    ctx.fillText(tr.socIntLabel, 1264, s.y + 71, 360);
+
+    ctx.textAlign = 'center';
+    for (const key in socPins) {
+      const p = socPins[key];
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = '600 9.6px ui-monospace, Menlo, "PingFang SC", sans-serif';
+      ctx.fillText(tr.pins[key], p.x, p.y - 10, 142);
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 4.5, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = '#0b111e';
+      ctx.stroke();
+    }
+    ctx.textAlign = 'left';
+  }
+
+  function drawSpeedPill(cx, cy, bw, spec, color, compact = false, customW = null) {
+    const w = customW || (compact ? 88 : 126);
+    const h = compact ? 26 : 32;
+    roundRect(cx - w / 2, cy - h / 2, w, h, 5);
+    ctx.fillStyle = '#0d1526';
+    ctx.fill();
+    ctx.lineWidth = 1.1;
+    ctx.strokeStyle = color;
+    ctx.stroke();
+
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = compact ? '700 9.6px ui-monospace, Menlo, sans-serif' : '700 10.6px ui-monospace, Menlo, sans-serif';
+    ctx.fillText(bw, cx, cy - 1.5, w - 8);
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = compact ? '8.8px "Segoe UI", "PingFang SC", sans-serif' : '9.4px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(spec, cx, cy + 9.5, w - 8);
+    ctx.textAlign = 'left';
+  }
+
+  function drawLinks(activeSet) {
+    const specs = t().linkSpecs;
+    for (const l of links) {
+      const sp = specs[l.specKey];
+      const isActive = !activeSet || (activeSet.has(l.from) && activeSet.has(l.to));
+      ctx.save();
+      ctx.globalAlpha = isActive ? 1 : 0.16;
+      ctx.strokeStyle = l.color;
+      ctx.lineWidth = (isActive && activeSet) ? l.width + 1.2 : l.width;
+      if (l.dashed) ctx.setLineDash([6, 4]);
+
+      const dst = getNode(l.to);
+
+      if (l.pin) {
+        const p = socPins[l.pin];
+        const x2 = dst.x + dst.w / 2;
+        const y2 = dst.y;
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y + 4);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        drawArrow(x2, y2, 'down', l.color);
+        drawSpeedPill((p.x + x2) / 2, (p.y + y2) / 2, sp.bw, sp.spec, l.color);
+      } else if (l.mode === 'lan_fan') {
+        const src = getNode(l.from);
+        const x1 = l.srcX;
+        const y1 = src.y + src.h;
+        const x2 = dst.x + dst.w / 2;
+        const y2 = dst.y;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x1, l.midY);
+        ctx.lineTo(x2, l.midY);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        drawArrow(x2, y2, 'down', l.color);
+        drawSpeedPill(x2, l.pillY, sp.bw, sp.spec, l.color, true, 92);
+      } else if (l.mode === 'sata_drop') {
+        const src = getNode(l.from);
+        const x1 = l.srcX;
+        const y1 = src.y + src.h;
+        const x2 = dst.x + dst.w / 2;
+        const y2 = dst.y;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        if (Math.abs(x1 - x2) > 1) {
+          ctx.lineTo(x1, l.midY); ctx.lineTo(x2, l.midY);
+        }
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        drawArrow(x2, y2, 'down', l.color);
+        drawSpeedPill(x2, l.pillY, sp.bw, sp.spec, l.color, true, 78);
+      } else if (l.mode === 'dual_exp_route') {
+        const src = getNode(l.from);
+        const sx = l.srcX;
+        const sy = src.y + src.h;
+        const ty = dst.y + dst.h / 2;
+        const tx = dst.x;
+        ctx.beginPath();
+        ctx.moveTo(sx, sy);
+        ctx.lineTo(sx, l.exitY);
+        ctx.lineTo(l.corridorX, l.exitY);
+        ctx.lineTo(l.corridorX, l.busY);
+        ctx.lineTo(l.entryX, l.busY);
+        ctx.lineTo(l.entryX, ty);
+        ctx.lineTo(tx, ty);
+        ctx.stroke();
+        drawArrow(tx, ty, 'right', l.color);
+        drawSpeedPill(l.pillX, l.pillY, sp.bw, sp.spec, l.color, true, 88);
+      } else if (l.mode === 'pm_fan') {
+        const src = getNode(l.from);
+        const x1 = src.x + src.w / 2;
+        const y1 = src.y + src.h;
+        const x2 = dst.x + dst.w / 2;
+        const y2 = dst.y;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1); ctx.lineTo(x1, l.midY); ctx.lineTo(x2, l.midY); ctx.lineTo(x2, y2);
+        ctx.stroke();
+        drawArrow(x2, y2, 'down', l.color);
+        drawSpeedPill(x2, l.pillY, sp.bw, sp.spec, l.color, true, 78);
+      }
+
+      ctx.restore();
+    }
+  }
+
+  function drawNodes(activeSet) {
+    const trNodes = t().nodes;
+    drawSoCNode(hoveredNode && hoveredNode.id === 'soc');
+
+    for (const n of nodes) {
+      if (n.type === 'soc') continue;
+      const nt = trNodes[n.id];
+      const isHover = hoveredNode && hoveredNode.id === n.id;
+      const isActive = !activeSet || activeSet.has(n.id);
+      const innerMaxW = n.w - 16;
+
+      ctx.save();
+      ctx.globalAlpha = isActive ? 1 : 0.25;
+
+      roundRect(n.x, n.y, n.w, n.h, 8);
+      ctx.fillStyle = (n.type === 'hdd' || n.type === 'ext_hdd') ? '#111b2e' : COLORS.nodeBg;
+      ctx.fill();
+
+      ctx.lineWidth = isHover ? 2.2 : 1.3;
+      ctx.strokeStyle = isHover ? COLORS.nodeHover : (n.color || COLORS.nodeBorder);
+      ctx.stroke();
+
+      ctx.fillStyle = n.color;
+      roundRect(n.x + 1, n.y + 1, n.w - 2, 4, 2);
+      ctx.fill();
+
+      if (n.type === 'chip') {
+        ctx.fillStyle = n.color;
+        ctx.font = '700 9.6px ui-monospace, Menlo, sans-serif';
+        ctx.fillText(nt.bdf, n.x + 8, n.y + 19, innerMaxW);
+
+        ctx.fillStyle = COLORS.textMain;
+        ctx.font = '700 12px "Segoe UI", "PingFang SC", sans-serif';
+        ctx.fillText(nt.title, n.x + 8, n.y + 36, innerMaxW);
+
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '10.2px "Segoe UI", "PingFang SC", sans-serif';
+        const lineStep = n.h <= 96 ? 13.5 : 14.5;
+        nt.lines.forEach((line, idx) => {
+          ctx.fillText(line, n.x + 8, n.y + 52 + idx * lineStep, innerMaxW);
+        });
+
+        if (nt.badge) {
+          const by = n.y + n.h - 22;
+          roundRect(n.x + 7, by, n.w - 14, 17, 4);
+          if (n.badgeLevel === 'crit') {
+            ctx.fillStyle = COLORS.critBg;
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(248, 113, 113, 0.45)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.fillStyle = COLORS.critText;
+          } else if (n.badgeLevel === 'warn') {
+            ctx.fillStyle = COLORS.warnBg;
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(251, 191, 36, 0.4)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.fillStyle = COLORS.warnText;
+          } else {
+            ctx.fillStyle = COLORS.okBg;
+            ctx.fill();
+            ctx.fillStyle = COLORS.okText;
+          }
+          ctx.font = '700 9.2px "Segoe UI", "PingFang SC", sans-serif';
+          ctx.fillText(nt.badge, n.x + 11, by + 11.8, n.w - 22);
+        }
+      } else if (n.type === 'hdd') {
+        ctx.fillStyle = n.color;
+        ctx.font = '700 9.6px "Segoe UI", "PingFang SC", sans-serif';
+        ctx.fillText(nt.bay, n.x + 8, n.y + 20, innerMaxW);
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '700 12px "Segoe UI", "PingFang SC", sans-serif';
+        ctx.fillText(nt.title, n.x + 8, n.y + 39, innerMaxW);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '9.8px "Segoe UI", "PingFang SC", sans-serif';
+        nt.lines.forEach((line, idx) => {
+          ctx.fillText(line, n.x + 8, n.y + 57 + idx * 15, innerMaxW);
+        });
+      } else if (n.type === 'ext_hdd') {
+        ctx.fillStyle = '#fda4af';
+        ctx.font = '700 9.5px ui-monospace, Menlo, sans-serif';
+        ctx.fillText(nt.bay, n.x + 8, n.y + 21, n.w - 16);
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '700 12px "Segoe UI", "PingFang SC", sans-serif';
+        ctx.fillText(nt.title, n.x + 8, n.y + 42, n.w - 16);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '10px "Segoe UI", "PingFang SC", sans-serif';
+        ctx.fillText(nt.lines[0], n.x + 8, n.y + 62, n.w - 16);
+      }
+
+      ctx.restore();
+    }
+  }
+
+  function drawInfoPanels() {
+    const tr = t();
+    // Panel 1: Architecture Overview (x=40..684, y=576..654)
+    roundRect(40, 576, 644, 78, 10);
+    ctx.fillStyle = '#101829';
+    ctx.fill();
+    ctx.strokeStyle = '#24324d';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#38bdf8';
+    ctx.font = '700 11.5px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.panel1Title, 52, 594, 620);
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '10.2px "Segoe UI", "PingFang SC", sans-serif';
+    tr.panel1Lines.forEach((txt, i) => {
+      ctx.fillText(txt, 52, 612 + i * 16.5, 620);
+    });
+
+    // Panel 2: Legend & Bottleneck Guide (x=40..536, y=700..988)
+    roundRect(40, 700, 496, 288, 12);
+    ctx.fillStyle = '#101829';
+    ctx.fill();
+    ctx.strokeStyle = '#24324d';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = '700 13px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.panel2Title, 56, 726, 464);
+
+    const legendMeta = [
+      { color: COLORS.pcie3x4,  x: 56,  y: 754, maxW: 195 },
+      { color: COLORS.pcie3x2,  x: 288, y: 754, maxW: 205 },
+      { color: COLORS.nic10g,   x: 56,  y: 778, maxW: 195 },
+      { color: COLORS.pcie1x1,  x: 288, y: 778, maxW: 205 },
+      { color: COLORS.esata,    x: 56,  y: 802, maxW: 195 },
+      { color: COLORS.internal, x: 288, y: 802, maxW: 205, dashed: true }
+    ];
+
+    ctx.font = '600 10.6px "Segoe UI", "PingFang SC", sans-serif';
+    legendMeta.forEach((it, idx) => {
+      ctx.save();
+      ctx.strokeStyle = it.color;
+      ctx.lineWidth = 3.2;
+      if (it.dashed) ctx.setLineDash([5, 3]);
+      ctx.beginPath();
+      ctx.moveTo(it.x, it.y - 4);
+      ctx.lineTo(it.x + 24, it.y - 4);
+      ctx.stroke();
+      ctx.restore();
+      ctx.fillStyle = '#e2e8f0';
+      ctx.fillText(tr.legend[idx], it.x + 32, it.y, it.maxW);
+    });
+
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.16)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(56, 822);
+    ctx.lineTo(520, 822);
+    ctx.stroke();
+
+    const noteColors = [COLORS.critText, COLORS.okText, COLORS.warnText];
+    let ny = 848;
+    tr.notes.forEach((nt, idx) => {
+      ctx.fillStyle = noteColors[idx];
+      ctx.font = '700 11.2px "Segoe UI", "PingFang SC", sans-serif';
+      ctx.fillText(nt.title, 56, ny, 464);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '10.6px "Segoe UI", "PingFang SC", sans-serif';
+      ctx.fillText(nt.text, 56, ny + 17, 464);
+      ny += 45;
+    });
+  }
+
+  function syncToolbarUI() {
+    const tr = t();
+    document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
+    document.title = tr.pageTitle;
+    navHome.textContent = tr.navHome;
+    uiTitle.textContent = tr.toolbarTitle;
+    uiSubtitle.textContent = tr.toolbarSub;
+    btnExport.textContent = tr.exportBtn;
+    uiFooter.innerHTML = '<a href="https://github.com/Einsfier/synology-hardware-topology" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;color:#94a3b8;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;"><svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>Einsfier/synology-hardware-topology</a>';
+    footerHome.textContent = tr.footerHome;
+    btnZh.classList.toggle('active', currentLang === 'zh');
+    btnEn.classList.toggle('active', currentLang === 'en');
+  }
+
+  function render() {
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = LOGICAL_W * dpr;
+    canvas.height = LOGICAL_H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    drawGrid();
+    drawHeader();
+    drawEnclosures();
+    drawInfoPanels();
+
+    const activeNode = pinnedNode || hoveredNode;
+    const activeSet = activeNode ? getRelatedIds(activeNode.id) : null;
+    drawLinks(activeSet);
+    drawPortMarkers();
+    drawNodes(activeSet);
+
+    ctx.fillStyle = '#64748b';
+    ctx.font = '11px ui-monospace, Menlo, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText('github.com/Einsfier/synology-hardware-topology', LOGICAL_W - 40, LOGICAL_H - 13);
+    ctx.textAlign = 'left';
+  }
+
+  function setLang(lang) {
+    if (lang !== 'zh' && lang !== 'en') return;
+    currentLang = lang;
+    try { localStorage.setItem('syno_topo_lang', lang); } catch (_) {}
+    pinnedNode = null;
+    hoveredNode = null;
+    tooltip.style.display = 'none';
+    syncToolbarUI();
+    render();
+  }
+
+  function hitTest(mx, my) {
+    for (let i = nodes.length - 1; i >= 0; i--) {
+      const n = nodes[i];
+      if (mx >= n.x && mx <= n.x + n.w && my >= n.y && my <= n.y + n.h) return n;
+    }
+    return null;
+  }
+
+  function updateTooltip(node, clientX, clientY) {
+    if (!node) {
+      tooltip.style.display = 'none';
+      return;
+    }
+    const tr = t();
+    const nt = tr.nodes[node.id];
+    if (!nt || !nt.meta) {
+      tooltip.style.display = 'none';
+      return;
+    }
+    const m = nt.meta;
+    const k = tr.ttKeys;
+    let html = `<div class="tt-title">${nt.title}</div>`;
+    if (m.bdf) html += `<div class="tt-bdf">${m.bdf}</div>`;
+    if (m.cap) html += `<div class="tt-row"><span class="tt-key">${k.cap}</span><span class="tt-val">${m.cap}</span></div>`;
+    if (m.sta) html += `<div class="tt-row"><span class="tt-key">${k.sta}</span><span class="tt-val">${m.sta}</span></div>`;
+    if (m.driver) html += `<div class="tt-row"><span class="tt-key">${k.driver}</span><span class="tt-val">${m.driver}</span></div>`;
+    if (m.detail) html += `<div style="margin-top:6px;color:#cbd5e1;font-size:11.5px;">${m.detail}</div>`;
+    if (m.warn) html += `<div class="tt-warn">⚠ ${m.warn}</div>`;
+    if (m.crit) html += `<div class="tt-crit">⛔ ${m.crit}</div>`;
+
+    tooltip.innerHTML = html;
+    tooltip.style.display = 'block';
+
+    const rect = wrap.getBoundingClientRect();
+    const ttW = tooltip.offsetWidth || 340;
+    const ttH = tooltip.offsetHeight || 180;
+    let left = clientX - rect.left + 16;
+    let top = clientY - rect.top + 16;
+    if (left + ttW + 10 > rect.width) left = clientX - rect.left - ttW - 16;
+    if (top + ttH + 10 > rect.height) top = clientY - rect.top - ttH - 16;
+    left = Math.max(8, Math.min(left, Math.max(8, rect.width - ttW - 8)));
+    top = Math.max(8, Math.min(top, Math.max(8, rect.height - ttH - 8)));
+    tooltip.style.left = left + 'px';
+    tooltip.style.top = top + 'px';
+  }
+
+  function getLogicalCoords(e) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+      mx: (e.clientX - rect.left) * (LOGICAL_W / rect.width),
+      my: (e.clientY - rect.top) * (LOGICAL_H / rect.height)
+    };
+  }
+
+  canvas.addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse' || pinnedNode) return;
+    const { mx, my } = getLogicalCoords(e);
+    const hit = hitTest(mx, my);
+    canvas.style.cursor = hit ? 'pointer' : 'default';
+    if (hit !== hoveredNode) {
+      hoveredNode = hit;
+      render();
+    }
+    updateTooltip(hit, e.clientX, e.clientY);
+  });
+
+  canvas.addEventListener('pointerdown', (e) => {
+    const { mx, my } = getLogicalCoords(e);
+    const hit = hitTest(mx, my);
+    if (!hit) {
+      if (pinnedNode || hoveredNode) {
+        pinnedNode = null;
+        hoveredNode = null;
+        tooltip.style.display = 'none';
+        render();
+      }
+      return;
+    }
+    if (pinnedNode && pinnedNode.id === hit.id) {
+      pinnedNode = null;
+      if (e.pointerType !== 'mouse') {
+        hoveredNode = null;
+        tooltip.style.display = 'none';
+      }
+    } else {
+      pinnedNode = hit;
+      hoveredNode = hit;
+      updateTooltip(hit, e.clientX, e.clientY);
+    }
+    render();
+  });
+
+  canvas.addEventListener('pointerleave', (e) => {
+    if (e.pointerType !== 'mouse' || pinnedNode) return;
+    hoveredNode = null;
+    tooltip.style.display = 'none';
+    render();
+  });
+
+  document.addEventListener('pointerdown', (e) => {
+    if (pinnedNode && !wrap.contains(e.target)) {
+      pinnedNode = null;
+      hoveredNode = null;
+      tooltip.style.display = 'none';
+      render();
+    }
+  });
+
+  btnZh.addEventListener('click', () => setLang('zh'));
+  btnEn.addEventListener('click', () => setLang('en'));
+
+  btnExport.addEventListener('click', () => {
+    pinnedNode = null;
+    hoveredNode = null;
+    tooltip.style.display = 'none';
+    render();
+    const link = document.createElement('a');
+    link.download = t().exportName;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
+
+  window.addEventListener('resize', render);
+  syncToolbarUI();
+  render();
+})();
+</script>
+</body>
+</html>
