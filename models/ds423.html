@@ -321,7 +321,7 @@
       footerHome: '返回 Synology Hardware Topology 首页',
       pageTitle: 'Synology DS423 (Realtek RTD1619B) 硬件架构与 4 盘位拓扑图',
       toolbarTitle: 'Synology DS423 硬件互联与 4 盘位拓扑图（价值系列 · Realtek RTD1619B + 双 1GbE）',
-      toolbarSub: '依据 Synology 官方规格、硬件安装指南与 RTD1619B ARM64 平台架构绘制（* 为平台推算项，待实机 dmesg / sysfs / lspci 核验）｜ 悬停或点击查看详情',
+      toolbarSub: '依据 Synology 官方规格、硬件安装指南与 RTD1619B ARM64 平台架构绘制（* 为平台推算项，待实机 lspci / syno_slot_mapping / sysfs 核验）｜ 悬停或点击查看详情',
       exportBtn: '导出高清 PNG',
       exportName: 'synology-ds423-4bay-topology-zh.png',
       canvasTitle: 'SYNOLOGY DS423 硬件架构与 4 盘位内部互联拓扑图（VALUE 价值系列）',
@@ -362,7 +362,7 @@
         '• 接口与散热确认：2× 1GbE RJ-45 (支持 LACP/故障转移，官方顺序读写 225/218 MB/s)、2× 后置 USB 3.2 Gen 1、双 80mm 风扇',
         '• 软件与存储能力：支持 Btrfs 快照与 SHR/RAID 0/1/5/6/10（单卷上限 108 TB）；无 M.2 NVMe、无扩展柜、官方无 Container Manager',
         '• ARM 平台架构特性：RTD1619B 外设多以片内 Platform Bus / SerDes 挂载，SSH 下 lspci 通常不显示片内原生 SATA 与 GMAC 设备',
-        '• * 平台推算说明：4 盘位在片内原生 SATA 与外置 PCIe-to-SATA 桥接间的具体分配、以及双 1GbE 的 PHY/PCIe 归属待实机 dmesg/sysfs 核验'
+        '• * 平台推算说明：4 盘位在片内原生 SATA 与外置 PCIe-to-SATA 桥接间的具体分配、以及双 1GbE 的 PHY/PCIe 归属待实机 lspci / sysfs 核验'
       ],
       panel2Title: '链路图例与关键瓶颈分析',
       legend: [
@@ -393,7 +393,7 @@
           lines: ['后置 RJ-45 1GbE 端口 2', '支持链路聚合 / 故障转移', '推算经 PCIe x1 扩展网卡*'],
           badge: '1GbE 线速 125 MB/s · 链路充足',
           meta: {
-            bdf: 'Onboard NIC #2 (具体芯片型号待实机 dmesg / ethtool -i 核验)',
+            bdf: 'Onboard NIC #2 (具体芯片型号待实机 lspci / sysfs 核验)',
             cap: '推算 PCIe 1.1/2.0 x1 (250–500 MB/s) ｜ 1GbE 全双工',
             sta: '与 LAN 1 配合实现双千兆 LACP (官方实测 225/218 MB/s)',
             driver: 'r8168 / Realtek GbE (推算*)',
@@ -417,7 +417,7 @@
           lines: ['SoC 片内 2口 SATA III*', 'Platform Bus 直连 (免 PCIe)', '承载内置盘位 3 / 4 (推算*)'],
           badge: '片内直连 · 无外置 PCIe 争抢',
           meta: {
-            bdf: 'Realtek RTD1619B Integrated SATA Host Controller (待 dmesg / sysfs 核验)',
+            bdf: 'Realtek RTD1619B Integrated SATA Host Controller (待实机 syno_slot_mapping / sysfs 核验)',
             cap: 'SoC 片内总线直连 ｜ 2× 原生 SATA III 6Gbps*',
             sta: '直连 2 块内置热插拔盘位（具体盘位号映射待 sysfs 确认）',
             driver: 'ahci_rtk / platform ahci',
@@ -504,7 +504,7 @@
       footerHome: 'Back to Synology Hardware Topology',
       pageTitle: 'Synology DS423 (Realtek RTD1619B) Hardware & 4-Bay SATA Topology',
       toolbarTitle: 'Synology DS423 Hardware Topology (Value Series · Realtek RTD1619B + Dual 1GbE)',
-      toolbarSub: 'Compiled from Synology official specs, hardware guide & RTD1619B ARM64 architecture (* = platform-inferred; awaiting dmesg/sysfs/lspci)  |  Hover or tap to inspect',
+      toolbarSub: 'Compiled from Synology official specs, hardware guide & RTD1619B ARM64 architecture (* = platform-inferred; awaiting lspci / syno_slot_mapping / sysfs)  |  Hover or tap to inspect',
       exportBtn: 'Export PNG',
       exportName: 'synology-ds423-4bay-topology-en.png',
       canvasTitle: 'SYNOLOGY DS423 HARDWARE & 4-BAY INTERNAL TOPOLOGY (VALUE SERIES)',
@@ -545,7 +545,7 @@
         '• Confirmed I/O & Cooling: 2× 1GbE RJ-45 (LACP / failover, rated 225/218 MB/s seq R/W), 2× rear USB 3.2 Gen 1 (5Gbps), dual 80mm fans',
         '• Storage & DSM Scope: Supports Btrfs snapshots & SHR/RAID 0/1/5/6/10 (108 TB max volume); no M.2 NVMe, no expansion unit, no official Docker',
         '• ARM SoC Bus Behavior: RTD1619B exposes native SATA & GMAC over on-die Platform Bus/SerDes rather than standard x86 PCIe, so lspci omits them',
-        '• * Platform-Inferred Items: Exact split between native SATA & onboard PCIe SATA bridge, plus dual-1GbE PHY/PCIe wiring await dmesg/sysfs dump'
+        '• * Platform-Inferred Items: Exact split between native SATA & onboard PCIe SATA bridge, plus dual-1GbE PHY/PCIe wiring await lspci / sysfs dump'
       ],
       panel2Title: 'Link Legend & Key Bottlenecks',
       legend: [
@@ -576,7 +576,7 @@
           lines: ['Rear RJ-45 1GbE Port 2', 'LACP / Failover Support', 'Inferred via PCIe x1 NIC*'],
           badge: '1GbE 125 MB/s · Ample Headroom',
           meta: {
-            bdf: 'Onboard NIC #2 (Exact IC pending live dmesg / ethtool -i verification)',
+            bdf: 'Onboard NIC #2 (Exact IC pending live lspci / sysfs verification)',
             cap: 'Inferred PCIe 1.1/2.0 x1 (250–500 MB/s) | Full-Duplex 1GbE',
             sta: 'Pairs with LAN 1 for dual-GbE LACP (225/218 MB/s official rated)',
             driver: 'r8168 / Realtek GbE (Inferred*)',
@@ -600,7 +600,7 @@
           lines: ['On-Die 2-Port SATA III*', 'Platform Bus Direct (No PCIe)', 'Serves Internal Bays 3–4*'],
           badge: 'On-Die Direct · No PCIe Cap',
           meta: {
-            bdf: 'Realtek RTD1619B Integrated SATA Host Controller (Pending dmesg / sysfs)',
+            bdf: 'Realtek RTD1619B Integrated SATA Host Controller (Pending syno_slot_mapping / sysfs)',
             cap: 'On-Die Platform Bus | 2× Native SATA III 6Gbps*',
             sta: 'Direct to 2 internal hot-swap bays (exact bay indices pending sysfs)',
             driver: 'ahci_rtk / platform ahci',

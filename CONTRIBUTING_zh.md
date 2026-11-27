@@ -47,7 +47,7 @@ lrwxrwxrwx 1 root root 0 ... /sys/block/sata3 -> ../devices/pci0000:00/0000:00:0
 ### 页面规范
 
 - **单文件与脱敏**：内联 CSS、Canvas 2D 与 Vanilla JS，零外部依赖。盘位统一使用通用名称（如 `SATA 盘位 1`、`M.2 2280 NVMe #1`），不含个人硬件标识；文案客观简洁，文档不使用 emoji。
-- **数据准确性**：有实机输出时严格按实机绘制（`status: 'verified'`）；依据官方规格与拆解推算时标为 `status: 'inferred'`，并用 `*` 或 `(推算)` 明确区分推算项。有效单向带宽按 PCIe 1.x/2.x (8b/10b)、PCIe 3.0/4.0 (128b/130b) 计算。
+- **数据准确性**：有实机输出时严格按实机绘制（`status: 'verified'`）；依据官方规格与拆解推算时标为 `status: 'inferred'`，并用 `*` 或 `(推算)` 明确区分推算项。页面内凡涉及实机核验说明，**统一仅引用标准 3 条命令**（`lspci`、`syno_slot_mapping`、`sysfs`），不自行引入 `dmesg`、`ethtool` 等其他命令。有效单向带宽按 PCIe 1.x/2.x (8b/10b)、PCIe 3.0/4.0 (128b/130b) 计算。
 - **视觉与卡片**：沿用 `models/ds923plus.html` 的深色主题（`#0a0f1a` / `#111827` / `#24324d` / `#38bdf8`）与 `1680 × 1025` HiDPI Canvas 布局；连线不压文字，端口标签在连线之后绘制。
   - **SoC 卡片与 Hover**：展示核心/线程、主频、TDP、内存配置、有无核显、DSM 平台与 PCIe 通道预算。
   - **设备卡片**：正面副标题写物理位置/角色（如 `专用网络升级槽`、`M.2 底部仓 · 槽位 1`）；片内外设仅列 NAS 有效模块；实机核验机型在设备 Hover 副标题（`meta.bdf`）中附带精确 PCI BDF / `ataX (hostY)`。
