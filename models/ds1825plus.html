@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3QgeD0iMiIgeT0iMiIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiByeD0iMTQiIGZpbGw9IiMwYTBmMWEiIHN0cm9rZT0iIzI0MzI0ZCIgc3Ryb2tlLXdpZHRoPSIzIi8+PHJlY3QgeD0iMTgiIHk9IjEyIiB3aWR0aD0iMjgiIGhlaWdodD0iMTIiIHJ4PSIzIiBmaWxsPSIjMTMxZTMzIiBzdHJva2U9IiMzOGJkZjgiIHN0cm9rZS13aWR0aD0iMyIvPjxwYXRoIGQ9Ik0zMiAyNHYxME0xNiAzNGgzMk0xNiAzNHY4TTMyIDM0djhNNDggMzR2OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzhiZGY4IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjxyZWN0IHg9IjEwIiB5PSI0MiIgd2lkdGg9IjEyIiBoZWlnaHQ9IjEwIiByeD0iMi41IiBmaWxsPSIjNjBhNWZhIi8+PHJlY3QgeD0iMjYiIHk9IjQyIiB3aWR0aD0iMTIiIGhlaWdodD0iMTAiIHJ4PSIyLjUiIGZpbGw9IiMzOGJkZjgiLz48cmVjdCB4PSI0MiIgeT0iNDIiIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMCIgcng9IjIuNSIgZmlsbD0iIzM0ZDM5OSIvPjwvc3ZnPg==" />
+<title>Synology DS1825+ (AMD V1500B) Hardware &amp; PCIe/SATA Topology | 群晖 DS1825+ 硬件拓扑图</title>
+<meta name="description" content="Interactive hardware topology diagram for Synology DS1825+ (AMD V1500B): 16 PCIe 3.0 lanes, standard PCIe 3.0 x8 (x4 link) expansion slot, dual M.2 NVMe, dual 2.5GbE (RTL8125D), 8-bay SATA, and dual DX525 18-bay USB-C expansion. 群晖 DS1825+ 硬件互联与 18 盘位 PCIe/SATA 拓扑图。" />
+<meta name="keywords" content="Synology DS1825+, AMD V1500B, v1000nk, PCIe topology, SATA topology, PCIe x8 x4 slot, 2.5GbE, RTL8125D, DX525, USB-C expansion, 18-bay, 群晖DS1825+, 群晖硬件拓扑, 18盘位扩展" />
+<meta name="robots" content="index, follow" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Synology DS1825+ Hardware &amp; 18-Bay PCIe/SATA Topology | 群晖 DS1825+ 硬件拓扑图" />
+<meta property="og:description" content="Interactive PCIe, SATA, standard PCIe x8 (x4) slot, dual 2.5GbE, and dual DX525 topology diagram for Synology DS1825+. 群晖 DS1825+ 交互式硬件互联与 18 盘位拓扑图。" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Synology DS1825+ Hardware Topology | 群晖 DS1825+ 硬件拓扑图" />
+<meta name="twitter:description" content="Interactive 18-bay PCIe/SATA/2.5GbE/USB-C expansion topology diagram for Synology DS1825+ (AMD V1500B) | 群晖 DS1825+ 硬件拓扑图。" />
+<style>
+  :root {
+    --bg: #0a0f1a;
+    --panel: #111827;
+    --border: #24324d;
+    --text: #e6edf7;
+    --muted: #8fa3c4;
+    --accent: #38bdf8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", monospace;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+  }
+  .nav-bar {
+    width: 100%;
+    max-width: 1680px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+  .nav-left, .nav-models {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    text-decoration: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 11px;
+    font-weight: 600;
+    transition: all 0.15s ease;
+  }
+  .nav-link:hover {
+    color: #fff;
+    border-color: var(--accent);
+    background: #1b2840;
+  }
+  .nav-link.active {
+    color: #fff;
+    background: #1d4ed8;
+    border-color: #3b82f6;
+  }
+  .toolbar {
+    width: 100%;
+    max-width: 1680px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 18px;
+    margin-bottom: 12px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .title-group h1 {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: #f8fafc;
+  }
+  .title-group p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .lang-switch {
+    display: inline-flex;
+    background: #0d1526;
+    border: 1px solid #32476b;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .lang-switch button {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .lang-switch button.active {
+    background: #2563eb;
+    color: #ffffff;
+  }
+  .lang-switch button:not(.active):hover {
+    background: #1b2840;
+    color: #f8fafc;
+  }
+  button.action-btn {
+    background: #1b2840;
+    color: var(--text);
+    border: 1px solid #32476b;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  button.action-btn:hover {
+    background: #253859;
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .canvas-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 1680px;
+    background: #0b111e;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 54px rgba(0, 0, 0, 0.5);
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    cursor: default;
+    touch-action: manipulation;
+  }
+  #tooltip {
+    position: absolute;
+    pointer-events: none;
+    display: none;
+    max-width: min(380px, calc(100% - 20px));
+    background: rgba(11, 17, 30, 0.97);
+    border: 1px solid #38bdf8;
+    border-radius: 8px;
+    padding: 11px 13px;
+    font-size: 12px;
+    line-height: 1.55;
+    color: #e2e8f0;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+    z-index: 20;
+  }
+  #tooltip .tt-title {
+    font-weight: 700;
+    color: #38bdf8;
+    margin-bottom: 3px;
+    font-size: 13px;
+  }
+  #tooltip .tt-bdf {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    color: #94a3b8;
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+  #tooltip .tt-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid rgba(148, 163, 184, 0.14);
+    padding-top: 3px;
+    margin-top: 3px;
+  }
+  #tooltip .tt-key { color: #94a3b8; white-space: nowrap; }
+  #tooltip .tt-val { color: #f8fafc; font-weight: 600; text-align: right; }
+  #tooltip .tt-warn { color: #fbbf24; margin-top: 6px; font-size: 11.5px; }
+  #tooltip .tt-crit { color: #f87171; margin-top: 6px; font-size: 11.5px; font-weight: 600; }
+  .seo-footer {
+    width: 100%;
+    max-width: 1680px;
+    margin-top: 14px;
+    padding: 12px 18px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .seo-footer a { color: var(--accent); text-decoration: none; }
+  .seo-footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar" aria-label="Breadcrumb">
+  <div class="nav-left">
+    <a class="nav-link" id="navHome" href="../index.html">← All Models</a>
+  </div>
+  <div class="nav-models">
+    <span class="nav-link active" aria-current="page">Synology DS1825+</span>
+  </div>
+</nav>
+
+<div class="toolbar">
+  <div class="title-group">
+    <h1 id="uiTitle"></h1>
+    <p id="uiSubtitle"></p>
+  </div>
+  <div class="controls">
+    <div class="lang-switch" role="group" aria-label="Language Switcher">
+      <button id="btnZh" type="button">中文</button>
+      <button id="btnEn" type="button">EN</button>
+    </div>
+    <button id="btnExport" class="action-btn" type="button"></button>
+  </div>
+</div>
+
+<div class="canvas-wrap" id="wrap">
+  <canvas id="topoCanvas" role="img" aria-label="Synology DS1825+ Hardware and 18-Bay PCIe/SATA Topology Diagram"></canvas>
+  <div id="tooltip" role="tooltip"></div>
+</div>
+
+<noscript>
+  <div class="seo-footer">JavaScript is required to render the interactive Synology DS1825+ (AMD Ryzen Embedded V1500B) 18-bay PCIe/SATA/2.5GbE/USB-C expansion topology diagram.</div>
+</noscript>
+
+<footer class="seo-footer">
+  <span id="uiFooter"></span>
+  <a id="footerHome" href="../index.html">Synology Hardware Topology</a>
+</footer>
+
+<script>
+(() => {
+  const LOGICAL_W = 1680;
+  const LOGICAL_H = 1025;
+
+  const canvas = document.getElementById('topoCanvas');
+  const ctx = canvas.getContext('2d');
+  const tooltip = document.getElementById('tooltip');
+  const wrap = document.getElementById('wrap');
+  const uiTitle = document.getElementById('uiTitle');
+  const uiSubtitle = document.getElementById('uiSubtitle');
+  const btnExport = document.getElementById('btnExport');
+  const btnZh = document.getElementById('btnZh');
+  const btnEn = document.getElementById('btnEn');
+  const navHome = document.getElementById('navHome');
+  const uiFooter = document.getElementById('uiFooter');
+  const footerHome = document.getElementById('footerHome');
+
+  const COLORS = {
+    bg: '#0b111e',
+    grid: 'rgba(148, 163, 184, 0.045)',
+    socBg: '#101a2e',
+    nodeBg: '#131e33',
+    nodeBorder: '#293b5c',
+    nodeHover: '#38bdf8',
+    pcie3x4: '#38bdf8',   // Sky (Standard PCIe 3.0 x8/x4 Open Slot)
+    pcie3x2: '#22d3ee',   // Cyan (M.2 Gen3 x2)
+    pcie3sata: '#60a5fa', // Blue (Dual 5-Port SATA Ctrl Gen3 x2)
+    pcie2x1: '#f59e0b',   // Amber (RTL8125D Gen2.1 x1)
+    internal: '#34d399',  // Emerald (On-Die Bus / FCH SATA)
+    sata: '#38bdf8',      // Sky (SATA III)
+    esata: '#fb7185',     // Rose (USB-C Expansion / DX525)
+    warnBg: 'rgba(245, 158, 11, 0.16)',
+    warnText: '#fbbf24',
+    critBg: 'rgba(239, 68, 68, 0.18)',
+    critText: '#f87171',
+    okBg: 'rgba(52, 211, 153, 0.14)',
+    okText: '#34d399',
+    textMain: '#f1f5f9',
+    textSub: '#94a3b8'
+  };
+
+  function detectInitialLang() {
+    try {
+      const saved = localStorage.getItem('syno_topo_lang') || localStorage.getItem('ds1825_topo_lang');
+      if (saved === 'zh' || saved === 'en') return saved;
+    } catch (_) {}
+    const navLang = (navigator.language || (navigator.languages && navigator.languages[0]) || 'en').toLowerCase();
+    return navLang.startsWith('zh') ? 'zh' : 'en';
+  }
+
+  let currentLang = detectInitialLang();
+  let hoveredNode = null;
+  let pinnedNode = null;
+
+  const I18N = {
+    zh: {
+      navHome: '← 全部机型',
+      footerHome: '返回 Synology Hardware Topology 首页',
+      pageTitle: 'Synology DS1825+ (AMD V1500B) 硬件架构与 18 盘位 PCIe/SATA 拓扑图',
+      toolbarTitle: 'Synology DS1825+ 硬件互联与 18 盘位拓扑图（8× 内置 SATA + 2× DX525 扩展 = 18 盘位）',
+      toolbarSub: '数据来源：拆解推算（官方规格与 v1000nk 平台架构；SATA 控制器、部分通道宽度与盘位映射待实机 lspci / syno_slot_mapping / sysfs 核验）｜ 悬停或点击节点查看详情',
+      exportBtn: '导出高清 PNG',
+      exportName: 'synology-ds1825-18bay-topology-zh.png',
+      canvasTitle: 'SYNOLOGY DS1825+ 硬件架构与 18 盘位扩展拓扑图',
+      canvasSub: 'AMD Ryzen Embedded V1500B (4C/8T · 2.2GHz · 16× PCIe 3.0 Lanes) ｜ 标准 PCIe 3.0 x8 (x4 电气) 通用槽 + 双 M.2 NVMe + 双 2.5GbE + 双 USB-C 专用扩展口 (2× DX525)',
+      socBanner: 'AMD Ryzen Embedded V1500B SoC — v1000nk 平台（16× 外置 PCIe 3.0 通道 + 2× 片内虚拟总线）',
+      socSummary: '内存：2× DDR4 ECC SODIMM (标配8GB/最高32GB) ｜ 无核显 ｜ PCIe 预算：x4(通用槽) + x2×2(M.2) + x1×2(双2.5GbE) + x2×2*(双SATA) ≈ 14 / 16 Lanes',
+      socExtLabel: '外置 PCIe 3.0 直出通道（无需 PCIe Switch；标准 x8/x4 通用槽、双 M.2、双 2.5GbE 与双 SATA 控制器均直连 SoC）',
+      socIntLabel: '片内 Infinity Fabric 虚拟总线',
+      backplaneTitle: '内置 8 盘位硬盘背板（8× 3.5"/2.5" SATA III · 热插拔 · 推算盘位 1–4 走 SATA #1，5–6 走 SATA #2，7–8 走 FCH 直连）',
+      dx1Title: '扩展柜 #1：Synology DX525（USB-C 专用扩展 · 5 盘位）',
+      dx2Title: '扩展柜 #2：Synology DX525（USB-C 专用扩展 · 5 盘位）',
+      expPort1: 'USB-C #1',
+      expPort2: 'USB-C #2',
+      pins: {
+        p_pcie:  'PCIe 3.0 x4 (通用槽)',
+        p_nvme1: 'PCIe 3.0 x2 (推算)',
+        p_nvme2: 'PCIe 3.0 x2 (推算)',
+        p_lan1:  'PCIe 3.0 x1 直连',
+        p_lan2:  'PCIe 3.0 x1 直连',
+        p_sata1: 'PCIe 3.0 x2* (SATA1)',
+        p_sata2: 'PCIe 3.0 x2* (SATA2)',
+        p_fch:   '片内 Bus B (FCH)',
+        p_busA:  '片内 Bus A (USB)'
+      },
+      linkSpecs: {
+        l_pcie:  { bw: '3.94 GB/s',  spec: 'PCIe 3.0 x4 · 8GT/s' },
+        l_nvme1: { bw: '1.97 GB/s*', spec: 'PCIe 3.0 x2 · 8GT/s' },
+        l_nvme2: { bw: '1.97 GB/s*', spec: 'PCIe 3.0 x2 · 8GT/s' },
+        l_lan1:  { bw: '500 MB/s',   spec: 'PCIe 2.1 x1 · 5GT/s' },
+        l_lan2:  { bw: '500 MB/s',   spec: 'PCIe 2.1 x1 · 5GT/s' },
+        l_sata1: { bw: '1.97 GB/s*', spec: 'PCIe 3.0 x2 · 8GT/s' },
+        l_sata2: { bw: '1.97 GB/s*', spec: 'PCIe 3.0 x2 · 8GT/s' },
+        l_fch:   { bw: '15.75 GB/s', spec: '片内直连 · 3.0 x16' },
+        l_busA:  { bw: '15.75 GB/s', spec: '片内直连 · 3.0 x16' },
+        l_hdd:   { bw: '600 MB/s',   spec: 'SATA 6G' },
+        l_exp1:  { bw: '600 MB/s*',  spec: 'EXP1 · DX525' },
+        l_exp2:  { bw: '600 MB/s*',  spec: 'EXP2 · DX525' },
+        l_ext:   { bw: '6Gbps',      spec: '5盘共享' }
+      },
+      panel1Title: 'DS1825+ 架构核实与推算边界（数据来源：拆解推算 ｜ 对比 DS1821+ 与 DS1525+）',
+      panel1Lines: [
+        '• 官方确认：V1500B (4C/8T)、8GB ECC (最高32GB)、标准 PCIe 3.0 x8 (x4 电气) 通用槽、双 M.2、双 2.5GbE、3× USB-A、双 USB-C (2× DX525)',
+        '• 对比 DS1821+：标配内存 4GB→8GB，取消 ASM1806 + 4×1GbE 改双 2.5GbE 直连 CPU，2× eSATA 换双 USB-C，USB-A 由 4 个减为 3 个',
+        '• 对比 DS1525+：保留标准半高 PCIe 3.0 x8 (x4 链路) 通用槽（兼容 10G/25G 网卡），官测顺序读/写高达 2,239 / 1,573 MB/s',
+        '• 平台推算：RTL8125D 同代延续；10 路 SATA (8 内置 + 2 扩展) 推算为双 5 口 AHCI* + FCH (2口)；待实机 lspci / syno_slot_mapping / sysfs 核验'
+      ],
+      panel2Title: '链路图例与关键瓶颈分析',
+      legend: [
+        'PCIe 3.0 x4 · 通用扩展槽 (~3.94 GB/s)',
+        'PCIe 3.0 x2* · M.2 / SATA (~1.97 GB/s)',
+        'PCIe 2.1 x1 · 双 2.5GbE (500 MB/s)',
+        'SATA III 6Gbps (600 MB/s)',
+        'USB-C 专用扩展链路 (DX525)',
+        '片内虚拟总线 3.0 x16 (~15.75 GB/s)'
+      ],
+      notes: [
+        { title: '1. 强瓶颈 · 单台 DX525 5 盘共享单路扩展上行', text: '每路 USB-C 专用口（底层 eSATA+UART）承载 5 盘，并发上限约 ~600 MB/s (~120 MB/s/盘)。' },
+        { title: '2. 扩展优势 · 标准半高 PCIe 3.0 x8 (x4 电气) 通用槽', text: '3.94 GB/s 带宽支持 10GbE/25GbE 网卡或 E10M20-T1，官测吞吐可达 2,239 / 1,573 MB/s。' },
+        { title: '3. 直连精简 · 取消 PCIe Switch，双 2.5GbE 与双 SATA 直连 SoC', text: '8 内置盘 + 2 扩展口由双独立 SATA 控制器与 FCH 分担，常规机械盘并发无明显 PCIe 瓶颈。' }
+      ],
+      ttKeys: { cap: '硬件规格', sta: '链路状态', driver: '驱动 / 芯片' },
+      nodes: {
+        soc: {
+          title: 'AMD Ryzen Embedded V1500B SoC (Great Horned Owl)',
+          meta: {
+            bdf: 'DSM Platform: v1000nk ｜ 数据来源：拆解推算',
+            cap: '4C/8T @ 2.2GHz · 16W TDP · 16× PCIe 3.0 Lanes · 无核显',
+            sta: '内存 2× DDR4 ECC SODIMM (标配 8GB / 最高 32GB) ｜ 推算已用约 14 / 16 通道',
+            detail: '提供 16 条外置 PCIe 3.0 通道与片内 2 路原生 FCH SATA；凭借充裕通道预算，DS1825+ 无需 PCIe Switch 即可直连标准 x4 通用槽、双 M.2、双 2.5GbE 与双独立 SATA 控制器。'
+          }
+        },
+        dev_pcie: {
+          bdf: '标准半高扩展槽 (官方确认)', title: 'PCIe 3.0 x8 (x4 电气)',
+          lines: ['标准低矮挡板通用槽', '支持 10GbE / 25GbE', '官测 2239/1573 MB/s'],
+          badge: '3.94 GB/s · 10G/25G 就绪',
+          meta: {
+            bdf: 'Standard Low-Profile PCIe 3.0 x8 Slot (x4 Link) — 官方规格确认',
+            cap: '物理 x8 插槽 ｜ 电气 PCIe 3.0 x4 (~3.94 GB/s)',
+            sta: '开放通用槽（兼容 E10G30-T2 / E10G18-T2 / E25G30-F2 等网卡及 M.2 扩展卡）',
+            driver: '随扩展卡驱动加载',
+            detail: '相比 DS1525+ 的专用 Mini 槽，标准 PCIe 3.0 x4 通用槽具备 ~3.94 GB/s 有效单向带宽，可跑满双口 10GbE 或 25GbE SFP28，官方测试顺序读/写最高 2,239 / 1,573 MB/s。'
+          }
+        },
+        dev_nvme1: {
+          bdf: '内置主板仓 · M.2 槽位 1', title: 'M.2 2280 NVMe #1',
+          lines: ['缓存 / NVMe 存储池', '平台推算: 3.0 x2*', '非热插拔 (机身内侧)'],
+          badge: '无 x1 限速 (~1.8GB/s)',
+          meta: {
+            bdf: 'Internal M.2 2280 NVMe Slot #1 (官方确认槽位，x2 宽度推算)',
+            cap: 'PCIe 3.0 x2* (~1.97 GB/s)',
+            sta: 'CPU 直出 PCIe 3.0 通道（待实机 lspci 核验精确 BDF 与宽度）',
+            driver: 'nvme',
+            detail: '位于机身硬盘仓左侧内壁，支持 2280 规格 NVMe SSD 读写缓存及原生存储池；实际顺序吞吐约 ~1.6–1.8 GB/s。'
+          }
+        },
+        dev_nvme2: {
+          bdf: '内置主板仓 · M.2 槽位 2', title: 'M.2 2280 NVMe #2',
+          lines: ['缓存 / NVMe 存储池', '平台推算: 3.0 x2*', '非热插拔 (机身内侧)'],
+          badge: '无 x1 限速 (~1.8GB/s)',
+          meta: {
+            bdf: 'Internal M.2 2280 NVMe Slot #2 (官方确认槽位，x2 宽度推算)',
+            cap: 'PCIe 3.0 x2* (~1.97 GB/s)',
+            sta: 'CPU 直出 PCIe 3.0 通道（待实机 lspci 核验精确 BDF 与宽度）',
+            driver: 'nvme',
+            detail: '与 M.2 #1 组建双盘 RAID 1 读写缓存或独立高速 NVMe 存储池，适合虚拟机、容器与高并发小文件负载。'
+          }
+        },
+        dev_lan1: {
+          bdf: '主板板载 (直连 CPU)', title: 'RTL8125D · LAN 1',
+          lines: ['板载 2.5GbE RJ-45', '接口: PCIe 2.1 x1', '驱动: r8125 (推算)'],
+          badge: '3.0→2.1x1 (2.5G满速)',
+          meta: {
+            bdf: 'Onboard 2.5GbE NIC #1 (同代 v1000nk 平台 RTL8125D 推算)',
+            cap: 'PCIe 2.1 x1 (5GT/s, 500 MB/s)',
+            sta: '2.5GbE 线速 312.5 MB/s · 支持 LACP / 故障转移',
+            driver: 'r8125',
+            detail: '取代前代 DS1821+ 的 ASM1806 + 4× RTL8111H，直接占用 1 条 SoC PCIe 通道，摆脱 PCIe Switch 中转。'
+          }
+        },
+        dev_lan2: {
+          bdf: '主板板载 (直连 CPU)', title: 'RTL8125D · LAN 2',
+          lines: ['板载 2.5GbE RJ-45', '接口: PCIe 2.1 x1', 'LACP / SMB 多通道'],
+          badge: '3.0→2.1x1 (2.5G满速)',
+          meta: {
+            bdf: 'Onboard 2.5GbE NIC #2 (同代 v1000nk 平台 RTL8125D 推算)',
+            cap: 'PCIe 2.1 x1 (5GT/s, 500 MB/s)',
+            sta: '双口聚合上限 ~5 Gbps (~625 MB/s)',
+            driver: 'r8125',
+            detail: '开箱即提供双 2.5GbE 网络能力；更高带宽需求可通过标准 PCIe 3.0 x4 槽加装 10GbE / 25GbE 网卡。'
+          }
+        },
+        dev_sata1: {
+          bdf: '独立 SATA 控制器 #1 (推算)', title: '5口 AHCI SATA #1*',
+          lines: ['推算: JMB585 级 5口', '支持 Port Multiplier', '内置 1–4 + USB-C #1'],
+          badge: '3.0 x2* (1.97 GB/s 充裕)',
+          meta: {
+            bdf: 'Discrete PCIe SATA Controller #1 (拆解推算，待实机 lspci 确认)',
+            cap: 'PCIe 3.0 x2* (~1.97 GB/s) · 5× SATA 6Gbps',
+            sta: '推算承载内置盘位 1–4 (4口) + USB-C #1 / DX525 #1 (1口) = 5 口满配',
+            driver: 'ahci',
+            warn: '若 4 块内置 SATA SSD 与 DX525 #1 同时满载读写，总吞吐会逼近 1.97 GB/s 上行上限；常规机械盘场景充裕，具体芯片与盘位待实机 lspci / sysfs 核验。'
+          }
+        },
+        dev_sata2: {
+          bdf: '独立 SATA 控制器 #2 (推算)', title: '5口 AHCI SATA #2*',
+          lines: ['推算: JMB585 级 5口', '支持 Port Multiplier', '内置 5–6 + USB-C #2'],
+          badge: '3.0 x2* (1.97 GB/s 富余)',
+          meta: {
+            bdf: 'Discrete PCIe SATA Controller #2 (拆解推算，待实机 lspci 确认)',
+            cap: 'PCIe 3.0 x2* (~1.97 GB/s) · 5× SATA 6Gbps (推算启用 3/5 口)',
+            sta: '推算承载内置盘位 5–6 (2口) + USB-C #2 / DX525 #2 (1口)，余 2 口空置',
+            driver: 'ahci',
+            detail: '延续 DS1821+ 双独立 SATA 控制器架构，将两路 DX525 扩展口分散至两颗独立控制器，避免单颗芯片同时挂载两台扩展柜导致总线拥堵。'
+          }
+        },
+        dev_fch_sata: {
+          bdf: 'SoC 片内 Bus B (推算)', title: 'AMD FCH 原生 SATA',
+          lines: ['片内 2口 AHCI 控制器', '驱动: ahci', '推算直连内置盘位 7 / 8'],
+          badge: '片内直连 · 无瓶颈',
+          meta: {
+            bdf: 'On-Die AMD FCH SATA (V1500B 原生 2× SATA 6Gbps)',
+            cap: '片内虚拟 PCIe 3.0 x16 (15.75 GB/s)',
+            sta: '2× 原生 SATA 6Gbps（推算直连内置盘位 7、8）',
+            driver: 'ahci',
+            detail: 'AMD V1500B 片内原生提供 2 路 SATA 6Gbps，与双独立 SATA 控制器共同组成 8 内置 + 2 扩展 = 10 路 SATA 存储子系统，无外置 PCIe 争抢。'
+          }
+        },
+        dev_busA: {
+          bdf: 'SoC 片内 Bus A', title: 'SoC 片内外设群',
+          lines: ['• 3× USB 3.2 Gen1', '• DSM 引导 DOM 闪存', '• AMD PSP 安全加密', '• 双 120mm 风扇管理'],
+          badge: '前1后2 USB-A + DOM',
+          meta: {
+            bdf: 'On-Die xHCI + Boot DOM (官方确认 3× USB 3.2 Gen 1)',
+            cap: '片内虚拟 PCIe 3.0 x16 (15.75 GB/s)',
+            sta: '3× USB 3.2 Gen 1 (5Gbps, 前1后2) + 系统引导 DOM + 250W 内置电源',
+            driver: 'xhci_hcd',
+            detail: '提供前置 1 个、后置 2 个标准 USB 3.2 Gen 1 接口（较 DS1821+ 减少 1 个后置 USB-A），不与后置 2 个 USB-C 专用扩展口混用。'
+          }
+        },
+        hdd_1: { bay: '盘位 1', title: 'SATA 盘位 1', lines: ['3.5" / 2.5"', 'SATA 6Gbps', '推算: SATA#1'], meta: { bdf: 'Internal Bay 1 (推算经独立 SATA #1)', sta: 'SATA III 6Gbps (热插拔)', detail: '推算挂载于独立 SATA #1，支持 3.5" SATA HDD 与 2.5" SATA SSD；升级 32GB ECC 后单卷最高支持 200TB。' } },
+        hdd_2: { bay: '盘位 2', title: 'SATA 盘位 2', lines: ['3.5" / 2.5"', 'SATA 6Gbps', '推算: SATA#1'], meta: { bdf: 'Internal Bay 2 (推算经独立 SATA #1)', sta: 'SATA III 6Gbps (热插拔)', detail: '推算挂载于独立 SATA #1，与盘位 1、3–4 及 USB-C #1 共享 1.97 GB/s PCIe 3.0 x2 上行。' } },
+        hdd_3: { bay: '盘位 3', title: 'SATA 盘位 3', lines: ['3.5" / 2.5"', 'SATA 6Gbps', '推算: SATA#1'], meta: { bdf: 'Internal Bay 3 (推算经独立 SATA #1)', sta: 'SATA III 6Gbps (热插拔)', detail: '8 盘位适合组建 SHR-2 / RAID 6 或 RAID 10；2025 Plus 系列默认强化群晖认证硬盘兼容性检查。' } },
+        hdd_4: { bay: '盘位 4', title: 'SATA 盘位 4', lines: ['3.5" / 2.5"', 'SATA 6Gbps', '推算: SATA#1'], meta: { bdf: 'Internal Bay 4 (推算经独立 SATA #1)', sta: 'SATA III 6Gbps (热插拔)', detail: '推算挂载于独立 SATA #1，精确盘位映射待实机 syno_slot_mapping / sysfs 核验。' } },
+        hdd_5: { bay: '盘位 5', title: 'SATA 盘位 5', lines: ['3.5" / 2.5"', 'SATA 6Gbps', '推算: SATA#2'], meta: { bdf: 'Internal Bay 5 (推算经独立 SATA #2)', sta: 'SATA III 6Gbps (热插拔)', detail: '推算挂载于独立 SATA #2，与盘位 6 及 USB-C #2 共享 1.97 GB/s PCIe 3.0 x2 上行。' } },
+        hdd_6: { bay: '盘位 6', title: 'SATA 盘位 6', lines: ['3.5" / 2.5"', 'SATA 6Gbps', '推算: SATA#2'], meta: { bdf: 'Internal Bay 6 (推算经独立 SATA #2)', sta: 'SATA III 6Gbps (热插拔)', detail: '推算挂载于独立 SATA #2，带宽充裕，适合与其余内置盘组建大容量阵列。' } },
+        hdd_7: { bay: '盘位 7', title: 'SATA 盘位 7', lines: ['3.5" / 2.5"', 'SATA 6Gbps', '推算: FCH直连'], meta: { bdf: 'Internal Bay 7 (推算直连 AMD FCH 原生 SATA)', sta: 'SATA III 6Gbps (热插拔)', detail: '推算由 SoC 片内原生 FCH SATA 控制器直连，无外置 PCIe 总线争抢。' } },
+        hdd_8: { bay: '盘位 8', title: 'SATA 盘位 8', lines: ['3.5" / 2.5"', 'SATA 6Gbps', '推算: FCH直连'], meta: { bdf: 'Internal Bay 8 (推算直连 AMD FCH 原生 SATA)', sta: 'SATA III 6Gbps (热插拔)', detail: '推算由 SoC 片内原生 FCH SATA 控制器直连，无外置 PCIe 总线争抢。' } },
+        dev_pm1: {
+          bdf: 'DX525 #1 内置 1转5 端口倍增 / UART', title: 'SATA Port Multiplier + UART #1',
+          lines: ['USB-C 专用扩展口 #1 → 拆分 5 路 SATA 6Gbps'],
+          badge: '⚠ 强瓶颈: 5盘共享单路扩展上行 (~600 MB/s*)',
+          meta: {
+            bdf: 'Expansion Port 1 (Type-C_EXT_1) → DX525 #1',
+            cap: '专用扩展口（仅支持 DX525，不兼容 DX517 或普通 USB-C/雷电）',
+            sta: '5 盘共享单路扩展通道 + UART 机箱管理',
+            crit: '社区观测该 USB-C 专用口底层为 eSATA 6Gbps + UART，5 块扩展盘共享约 ~600 MB/s（全盘并发约 ~120 MB/s/盘）；强烈建议在 DX525 #1 上建立独立存储池，避免跨机箱组 RAID。'
+          }
+        },
+        dev_pm2: {
+          bdf: 'DX525 #2 内置 1转5 端口倍增 / UART', title: 'SATA Port Multiplier + UART #2',
+          lines: ['USB-C 专用扩展口 #2 → 拆分 5 路 SATA 6Gbps'],
+          badge: '⚠ 强瓶颈: 5盘共享单路扩展上行 (~600 MB/s*)',
+          meta: {
+            bdf: 'Expansion Port 2 (Type-C_EXT_2) → DX525 #2',
+            cap: '专用扩展口（仅支持 DX525，不兼容 DX517 或普通 USB-C/雷电）',
+            sta: '5 盘共享单路扩展通道 + UART 机箱管理',
+            crit: 'DS1825+ 支持同时连接 2 台 DX525 扩展至 18 盘位；每台 DX525 应各自建立独立存储池，降低线缆松动掉盘风险。'
+          }
+        },
+        ext1_1: { bay: 'DX1 · E1', title: '扩展盘 1', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #1 Bay 1 (总第 9 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s*)', detail: '接入 DX525 #1，建议独立建池用于冷数据归档或备份。' } },
+        ext1_2: { bay: 'DX1 · E2', title: '扩展盘 2', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #1 Bay 2 (总第 10 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s*)', detail: '接入 DX525 #1，与 E1/E3–E5 共享单路扩展上行。' } },
+        ext1_3: { bay: 'DX1 · E3', title: '扩展盘 3', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #1 Bay 3 (总第 11 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s*)', detail: '接入 DX525 #1，与 E1–E2/E4–E5 共享单路扩展上行。' } },
+        ext1_4: { bay: 'DX1 · E4', title: '扩展盘 4', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #1 Bay 4 (总第 12 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s*)', detail: '接入 DX525 #1，与 E1–E3/E5 共享单路扩展上行。' } },
+        ext1_5: { bay: 'DX1 · E5', title: '扩展盘 5', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #1 Bay 5 (总第 13 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s*)', detail: '接入 DX525 #1，单台扩展柜合计 13 盘位。' } },
+        ext2_1: { bay: 'DX2 · E6', title: '扩展盘 6', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #2 Bay 1 (总第 14 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s*)', detail: '接入 DX525 #2，建议与 DX525 #1 分开建立独立存储池。' } },
+        ext2_2: { bay: 'DX2 · E7', title: '扩展盘 7', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #2 Bay 2 (总第 15 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s*)', detail: '接入 DX525 #2，与 E6/E8–E10 共享单路扩展上行。' } },
+        ext2_3: { bay: 'DX2 · E8', title: '扩展盘 8', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #2 Bay 3 (总第 16 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s*)', detail: '接入 DX525 #2，与 E6–E7/E9–E10 共享单路扩展上行。' } },
+        ext2_4: { bay: 'DX2 · E9', title: '扩展盘 9', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #2 Bay 4 (总第 17 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s*)', detail: '接入 DX525 #2，与 E6–E8/E10 共享单路扩展上行。' } },
+        ext2_5: { bay: 'DX2 · E10', title: '扩展盘 10', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #2 Bay 5 (总第 18 盘)', sta: 'SATA 6Gbps (5盘共享 600MB/s*)', detail: '接入 DX525 #2，全系统最高扩展至 8 + 5 + 5 = 18 盘位。' } }
+      }
+    },
+
+    en: {
+      navHome: '← All Models',
+      footerHome: 'Back to Synology Hardware Topology',
+      pageTitle: 'Synology DS1825+ (AMD V1500B) Hardware & 18-Bay PCIe/SATA Topology',
+      toolbarTitle: 'Synology DS1825+ Hardware Topology (8× Internal SATA + 2× DX525 = 18 Bays)',
+      toolbarSub: 'Source: Teardown + Spec (official specs & v1000nk architecture; SATA ICs, select lane widths & bay mapping pending live lspci / syno_slot_mapping / sysfs)  |  Hover or tap to inspect',
+      exportBtn: 'Export PNG',
+      exportName: 'synology-ds1825-18bay-topology-en.png',
+      canvasTitle: 'SYNOLOGY DS1825+ HARDWARE & 18-BAY EXPANSION TOPOLOGY',
+      canvasSub: 'AMD Ryzen Embedded V1500B (4C/8T · 2.2GHz · 16× PCIe 3.0 Lanes)  |  Standard PCIe 3.0 x8 (x4 Link) Slot + Dual M.2 NVMe + Dual 2.5GbE + Dual USB-C Expansion (2× DX525)',
+      socBanner: 'AMD Ryzen Embedded V1500B SoC — v1000nk Platform (16× External PCIe 3.0 Lanes + 2× On-Die Virtual x16 Links)',
+      socSummary: 'RAM: 2× DDR4 ECC SODIMM (8GB std / 32GB max) | Headless | PCIe Budget: x4(Open Slot) + x2×2(M.2) + x1×2(2.5GbE) + x2×2*(Dual SATA) ≈ 14 / 16 Lanes',
+      socExtLabel: 'External PCIe 3.0 Direct Lanes (No External PCIe Switch; Open x8/x4 Slot, Dual M.2, Dual 2.5GbE & Dual SATA Ctrl Direct to SoC)',
+      socIntLabel: 'On-Die Infinity Fabric Virtual Bus',
+      backplaneTitle: 'Internal 8-Bay Backplane (8× 3.5"/2.5" SATA III · Hot-Swap · Inferred: Bays 1–4 via SATA #1, 5–6 via SATA #2, 7–8 via FCH)',
+      dx1Title: 'Expansion #1: Synology DX525 (Proprietary USB-C · 5 Bays)',
+      dx2Title: 'Expansion #2: Synology DX525 (Proprietary USB-C · 5 Bays)',
+      expPort1: 'USB-C #1',
+      expPort2: 'USB-C #2',
+      pins: {
+        p_pcie:  'PCIe 3.0 x4 (Open)',
+        p_nvme1: 'PCIe 3.0 x2 (Inf.)',
+        p_nvme2: 'PCIe 3.0 x2 (Inf.)',
+        p_lan1:  'PCIe 3.0 x1 Direct',
+        p_lan2:  'PCIe 3.0 x1 Direct',
+        p_sata1: 'PCIe 3.0 x2* (SATA1)',
+        p_sata2: 'PCIe 3.0 x2* (SATA2)',
+        p_fch:   'On-Die Bus B (FCH)',
+        p_busA:  'On-Die Bus A (USB)'
+      },
+      linkSpecs: {
+        l_pcie:  { bw: '3.94 GB/s',  spec: 'PCIe 3.0 x4 · 8GT/s' },
+        l_nvme1: { bw: '1.97 GB/s*', spec: 'PCIe 3.0 x2 · 8GT/s' },
+        l_nvme2: { bw: '1.97 GB/s*', spec: 'PCIe 3.0 x2 · 8GT/s' },
+        l_lan1:  { bw: '500 MB/s',   spec: 'PCIe 2.1 x1 · 5GT/s' },
+        l_lan2:  { bw: '500 MB/s',   spec: 'PCIe 2.1 x1 · 5GT/s' },
+        l_sata1: { bw: '1.97 GB/s*', spec: 'PCIe 3.0 x2 · 8GT/s' },
+        l_sata2: { bw: '1.97 GB/s*', spec: 'PCIe 3.0 x2 · 8GT/s' },
+        l_fch:   { bw: '15.75 GB/s', spec: 'On-Die · 3.0 x16' },
+        l_busA:  { bw: '15.75 GB/s', spec: 'On-Die · 3.0 x16' },
+        l_hdd:   { bw: '600 MB/s',   spec: 'SATA 6G' },
+        l_exp1:  { bw: '600 MB/s*',  spec: 'EXP1 · DX525' },
+        l_exp2:  { bw: '600 MB/s*',  spec: 'EXP2 · DX525' },
+        l_ext:   { bw: '6Gbps',      spec: 'Shared' }
+      },
+      panel1Title: 'DS1825+ Architecture & Provenance (Source: Teardown + Spec | vs DS1821+ & DS1525+)',
+      panel1Lines: [
+        '• Official Specs: V1500B (4C/8T), 8GB ECC (32GB max), PCIe 3.0 x8 (x4 link) slot, dual M.2, dual 2.5GbE, 3× USB-A, dual USB-C (2× DX525)',
+        '• vs DS1821+: Standard RAM 4GB→8GB; drops ASM1806 + 4×1GbE for direct 2×2.5GbE; 2× eSATA→2× USB-C; USB-A 4→3 ports',
+        '• vs DS1525+: Retains standard low-profile PCIe 3.0 x8 (x4 link) open slot for 10G/25G NICs; rated 2,239 / 1,573 MB/s seq R/W',
+        '• Platform-Inferred: RTL8125D NICs; 10 SATA ports split as dual 5-port AHCI* + FCH (2); pending live lspci / syno_slot_mapping / sysfs'
+      ],
+      panel2Title: 'Link Legend & Key Bottlenecks',
+      legend: [
+        'PCIe 3.0 x4 · Open Slot (~3.94 GB/s)',
+        'PCIe 3.0 x2* · M.2 / SATA (~1.97 GB/s)',
+        'PCIe 2.1 x1 · Dual 2.5GbE (500 MB/s)',
+        'SATA III 6Gbps (600 MB/s)',
+        'Proprietary USB-C Expansion (DX525)',
+        'On-Die Virtual Bus 3.0 x16 (~15.75 GB/s)'
+      ],
+      notes: [
+        { title: '1. Severe · Each DX525 Shares One Expansion Uplink', text: 'Each proprietary USB-C link (eSATA+UART) serves 5 drives (~600 MB/s total, ~120 MB/s/drive).' },
+        { title: '2. Versatile · Standard PCIe 3.0 x8 (x4 Link) Open Slot', text: '3.94 GB/s supports 10GbE/25GbE NICs or E10M20-T1; rated up to 2,239 / 1,573 MB/s seq R/W.' },
+        { title: '3. Streamlined · No PCIe Switch; Direct 2.5GbE & Dual SATA', text: '8 internal bays + 2 expansion links split across dual SATA ICs + FCH with ample HDD headroom.' }
+      ],
+      ttKeys: { cap: 'Spec', sta: 'Link / Role', driver: 'Driver / IC' },
+      nodes: {
+        soc: {
+          title: 'AMD Ryzen Embedded V1500B SoC (Great Horned Owl)',
+          meta: {
+            bdf: 'DSM Platform: v1000nk  |  Source: Teardown + Spec',
+            cap: '4C/8T @ 2.2GHz · 16W TDP · 16× PCIe 3.0 Lanes · Headless',
+            sta: 'RAM: 2× DDR4 ECC SODIMM (8GB std / 32GB max) | ~14 / 16 Lanes Allocated',
+            detail: 'Exposes 16 external PCIe 3.0 lanes plus 2 on-die FCH SATA ports, wiring the open x4 slot, dual M.2 NVMe, dual 2.5GbE, and dual discrete SATA controllers directly without a PCIe switch.'
+          }
+        },
+        dev_pcie: {
+          bdf: 'Standard Low-Profile Slot (Official)', title: 'PCIe 3.0 x8 (x4 Link)',
+          lines: ['Standard Open Slot', 'Fits 10GbE / 25GbE', 'Rated 2239/1573 MB/s'],
+          badge: '3.94 GB/s · 10G/25G Ready',
+          meta: {
+            bdf: 'Standard Low-Profile PCIe 3.0 x8 Slot (x4 Electrical) — Official Spec',
+            cap: 'Physical x8 Slot | Electrical PCIe 3.0 x4 (~3.94 GB/s)',
+            sta: 'Open expansion slot (supports E10G30-T2 / E10G18-T2 / E25G30-F2 & M.2 adapter cards)',
+            driver: 'Loaded per add-in card',
+            detail: 'Provides ~3.94 GB/s unidirectional bandwidth for dual-port 10GbE or 25GbE SFP28 NICs, reaching up to 2,239 / 1,573 MB/s sequential throughput in official Synology benchmarks.'
+          }
+        },
+        dev_nvme1: {
+          bdf: 'Internal Bay · M.2 Slot 1', title: 'M.2 2280 NVMe #1',
+          lines: ['Cache / Storage Pool', 'Inferred: 3.0 x2*', 'Non-Hot-Swap (Internal)'],
+          badge: 'Uncapped vs x1 (~1.8GB/s)',
+          meta: {
+            bdf: 'Internal M.2 2280 NVMe Slot #1 (Official Slot; x2 width inferred)',
+            cap: 'PCIe 3.0 x2* (~1.97 GB/s)',
+            sta: 'Direct CPU PCIe 3.0 Lanes (exact BDF & width pending live lspci)',
+            driver: 'nvme',
+            detail: 'Mounted inside the left chassis wall; supports M.2 2280 NVMe cache and native storage pools (~1.6–1.8 GB/s real-world).'
+          }
+        },
+        dev_nvme2: {
+          bdf: 'Internal Bay · M.2 Slot 2', title: 'M.2 2280 NVMe #2',
+          lines: ['Cache / Storage Pool', 'Inferred: 3.0 x2*', 'Non-Hot-Swap (Internal)'],
+          badge: 'Uncapped vs x1 (~1.8GB/s)',
+          meta: {
+            bdf: 'Internal M.2 2280 NVMe Slot #2 (Official Slot; x2 width inferred)',
+            cap: 'PCIe 3.0 x2* (~1.97 GB/s)',
+            sta: 'Direct CPU PCIe 3.0 Lanes (exact BDF & width pending live lspci)',
+            driver: 'nvme',
+            detail: 'Pairs with M.2 #1 for mirrored RAID 1 SSD cache or an independent NVMe volume for VMs, containers, and hot workloads.'
+          }
+        },
+        dev_lan1: {
+          bdf: 'Onboard (Direct to CPU)', title: 'RTL8125D · LAN 1',
+          lines: ['Onboard 2.5GbE RJ-45', 'Interface: PCIe 2.1 x1', 'Driver: r8125 (Inf.)'],
+          badge: '3.0→2.1x1 (Full 2.5G)',
+          meta: {
+            bdf: 'Onboard 2.5GbE NIC #1 (v1000nk Family RTL8125D Inferred)',
+            cap: 'PCIe 2.1 x1 (5GT/s, 500 MB/s)',
+            sta: '2.5GbE line rate 312.5 MB/s · LACP / Failover',
+            driver: 'r8125',
+            detail: 'Replaces DS1821+\'s ASM1806 + 4× RTL8111H setup with a direct SoC PCIe lane, eliminating the PCIe switch.'
+          }
+        },
+        dev_lan2: {
+          bdf: 'Onboard (Direct to CPU)', title: 'RTL8125D · LAN 2',
+          lines: ['Onboard 2.5GbE RJ-45', 'Interface: PCIe 2.1 x1', 'LACP / SMB Multichannel'],
+          badge: '3.0→2.1x1 (Full 2.5G)',
+          meta: {
+            bdf: 'Onboard 2.5GbE NIC #2 (v1000nk Family RTL8125D Inferred)',
+            cap: 'PCIe 2.1 x1 (5GT/s, 500 MB/s)',
+            sta: 'Combined ~5 Gbps (~625 MB/s max)',
+            driver: 'r8125',
+            detail: 'Dual 2.5GbE delivers solid out-of-the-box multi-gigabit speed, with the open PCIe x4 slot ready for 10GbE/25GbE.'
+          }
+        },
+        dev_sata1: {
+          bdf: 'Discrete SATA #1 (Inferred)', title: '5-Port AHCI SATA #1*',
+          lines: ['Inf.: JMB585 Class', 'Port Multiplier Capable', 'Bays 1–4 + USB-C #1'],
+          badge: '3.0 x2* (1.97 GB/s OK)',
+          meta: {
+            bdf: 'Discrete PCIe SATA Controller #1 (Teardown + Spec; pending live lspci)',
+            cap: 'PCIe 3.0 x2* (~1.97 GB/s) · 5× SATA 6Gbps',
+            sta: 'Inferred: Internal Bays 1–4 (4 ports) + USB-C #1 / DX525 #1 (1 port) = 5 ports',
+            driver: 'ahci',
+            warn: 'Simultaneous full-speed I/O across 4 internal SATA SSDs plus DX525 #1 approaches 1.97 GB/s; standard HDD arrays have ample headroom. Exact IC & bay split pending live lspci / sysfs.'
+          }
+        },
+        dev_sata2: {
+          bdf: 'Discrete SATA #2 (Inferred)', title: '5-Port AHCI SATA #2*',
+          lines: ['Inf.: JMB585 Class', 'Port Multiplier Capable', 'Bays 5–6 + USB-C #2'],
+          badge: '3.0 x2* (1.97 GB/s Ample)',
+          meta: {
+            bdf: 'Discrete PCIe SATA Controller #2 (Teardown + Spec; pending live lspci)',
+            cap: 'PCIe 3.0 x2* (~1.97 GB/s) · 5× SATA 6Gbps (3 of 5 ports inferred active)',
+            sta: 'Inferred: Internal Bays 5–6 (2 ports) + USB-C #2 / DX525 #2 (1 port), 2 spare',
+            driver: 'ahci',
+            detail: 'Follows DS1821+\'s dual discrete SATA controller layout, isolating the two DX525 expansion uplinks across separate controllers.'
+          }
+        },
+        dev_fch_sata: {
+          bdf: 'SoC On-Die Bus B (Inf.)', title: 'AMD FCH Native SATA',
+          lines: ['On-Die 2-Port AHCI', 'Driver: ahci', 'Inf.: Direct to Bays 7–8'],
+          badge: 'On-Die Direct · No Cap',
+          meta: {
+            bdf: 'On-Die AMD FCH SATA (Native V1500B 2× SATA 6Gbps)',
+            cap: 'On-Die Virtual PCIe 3.0 x16 (15.75 GB/s)',
+            sta: '2× Native SATA 6Gbps (inferred to Internal Bays 7–8)',
+            driver: 'ahci',
+            detail: 'V1500B integrates 2 native SATA 6Gbps ports on-die, combining with dual discrete SATA controllers for 8 internal + 2 expansion = 10 SATA ports.'
+          }
+        },
+        dev_busA: {
+          bdf: 'SoC On-Die Bus A', title: 'SoC On-Die Peripherals',
+          lines: ['• 3× USB 3.2 Gen1', '• DSM Boot DOM Flash', '• AMD PSP Crypto', '• Dual 120mm Fan Ctrl'],
+          badge: '3× USB-A (5G) + DOM',
+          meta: {
+            bdf: 'On-Die xHCI + Boot DOM (Official 3× USB 3.2 Gen 1)',
+            cap: 'On-Die Virtual PCIe 3.0 x16 (15.75 GB/s)',
+            sta: '3× USB 3.2 Gen 1 (5Gbps, 1 front + 2 rear) + Boot DOM + 250W PSU',
+            driver: 'xhci_hcd',
+            detail: 'Provides 1 front and 2 rear USB-A 5Gbps ports (1 fewer rear USB-A than DS1821+), separate from the two rear proprietary USB-C expansion ports.'
+          }
+        },
+        hdd_1: { bay: 'Bay 1', title: 'SATA Bay 1', lines: ['3.5" / 2.5"', 'SATA 6Gbps', 'Inf: SATA#1'], meta: { bdf: 'Internal Bay 1 (Inferred Discrete SATA #1)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'Inferred on SATA #1; supports 3.5" SATA HDD & 2.5" SATA SSD, and up to 200TB single volume with 32GB ECC RAM.' } },
+        hdd_2: { bay: 'Bay 2', title: 'SATA Bay 2', lines: ['3.5" / 2.5"', 'SATA 6Gbps', 'Inf: SATA#1'], meta: { bdf: 'Internal Bay 2 (Inferred Discrete SATA #1)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'Inferred on SATA #1; shares 1.97 GB/s PCIe 3.0 x2 uplink with Bays 1, 3–4 & USB-C #1.' } },
+        hdd_3: { bay: 'Bay 3', title: 'SATA Bay 3', lines: ['3.5" / 2.5"', 'SATA 6Gbps', 'Inf: SATA#1'], meta: { bdf: 'Internal Bay 3 (Inferred Discrete SATA #1)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: '8 internal bays suit SHR-2 / RAID 6 or RAID 10; 2025 Plus series enforces stricter Synology drive compatibility checks.' } },
+        hdd_4: { bay: 'Bay 4', title: 'SATA Bay 4', lines: ['3.5" / 2.5"', 'SATA 6Gbps', 'Inf: SATA#1'], meta: { bdf: 'Internal Bay 4 (Inferred Discrete SATA #1)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'Inferred on SATA #1; exact bay-to-controller mapping pending live syno_slot_mapping / sysfs.' } },
+        hdd_5: { bay: 'Bay 5', title: 'SATA Bay 5', lines: ['3.5" / 2.5"', 'SATA 6Gbps', 'Inf: SATA#2'], meta: { bdf: 'Internal Bay 5 (Inferred Discrete SATA #2)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'Inferred on SATA #2; shares 1.97 GB/s PCIe 3.0 x2 uplink with Bay 6 & USB-C #2.' } },
+        hdd_6: { bay: 'Bay 6', title: 'SATA Bay 6', lines: ['3.5" / 2.5"', 'SATA 6Gbps', 'Inf: SATA#2'], meta: { bdf: 'Internal Bay 6 (Inferred Discrete SATA #2)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'Inferred on SATA #2 with ample PCIe bandwidth headroom.' } },
+        hdd_7: { bay: 'Bay 7', title: 'SATA Bay 7', lines: ['3.5" / 2.5"', 'SATA 6Gbps', 'Inf: FCH'], meta: { bdf: 'Internal Bay 7 (Inferred AMD FCH Native SATA)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'Inferred directly attached to SoC on-die FCH SATA with zero external PCIe contention.' } },
+        hdd_8: { bay: 'Bay 8', title: 'SATA Bay 8', lines: ['3.5" / 2.5"', 'SATA 6Gbps', 'Inf: FCH'], meta: { bdf: 'Internal Bay 8 (Inferred AMD FCH Native SATA)', sta: 'SATA III 6Gbps (Hot-Swap)', detail: 'Inferred directly attached to SoC on-die FCH SATA with zero external PCIe contention.' } },
+        dev_pm1: {
+          bdf: 'DX525 #1 Built-in 1-to-5 PM / UART', title: 'SATA Port Multiplier + UART #1',
+          lines: ['Proprietary USB-C #1 splits into 5× SATA 6Gbps'],
+          badge: '⚠ Severe: 5 Bays Share Single Uplink (~600 MB/s*)',
+          meta: {
+            bdf: 'Expansion Port 1 (Type-C_EXT_1) → DX525 #1',
+            cap: 'DX525 Only (Not Compatible with DX517 or Standard USB-C/TB)',
+            sta: '5 Bays Share Single Expansion Link + UART Enclosure Mgmt',
+            crit: 'Community observations indicate eSATA 6Gbps + UART over proprietary USB-C (~600 MB/s across 5 bays, ~120 MB/s/drive concurrent). Keep DX525 #1 as an independent storage pool.'
+          }
+        },
+        dev_pm2: {
+          bdf: 'DX525 #2 Built-in 1-to-5 PM / UART', title: 'SATA Port Multiplier + UART #2',
+          lines: ['Proprietary USB-C #2 splits into 5× SATA 6Gbps'],
+          badge: '⚠ Severe: 5 Bays Share Single Uplink (~600 MB/s*)',
+          meta: {
+            bdf: 'Expansion Port 2 (Type-C_EXT_2) → DX525 #2',
+            cap: 'DX525 Only (Not Compatible with DX517 or Standard USB-C/TB)',
+            sta: '5 Bays Share Single Expansion Link + UART Enclosure Mgmt',
+            crit: 'DS1825+ supports up to two DX525 enclosures for 18 bays total. Create a separate pool per DX525 rather than spanning RAID across units.'
+          }
+        },
+        ext1_1: { bay: 'DX1 · E1', title: 'Ext Bay 1', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #1 Bay 1 (Drive #9)', sta: 'SATA 6Gbps (5-Bay Shared)', detail: 'DX525 #1 Bay 1; recommended for an independent backup or archive pool.' } },
+        ext1_2: { bay: 'DX1 · E2', title: 'Ext Bay 2', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #1 Bay 2 (Drive #10)', sta: 'SATA 6Gbps (5-Bay Shared)', detail: 'DX525 #1 Bay 2; shares single expansion uplink with E1, E3–E5.' } },
+        ext1_3: { bay: 'DX1 · E3', title: 'Ext Bay 3', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #1 Bay 3 (Drive #11)', sta: 'SATA 6Gbps (5-Bay Shared)', detail: 'DX525 #1 Bay 3; shares single expansion uplink with E1–E2, E4–E5.' } },
+        ext1_4: { bay: 'DX1 · E4', title: 'Ext Bay 4', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #1 Bay 4 (Drive #12)', sta: 'SATA 6Gbps (5-Bay Shared)', detail: 'DX525 #1 Bay 4; shares single expansion uplink with E1–E3, E5.' } },
+        ext1_5: { bay: 'DX1 · E5', title: 'Ext Bay 5', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #1 Bay 5 (Drive #13)', sta: 'SATA 6Gbps (5-Bay Shared)', detail: 'DX525 #1 Bay 5; brings total capacity to 13 bays with one DX525.' } },
+        ext2_1: { bay: 'DX2 · E6', title: 'Ext Bay 6', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #2 Bay 1 (Drive #14)', sta: 'SATA 6Gbps (5-Bay Shared)', detail: 'DX525 #2 Bay 1; keep as an independent pool separate from DX525 #1.' } },
+        ext2_2: { bay: 'DX2 · E7', title: 'Ext Bay 7', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #2 Bay 2 (Drive #15)', sta: 'SATA 6Gbps (5-Bay Shared)', detail: 'DX525 #2 Bay 2; shares single expansion uplink with E6, E8–E10.' } },
+        ext2_3: { bay: 'DX2 · E8', title: 'Ext Bay 8', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #2 Bay 3 (Drive #16)', sta: 'SATA 6Gbps (5-Bay Shared)', detail: 'DX525 #2 Bay 3; shares single expansion uplink with E6–E7, E9–E10.' } },
+        ext2_4: { bay: 'DX2 · E9', title: 'Ext Bay 9', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #2 Bay 4 (Drive #17)', sta: 'SATA 6Gbps (5-Bay Shared)', detail: 'DX525 #2 Bay 4; shares single expansion uplink with E6–E8, E10.' } },
+        ext2_5: { bay: 'DX2 · E10', title: 'Ext Bay 10', lines: ['SATA 6Gbps'], meta: { bdf: 'DX525 #2 Bay 5 (Drive #18)', sta: 'SATA 6Gbps (5-Bay Shared)', detail: 'DX525 #2 Bay 5; expands total capacity to 8 + 5 + 5 = 18 bays.' } }
+      }
+    }
+  };
+
+  const socPins = {
+    p_pcie:  { x: 130,  y: 176, color: COLORS.pcie3x4 },
+    p_nvme1: { x: 311,  y: 176, color: COLORS.pcie3x2 },
+    p_nvme2: { x: 481,  y: 176, color: COLORS.pcie3x2 },
+    p_lan1:  { x: 649,  y: 176, color: COLORS.pcie2x1 },
+    p_lan2:  { x: 815,  y: 176, color: COLORS.pcie2x1 },
+    p_sata1: { x: 995,  y: 176, color: COLORS.pcie3sata },
+    p_sata2: { x: 1189, y: 176, color: COLORS.pcie3sata },
+    p_fch:   { x: 1384, y: 176, color: COLORS.internal },
+    p_busA:  { x: 1559, y: 176, color: COLORS.internal }
+  };
+
+  const nodes = [
+    { id: 'soc',          x: 40,   y: 70,  w: 1600, h: 106, type: 'soc' },
+
+    // Row 1: Direct SoC devices & controllers (y=266..392)
+    { id: 'dev_pcie',     x: 40,   y: 266, w: 180,  h: 126, type: 'chip', color: COLORS.pcie3x4,   badgeLevel: 'ok' },
+    { id: 'dev_nvme1',    x: 232,  y: 266, w: 158,  h: 126, type: 'chip', color: COLORS.pcie3x2,   badgeLevel: 'ok' },
+    { id: 'dev_nvme2',    x: 402,  y: 266, w: 158,  h: 126, type: 'chip', color: COLORS.pcie3x2,   badgeLevel: 'ok' },
+    { id: 'dev_lan1',     x: 572,  y: 266, w: 154,  h: 126, type: 'chip', color: COLORS.pcie2x1,   badgeLevel: 'ok' },
+    { id: 'dev_lan2',     x: 738,  y: 266, w: 154,  h: 126, type: 'chip', color: COLORS.pcie2x1,   badgeLevel: 'ok' },
+    { id: 'dev_sata1',    x: 904,  y: 266, w: 182,  h: 126, type: 'chip', color: COLORS.pcie3sata, badgeLevel: 'ok' },
+    { id: 'dev_sata2',    x: 1098, y: 266, w: 182,  h: 126, type: 'chip', color: COLORS.pcie3sata, badgeLevel: 'ok' },
+    { id: 'dev_fch_sata', x: 1302, y: 266, w: 164,  h: 126, type: 'chip', color: COLORS.internal,  badgeLevel: 'ok' },
+    { id: 'dev_busA',     x: 1478, y: 266, w: 162,  h: 140, type: 'chip', color: COLORS.internal,  badgeLevel: 'ok' },
+
+    // Row 2 Right: Internal 8-Bay SATA Backplane (x=796..1640, y=496..602)
+    { id: 'hdd_1',        x: 810,  y: 496, w: 95,   h: 106, type: 'hdd',  color: COLORS.sata },
+    { id: 'hdd_2',        x: 913,  y: 496, w: 95,   h: 106, type: 'hdd',  color: COLORS.sata },
+    { id: 'hdd_3',        x: 1016, y: 496, w: 95,   h: 106, type: 'hdd',  color: COLORS.sata },
+    { id: 'hdd_4',        x: 1119, y: 496, w: 95,   h: 106, type: 'hdd',  color: COLORS.sata },
+    { id: 'hdd_5',        x: 1222, y: 496, w: 95,   h: 106, type: 'hdd',  color: COLORS.pcie3sata },
+    { id: 'hdd_6',        x: 1325, y: 496, w: 95,   h: 106, type: 'hdd',  color: COLORS.pcie3sata },
+    { id: 'hdd_7',        x: 1428, y: 496, w: 95,   h: 106, type: 'hdd',  color: COLORS.internal },
+    { id: 'hdd_8',        x: 1531, y: 496, w: 95,   h: 106, type: 'hdd',  color: COLORS.internal },
+
+    // Expansion Unit #1 (DX525 #1)
+    { id: 'dev_pm1',      x: 652,  y: 738, w: 340,  h: 88,  type: 'chip', color: COLORS.esata, badgeLevel: 'crit' },
+    { id: 'ext1_1',       x: 570,  y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata },
+    { id: 'ext1_2',       x: 672,  y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata },
+    { id: 'ext1_3',       x: 774,  y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata },
+    { id: 'ext1_4',       x: 876,  y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata },
+    { id: 'ext1_5',       x: 978,  y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata },
+
+    // Expansion Unit #2 (DX525 #2)
+    { id: 'dev_pm2',      x: 1204, y: 738, w: 340,  h: 88,  type: 'chip', color: COLORS.esata, badgeLevel: 'crit' },
+    { id: 'ext2_1',       x: 1122, y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata },
+    { id: 'ext2_2',       x: 1224, y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata },
+    { id: 'ext2_3',       x: 1326, y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata },
+    { id: 'ext2_4',       x: 1428, y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata },
+    { id: 'ext2_5',       x: 1530, y: 890, w: 94,   h: 82,  type: 'ext_hdd', color: COLORS.esata }
+  ];
+
+  const links = [
+    // SoC to Row 1
+    { id: 'l_pcie',  specKey: 'l_pcie',  from: 'soc', pin: 'p_pcie',  to: 'dev_pcie',     color: COLORS.pcie3x4,   width: 4.5 },
+    { id: 'l_nvme1', specKey: 'l_nvme1', from: 'soc', pin: 'p_nvme1', to: 'dev_nvme1',    color: COLORS.pcie3x2,   width: 4 },
+    { id: 'l_nvme2', specKey: 'l_nvme2', from: 'soc', pin: 'p_nvme2', to: 'dev_nvme2',    color: COLORS.pcie3x2,   width: 4 },
+    { id: 'l_lan1',  specKey: 'l_lan1',  from: 'soc', pin: 'p_lan1',  to: 'dev_lan1',     color: COLORS.pcie2x1,   width: 3 },
+    { id: 'l_lan2',  specKey: 'l_lan2',  from: 'soc', pin: 'p_lan2',  to: 'dev_lan2',     color: COLORS.pcie2x1,   width: 3 },
+    { id: 'l_sata1', specKey: 'l_sata1', from: 'soc', pin: 'p_sata1', to: 'dev_sata1',    color: COLORS.pcie3sata, width: 4 },
+    { id: 'l_sata2', specKey: 'l_sata2', from: 'soc', pin: 'p_sata2', to: 'dev_sata2',    color: COLORS.pcie3sata, width: 4 },
+    { id: 'l_fch',   specKey: 'l_fch',   from: 'soc', pin: 'p_fch',   to: 'dev_fch_sata', color: COLORS.internal,  width: 4.5, dashed: true },
+    { id: 'l_busA',  specKey: 'l_busA',  from: 'soc', pin: 'p_busA',  to: 'dev_busA',     color: COLORS.internal,  width: 4.5, dashed: true },
+
+    // Internal 8 SATA drops
+    { id: 'l_hdd1',  specKey: 'l_hdd',   from: 'dev_sata1',    to: 'hdd_1', color: COLORS.sata,      width: 2.3, mode: 'sata_drop', srcX: 952,  midY: 424, pillY: 472 },
+    { id: 'l_hdd2',  specKey: 'l_hdd',   from: 'dev_sata1',    to: 'hdd_2', color: COLORS.sata,      width: 2.3, mode: 'sata_drop', srcX: 992,  midY: 424, pillY: 472 },
+    { id: 'l_hdd3',  specKey: 'l_hdd',   from: 'dev_sata1',    to: 'hdd_3', color: COLORS.sata,      width: 2.3, mode: 'sata_drop', srcX: 1030, midY: 424, pillY: 472 },
+    { id: 'l_hdd4',  specKey: 'l_hdd',   from: 'dev_sata1',    to: 'hdd_4', color: COLORS.sata,      width: 2.3, mode: 'sata_drop', srcX: 1068, midY: 424, pillY: 472 },
+    { id: 'l_hdd5',  specKey: 'l_hdd',   from: 'dev_sata2',    to: 'hdd_5', color: COLORS.pcie3sata, width: 2.3, mode: 'sata_drop', srcX: 1192, midY: 436, pillY: 472 },
+    { id: 'l_hdd6',  specKey: 'l_hdd',   from: 'dev_sata2',    to: 'hdd_6', color: COLORS.pcie3sata, width: 2.3, mode: 'sata_drop', srcX: 1244, midY: 436, pillY: 472 },
+    { id: 'l_hdd7',  specKey: 'l_hdd',   from: 'dev_fch_sata', to: 'hdd_7', color: COLORS.internal,  width: 2.3, mode: 'sata_drop', srcX: 1364, midY: 446, pillY: 472 },
+    { id: 'l_hdd8',  specKey: 'l_hdd',   from: 'dev_fch_sata', to: 'hdd_8', color: COLORS.internal,  width: 2.3, mode: 'sata_drop', srcX: 1416, midY: 446, pillY: 472 },
+
+    // Dual USB-C expansion routes through center corridor (x=716 & x=756) to DX525 #1 & #2
+    { id: 'l_exp1',  specKey: 'l_exp1',  from: 'dev_sata1', to: 'dev_pm1', color: COLORS.esata, width: 3.2, mode: 'dual_exp_route', srcX: 920,  exitY: 404, corridorX: 716, busY: 673, entryX: 596,  pillX: 656, pillY: 673 },
+    { id: 'l_exp2',  specKey: 'l_exp2',  from: 'dev_sata2', to: 'dev_pm2', color: COLORS.esata, width: 3.2, mode: 'dual_exp_route', srcX: 1124, exitY: 414, corridorX: 756, busY: 673, entryX: 1148, pillX: 952, pillY: 673 },
+
+    // DX525 #1 fanout
+    { id: 'l_ext1_1', specKey: 'l_ext', from: 'dev_pm1', to: 'ext1_1', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 },
+    { id: 'l_ext1_2', specKey: 'l_ext', from: 'dev_pm1', to: 'ext1_2', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 },
+    { id: 'l_ext1_3', specKey: 'l_ext', from: 'dev_pm1', to: 'ext1_3', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 },
+    { id: 'l_ext1_4', specKey: 'l_ext', from: 'dev_pm1', to: 'ext1_4', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 },
+    { id: 'l_ext1_5', specKey: 'l_ext', from: 'dev_pm1', to: 'ext1_5', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 },
+
+    // DX525 #2 fanout
+    { id: 'l_ext2_1', specKey: 'l_ext', from: 'dev_pm2', to: 'ext2_1', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 },
+    { id: 'l_ext2_2', specKey: 'l_ext', from: 'dev_pm2', to: 'ext2_2', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 },
+    { id: 'l_ext2_3', specKey: 'l_ext', from: 'dev_pm2', to: 'ext2_3', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 },
+    { id: 'l_ext2_4', specKey: 'l_ext', from: 'dev_pm2', to: 'ext2_4', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 },
+    { id: 'l_ext2_5', specKey: 'l_ext', from: 'dev_pm2', to: 'ext2_5', color: COLORS.esata, width: 2.1, mode: 'pm_fan', midY: 844, pillY: 864 }
+  ];
+
+  function t() { return I18N[currentLang]; }
+  function getNode(id) { return nodes.find(n => n.id === id); }
+
+  function getRelatedIds(nodeId) {
+    if (!nodeId || nodeId === 'soc') return null;
+    const set = new Set([nodeId]);
+    let changed = true;
+    while (changed) {
+      changed = false;
+      for (const l of links) {
+        if (set.has(l.to) && !set.has(l.from)) { set.add(l.from); changed = true; }
+      }
+    }
+    const down = new Set([nodeId]);
+    changed = true;
+    while (changed) {
+      changed = false;
+      for (const l of links) {
+        if (down.has(l.from) && !down.has(l.to)) { down.add(l.to); set.add(l.to); changed = true; }
+      }
+    }
+    return set;
+  }
+
+  function roundRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function drawArrow(x, y, dir, color) {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    if (dir === 'down') {
+      ctx.moveTo(x, y); ctx.lineTo(x - 5, y - 9); ctx.lineTo(x + 5, y - 9);
+    } else if (dir === 'right') {
+      ctx.moveTo(x, y); ctx.lineTo(x - 9, y - 5); ctx.lineTo(x - 9, y + 5);
+    }
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawGrid() {
+    ctx.fillStyle = COLORS.bg;
+    ctx.fillRect(0, 0, LOGICAL_W, LOGICAL_H);
+    ctx.strokeStyle = COLORS.grid;
+    ctx.lineWidth = 1;
+    for (let x = 0; x <= LOGICAL_W; x += 28) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, LOGICAL_H); ctx.stroke();
+    }
+    for (let y = 0; y <= LOGICAL_H; y += 28) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(LOGICAL_W, y); ctx.stroke();
+    }
+  }
+
+  function drawHeader() {
+    const tr = t();
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = '700 20px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.canvasTitle, 40, 34, 1600);
+
+    ctx.fillStyle = COLORS.textSub;
+    ctx.font = '12.5px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.canvasSub, 40, 54, 1600);
+  }
+
+  function drawEnclosures() {
+    const tr = t();
+    // Internal 8-bay backplane container (title placed below bays to avoid incoming SATA lines)
+    roundRect(796, 488, 844, 158, 12);
+    ctx.save();
+    ctx.fillStyle = 'rgba(56, 189, 248, 0.035)';
+    ctx.fill();
+    ctx.setLineDash([6, 4]);
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.42)';
+    ctx.lineWidth = 1.4;
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = '#7dd3fc';
+    ctx.font = '700 11px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.backplaneTitle, 810, 633, 816);
+
+    // DX525 #1 container
+    roundRect(556, 700, 532, 288, 14);
+    ctx.save();
+    ctx.fillStyle = 'rgba(251, 113, 133, 0.04)';
+    ctx.fill();
+    ctx.setLineDash([7, 5]);
+    ctx.strokeStyle = 'rgba(251, 113, 133, 0.5)';
+    ctx.lineWidth = 1.6;
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = '#fda4af';
+    ctx.font = '700 12px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.dx1Title, 652, 722, 422);
+
+    // DX525 #2 container
+    roundRect(1108, 700, 532, 288, 14);
+    ctx.save();
+    ctx.fillStyle = 'rgba(251, 113, 133, 0.04)';
+    ctx.fill();
+    ctx.setLineDash([7, 5]);
+    ctx.strokeStyle = 'rgba(251, 113, 133, 0.5)';
+    ctx.lineWidth = 1.6;
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = '#fda4af';
+    ctx.font = '700 12px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.dx2Title, 1204, 722, 422);
+  }
+
+  function drawPortMarkers() {
+    const tr = t();
+    const markers = [
+      { cx: 596,  label: tr.expPort1 },
+      { cx: 1148, label: tr.expPort2 }
+    ];
+    for (const m of markers) {
+      roundRect(m.cx - 38, 690, 76, 20, 4);
+      ctx.fillStyle = '#2a121d';
+      ctx.fill();
+      ctx.strokeStyle = COLORS.esata;
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+      ctx.fillStyle = '#fda4af';
+      ctx.font = '700 10px ui-monospace, Menlo, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(m.label, m.cx, 703.5, 68);
+      ctx.textAlign = 'left';
+    }
+  }
+
+  function drawSoCNode(isHover) {
+    const tr = t();
+    const s = getNode('soc');
+    roundRect(s.x, s.y, s.w, s.h, 14);
+    ctx.fillStyle = COLORS.socBg;
+    ctx.fill();
+    ctx.lineWidth = isHover ? 2.2 : 1.7;
+    ctx.strokeStyle = isHover ? COLORS.nodeHover : 'rgba(59, 130, 246, 0.65)';
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(59, 130, 246, 0.16)';
+    roundRect(s.x + 1, s.y + 1, s.w - 2, 28, 12);
+    ctx.fill();
+
+    ctx.fillStyle = '#93c5fd';
+    ctx.font = '700 13px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.socBanner, s.x + 16, s.y + 19.5, s.w - 32);
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11.4px ui-monospace, Menlo, "PingFang SC", sans-serif';
+    ctx.fillText(tr.socSummary, s.x + 16, s.y + 49, s.w - 32);
+
+    ctx.save();
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.25)';
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(1291, s.y + 62);
+    ctx.lineTo(1291, s.y + s.h - 4);
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = '#60a5fa';
+    ctx.font = '600 10.5px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.socExtLabel, s.x + 16, s.y + 71, 1220);
+    ctx.fillStyle = '#34d399';
+    ctx.fillText(tr.socIntLabel, 1306, s.y + 71, 320);
+
+    ctx.textAlign = 'center';
+    for (const key in socPins) {
+      const p = socPins[key];
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = '600 10px ui-monospace, Menlo, "PingFang SC", sans-serif';
+      ctx.fillText(tr.pins[key], p.x, p.y - 10, 150);
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 4.5, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = '#0b111e';
+      ctx.stroke();
+    }
+    ctx.textAlign = 'left';
+  }
+
+  function drawSpeedPill(cx, cy, bw, spec, color, compact = false, customW = null) {
+    const w = customW || (compact ? 88 : 124);
+    const h = compact ? 26 : 32;
+    roundRect(cx - w / 2, cy - h / 2, w, h, 5);
+    ctx.fillStyle = '#0d1526';
+    ctx.fill();
+    ctx.lineWidth = 1.1;
+    ctx.strokeStyle = color;
+    ctx.stroke();
+
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = compact ? '700 9.6px ui-monospace, Menlo, sans-serif' : '700 10.6px ui-monospace, Menlo, sans-serif';
+    ctx.fillText(bw, cx, cy - 1.5, w - 8);
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = compact ? '8.8px "Segoe UI", "PingFang SC", sans-serif' : '9.4px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(spec, cx, cy + 9.5, w - 8);
+    ctx.textAlign = 'left';
+  }
+
+  function drawLinks(activeSet) {
+    const specs = t().linkSpecs;
+    for (const l of links) {
+      const sp = specs[l.specKey];
+      const isActive = !activeSet || (activeSet.has(l.from) && activeSet.has(l.to));
+      ctx.save();
+      ctx.globalAlpha = isActive ? 1 : 0.16;
+      ctx.strokeStyle = l.color;
+      ctx.lineWidth = (isActive && activeSet) ? l.width + 1.2 : l.width;
+      if (l.dashed) ctx.setLineDash([6, 4]);
+
+      const dst = getNode(l.to);
+
+      if (l.pin) {
+        const p = socPins[l.pin];
+        const x2 = dst.x + dst.w / 2;
+        const y2 = dst.y;
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y + 4);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        drawArrow(x2, y2, 'down', l.color);
+        drawSpeedPill((p.x + x2) / 2, (p.y + y2) / 2, sp.bw, sp.spec, l.color);
+      } else if (l.mode === 'sata_drop') {
+        const src = getNode(l.from);
+        const x1 = l.srcX;
+        const y1 = src.y + src.h;
+        const x2 = dst.x + dst.w / 2;
+        const y2 = dst.y;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        if (Math.abs(x1 - x2) > 1) {
+          ctx.lineTo(x1, l.midY); ctx.lineTo(x2, l.midY);
+        }
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        drawArrow(x2, y2, 'down', l.color);
+        drawSpeedPill(x2, l.pillY, sp.bw, sp.spec, l.color, true, 78);
+      } else if (l.mode === 'dual_exp_route') {
+        const src = getNode(l.from);
+        const sx = l.srcX;
+        const sy = src.y + src.h;
+        const ty = dst.y + dst.h / 2;
+        const tx = dst.x;
+        ctx.beginPath();
+        ctx.moveTo(sx, sy);
+        ctx.lineTo(sx, l.exitY);
+        ctx.lineTo(l.corridorX, l.exitY);
+        ctx.lineTo(l.corridorX, l.busY);
+        ctx.lineTo(l.entryX, l.busY);
+        ctx.lineTo(l.entryX, ty);
+        ctx.lineTo(tx, ty);
+        ctx.stroke();
+        drawArrow(tx, ty, 'right', l.color);
+        drawSpeedPill(l.pillX, l.pillY, sp.bw, sp.spec, l.color, true, 92);
+      } else if (l.mode === 'pm_fan') {
+        const src = getNode(l.from);
+        const x1 = src.x + src.w / 2;
+        const y1 = src.y + src.h;
+        const x2 = dst.x + dst.w / 2;
+        const y2 = dst.y;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1); ctx.lineTo(x1, l.midY); ctx.lineTo(x2, l.midY); ctx.lineTo(x2, y2);
+        ctx.stroke();
+        drawArrow(x2, y2, 'down', l.color);
+        drawSpeedPill(x2, l.pillY, sp.bw, sp.spec, l.color, true, 78);
+      }
+
+      ctx.restore();
+    }
+  }
+
+  function drawNodes(activeSet) {
+    const trNodes = t().nodes;
+    drawSoCNode(hoveredNode && hoveredNode.id === 'soc');
+
+    for (const n of nodes) {
+      if (n.type === 'soc') continue;
+      const nt = trNodes[n.id];
+      const isHover = hoveredNode && hoveredNode.id === n.id;
+      const isActive = !activeSet || activeSet.has(n.id);
+      const innerMaxW = n.w - 16;
+
+      ctx.save();
+      ctx.globalAlpha = isActive ? 1 : 0.25;
+
+      roundRect(n.x, n.y, n.w, n.h, 8);
+      ctx.fillStyle = (n.type === 'hdd' || n.type === 'ext_hdd') ? '#111b2e' : COLORS.nodeBg;
+      ctx.fill();
+
+      ctx.lineWidth = isHover ? 2.2 : 1.3;
+      ctx.strokeStyle = isHover ? COLORS.nodeHover : (n.color || COLORS.nodeBorder);
+      ctx.stroke();
+
+      ctx.fillStyle = n.color;
+      roundRect(n.x + 1, n.y + 1, n.w - 2, 4, 2);
+      ctx.fill();
+
+      if (n.type === 'chip') {
+        ctx.fillStyle = n.color;
+        ctx.font = '700 9.6px ui-monospace, Menlo, sans-serif';
+        ctx.fillText(nt.bdf, n.x + 8, n.y + 19, innerMaxW);
+
+        ctx.fillStyle = COLORS.textMain;
+        ctx.font = '700 12px "Segoe UI", "PingFang SC", sans-serif';
+        ctx.fillText(nt.title, n.x + 8, n.y + 36, innerMaxW);
+
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '10.2px "Segoe UI", "PingFang SC", sans-serif';
+        const lineStep = n.h <= 96 ? 13.5 : 14.5;
+        nt.lines.forEach((line, idx) => {
+          ctx.fillText(line, n.x + 8, n.y + 52 + idx * lineStep, innerMaxW);
+        });
+
+        if (nt.badge) {
+          const by = n.y + n.h - 22;
+          roundRect(n.x + 7, by, n.w - 14, 17, 4);
+          if (n.badgeLevel === 'crit') {
+            ctx.fillStyle = COLORS.critBg;
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(248, 113, 113, 0.45)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.fillStyle = COLORS.critText;
+          } else if (n.badgeLevel === 'warn') {
+            ctx.fillStyle = COLORS.warnBg;
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(251, 191, 36, 0.4)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.fillStyle = COLORS.warnText;
+          } else {
+            ctx.fillStyle = COLORS.okBg;
+            ctx.fill();
+            ctx.fillStyle = COLORS.okText;
+          }
+          ctx.font = '700 9.2px "Segoe UI", "PingFang SC", sans-serif';
+          ctx.fillText(nt.badge, n.x + 11, by + 11.8, n.w - 22);
+        }
+      } else if (n.type === 'hdd') {
+        ctx.fillStyle = n.color;
+        ctx.font = '700 9.6px "Segoe UI", "PingFang SC", sans-serif';
+        ctx.fillText(nt.bay, n.x + 8, n.y + 20, innerMaxW);
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '700 12px "Segoe UI", "PingFang SC", sans-serif';
+        ctx.fillText(nt.title, n.x + 8, n.y + 39, innerMaxW);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '9.8px "Segoe UI", "PingFang SC", sans-serif';
+        nt.lines.forEach((line, idx) => {
+          ctx.fillText(line, n.x + 8, n.y + 57 + idx * 15, innerMaxW);
+        });
+      } else if (n.type === 'ext_hdd') {
+        ctx.fillStyle = '#fda4af';
+        ctx.font = '700 9.5px ui-monospace, Menlo, sans-serif';
+        ctx.fillText(nt.bay, n.x + 8, n.y + 21, n.w - 16);
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '700 12px "Segoe UI", "PingFang SC", sans-serif';
+        ctx.fillText(nt.title, n.x + 8, n.y + 42, n.w - 16);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '10px "Segoe UI", "PingFang SC", sans-serif';
+        ctx.fillText(nt.lines[0], n.x + 8, n.y + 62, n.w - 16);
+      }
+
+      ctx.restore();
+    }
+  }
+
+  function drawInfoPanels() {
+    const tr = t();
+    // Panel 1: Architecture Overview (x=40..680, y=488..646, aligned with 8-bay backplane)
+    roundRect(40, 488, 640, 158, 10);
+    ctx.fillStyle = '#101829';
+    ctx.fill();
+    ctx.strokeStyle = '#24324d';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#38bdf8';
+    ctx.font = '700 12px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.panel1Title, 54, 512, 612);
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '10.6px "Segoe UI", "PingFang SC", sans-serif';
+    tr.panel1Lines.forEach((txt, i) => {
+      ctx.fillText(txt, 54, 538 + i * 26, 612);
+    });
+
+    // Panel 2: Legend & Bottleneck Guide (x=40..536, y=700..988)
+    roundRect(40, 700, 496, 288, 12);
+    ctx.fillStyle = '#101829';
+    ctx.fill();
+    ctx.strokeStyle = '#24324d';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = '700 13px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.panel2Title, 56, 726, 464);
+
+    const legendMeta = [
+      { color: COLORS.pcie3x4,  x: 56,  y: 754, maxW: 195 },
+      { color: COLORS.pcie3x2,  x: 288, y: 754, maxW: 205 },
+      { color: COLORS.pcie2x1,  x: 56,  y: 778, maxW: 195 },
+      { color: COLORS.sata,     x: 288, y: 778, maxW: 205 },
+      { color: COLORS.esata,    x: 56,  y: 802, maxW: 195 },
+      { color: COLORS.internal, x: 288, y: 802, maxW: 205, dashed: true }
+    ];
+
+    ctx.font = '600 10.6px "Segoe UI", "PingFang SC", sans-serif';
+    legendMeta.forEach((it, idx) => {
+      ctx.save();
+      ctx.strokeStyle = it.color;
+      ctx.lineWidth = 3.2;
+      if (it.dashed) ctx.setLineDash([5, 3]);
+      ctx.beginPath();
+      ctx.moveTo(it.x, it.y - 4);
+      ctx.lineTo(it.x + 24, it.y - 4);
+      ctx.stroke();
+      ctx.restore();
+      ctx.fillStyle = '#e2e8f0';
+      ctx.fillText(tr.legend[idx], it.x + 32, it.y, it.maxW);
+    });
+
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.16)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(56, 822);
+    ctx.lineTo(520, 822);
+    ctx.stroke();
+
+    const noteColors = [COLORS.critText, COLORS.okText, COLORS.okText];
+    let ny = 848;
+    tr.notes.forEach((nt, idx) => {
+      ctx.fillStyle = noteColors[idx];
+      ctx.font = '700 11.2px "Segoe UI", "PingFang SC", sans-serif';
+      ctx.fillText(nt.title, 56, ny, 464);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '10.6px "Segoe UI", "PingFang SC", sans-serif';
+      ctx.fillText(nt.text, 56, ny + 17, 464);
+      ny += 45;
+    });
+  }
+
+  function syncToolbarUI() {
+    const tr = t();
+    document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
+    document.title = tr.pageTitle;
+    navHome.textContent = tr.navHome;
+    uiTitle.textContent = tr.toolbarTitle;
+    uiSubtitle.textContent = tr.toolbarSub;
+    btnExport.textContent = tr.exportBtn;
+    uiFooter.innerHTML = '<a href="https://github.com/Einsfier/synology-hardware-topology" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;color:#94a3b8;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;"><svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>Einsfier/synology-hardware-topology</a>';
+    footerHome.textContent = tr.footerHome;
+    btnZh.classList.toggle('active', currentLang === 'zh');
+    btnEn.classList.toggle('active', currentLang === 'en');
+  }
+
+  function render() {
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = LOGICAL_W * dpr;
+    canvas.height = LOGICAL_H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    drawGrid();
+    drawHeader();
+    drawEnclosures();
+    drawInfoPanels();
+
+    const activeNode = pinnedNode || hoveredNode;
+    const activeSet = activeNode ? getRelatedIds(activeNode.id) : null;
+    drawLinks(activeSet);
+    drawPortMarkers();
+    drawNodes(activeSet);
+
+    ctx.fillStyle = '#64748b';
+    ctx.font = '11px ui-monospace, Menlo, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText('github.com/Einsfier/synology-hardware-topology', LOGICAL_W - 40, LOGICAL_H - 13);
+    ctx.textAlign = 'left';
+  }
+
+  function setLang(lang) {
+    if (lang !== 'zh' && lang !== 'en') return;
+    currentLang = lang;
+    try { localStorage.setItem('syno_topo_lang', lang); } catch (_) {}
+    pinnedNode = null;
+    hoveredNode = null;
+    tooltip.style.display = 'none';
+    syncToolbarUI();
+    render();
+  }
+
+  function hitTest(mx, my) {
+    for (let i = nodes.length - 1; i >= 0; i--) {
+      const n = nodes[i];
+      if (mx >= n.x && mx <= n.x + n.w && my >= n.y && my <= n.y + n.h) return n;
+    }
+    return null;
+  }
+
+  function updateTooltip(node, clientX, clientY) {
+    if (!node) {
+      tooltip.style.display = 'none';
+      return;
+    }
+    const tr = t();
+    const nt = tr.nodes[node.id];
+    if (!nt || !nt.meta) {
+      tooltip.style.display = 'none';
+      return;
+    }
+    const m = nt.meta;
+    const k = tr.ttKeys;
+    let html = `<div class="tt-title">${nt.title}</div>`;
+    if (m.bdf) html += `<div class="tt-bdf">${m.bdf}</div>`;
+    if (m.cap) html += `<div class="tt-row"><span class="tt-key">${k.cap}</span><span class="tt-val">${m.cap}</span></div>`;
+    if (m.sta) html += `<div class="tt-row"><span class="tt-key">${k.sta}</span><span class="tt-val">${m.sta}</span></div>`;
+    if (m.driver) html += `<div class="tt-row"><span class="tt-key">${k.driver}</span><span class="tt-val">${m.driver}</span></div>`;
+    if (m.detail) html += `<div style="margin-top:6px;color:#cbd5e1;font-size:11.5px;">${m.detail}</div>`;
+    if (m.warn) html += `<div class="tt-warn">⚠ ${m.warn}</div>`;
+    if (m.crit) html += `<div class="tt-crit">⛔ ${m.crit}</div>`;
+
+    tooltip.innerHTML = html;
+    tooltip.style.display = 'block';
+
+    const rect = wrap.getBoundingClientRect();
+    const ttW = tooltip.offsetWidth || 340;
+    const ttH = tooltip.offsetHeight || 180;
+    let left = clientX - rect.left + 16;
+    let top = clientY - rect.top + 16;
+    if (left + ttW + 10 > rect.width) left = clientX - rect.left - ttW - 16;
+    if (top + ttH + 10 > rect.height) top = clientY - rect.top - ttH - 16;
+    left = Math.max(8, Math.min(left, Math.max(8, rect.width - ttW - 8)));
+    top = Math.max(8, Math.min(top, Math.max(8, rect.height - ttH - 8)));
+    tooltip.style.left = left + 'px';
+    tooltip.style.top = top + 'px';
+  }
+
+  function getLogicalCoords(e) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+      mx: (e.clientX - rect.left) * (LOGICAL_W / rect.width),
+      my: (e.clientY - rect.top) * (LOGICAL_H / rect.height)
+    };
+  }
+
+  canvas.addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse' || pinnedNode) return;
+    const { mx, my } = getLogicalCoords(e);
+    const hit = hitTest(mx, my);
+    canvas.style.cursor = hit ? 'pointer' : 'default';
+    if (hit !== hoveredNode) {
+      hoveredNode = hit;
+      render();
+    }
+    updateTooltip(hit, e.clientX, e.clientY);
+  });
+
+  canvas.addEventListener('pointerdown', (e) => {
+    const { mx, my } = getLogicalCoords(e);
+    const hit = hitTest(mx, my);
+    if (!hit) {
+      if (pinnedNode || hoveredNode) {
+        pinnedNode = null;
+        hoveredNode = null;
+        tooltip.style.display = 'none';
+        render();
+      }
+      return;
+    }
+    if (pinnedNode && pinnedNode.id === hit.id) {
+      pinnedNode = null;
+      if (e.pointerType !== 'mouse') {
+        hoveredNode = null;
+        tooltip.style.display = 'none';
+      }
+    } else {
+      pinnedNode = hit;
+      hoveredNode = hit;
+      updateTooltip(hit, e.clientX, e.clientY);
+    }
+    render();
+  });
+
+  canvas.addEventListener('pointerleave', (e) => {
+    if (e.pointerType !== 'mouse' || pinnedNode) return;
+    hoveredNode = null;
+    tooltip.style.display = 'none';
+    render();
+  });
+
+  document.addEventListener('pointerdown', (e) => {
+    if (pinnedNode && !wrap.contains(e.target)) {
+      pinnedNode = null;
+      hoveredNode = null;
+      tooltip.style.display = 'none';
+      render();
+    }
+  });
+
+  btnZh.addEventListener('click', () => setLang('zh'));
+  btnEn.addEventListener('click', () => setLang('en'));
+
+  btnExport.addEventListener('click', () => {
+    pinnedNode = null;
+    hoveredNode = null;
+    tooltip.style.display = 'none';
+    render();
+    const link = document.createElement('a');
+    link.download = t().exportName;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
+
+  window.addEventListener('resize', render);
+  syncToolbarUI();
+  render();
+})();
+</script>
+</body>
+</html>
