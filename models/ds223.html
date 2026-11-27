@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3QgeD0iMiIgeT0iMiIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiByeD0iMTQiIGZpbGw9IiMwYTBmMWEiIHN0cm9rZT0iIzI0MzI0ZCIgc3Ryb2tlLXdpZHRoPSIzIi8+PHJlY3QgeD0iMTgiIHk9IjEyIiB3aWR0aD0iMjgiIGhlaWdodD0iMTIiIHJ4PSIzIiBmaWxsPSIjMTMxZTMzIiBzdHJva2U9IiMzOGJkZjgiIHN0cm9rZS13aWR0aD0iMyIvPjxwYXRoIGQ9Ik0zMiAyNHYxME0xNiAzNGgzMk0xNiAzNHY4TTMyIDM0djhNNDggMzR2OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzhiZGY4IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjxyZWN0IHg9IjEwIiB5PSI0MiIgd2lkdGg9IjEyIiBoZWlnaHQ9IjEwIiByeD0iMi41IiBmaWxsPSIjNjBhNWZhIi8+PHJlY3QgeD0iMjYiIHk9IjQyIiB3aWR0aD0iMTIiIGhlaWdodD0iMTAiIHJ4PSIyLjUiIGZpbGw9IiMzOGJkZjgiLz48cmVjdCB4PSI0MiIgeT0iNDIiIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMCIgcng9IjIuNSIgZmlsbD0iIzM0ZDM5OSIvPjwvc3ZnPg==" />
+<title>Synology DS223 (Realtek RTD1619B) Hardware &amp; On-Die SATA Topology | 群晖 DS223 硬件拓扑图</title>
+<meta name="description" content="Interactive hardware topology diagram for Synology DS223 (Value series, Realtek RTD1619B ARM64 Cortex-A55 4C/4T): 2GB soldered DDR4, 2-bay hot-swap native SATA III, single 1GbE LAN, 3x USB 3.2 Gen 1 with front Copy button, and Btrfs support. 群晖 DS223 价值系列交互式硬件拓扑图，展示 RTD1619B ARM 片内直连架构、热插拔双盘位 SATA、3口 USB 与瓶颈分析。" />
+<meta name="keywords" content="Synology DS223, Realtek RTD1619B, ARM64, Cortex-A55, rtd1619b, RTL8211F, SATA topology, Btrfs, Value series, 群晖DS223, 群晖硬件拓扑, 价值系列, 2盘位NAS" />
+<meta name="robots" content="index, follow" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Synology DS223 (Realtek RTD1619B) Hardware Topology | 群晖 DS223 硬件拓扑图" />
+<meta property="og:description" content="Interactive on-die ARM64 hardware topology diagram for Synology DS223 (Realtek RTD1619B, 2GB DDR4, 2-bay hot-swap SATA, 1GbE, 3x USB 3.2 Gen 1). 群晖 DS223 交互式硬件互联与片内直连拓扑图。" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Synology DS223 Hardware Topology | 群晖 DS223 硬件拓扑图" />
+<meta name="twitter:description" content="Interactive ARM64 on-die SATA/LAN/USB interconnect diagram for Synology DS223 (Realtek RTD1619B) | 群晖 DS223 硬件拓扑图。" />
+<style>
+  :root {
+    --bg: #0a0f1a;
+    --panel: #111827;
+    --border: #24324d;
+    --text: #e6edf7;
+    --muted: #8fa3c4;
+    --accent: #38bdf8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", monospace;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+  }
+  .nav-bar {
+    width: 100%;
+    max-width: 1680px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+  .nav-left, .nav-models {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    text-decoration: none;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 11px;
+    font-weight: 600;
+    transition: all 0.15s ease;
+  }
+  .nav-link:hover {
+    color: #fff;
+    border-color: var(--accent);
+    background: #1b2840;
+  }
+  .nav-link.active {
+    color: #fff;
+    background: #1d4ed8;
+    border-color: #3b82f6;
+  }
+  .toolbar {
+    width: 100%;
+    max-width: 1680px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 18px;
+    margin-bottom: 12px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .title-group h1 {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: #f8fafc;
+  }
+  .title-group p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .lang-switch {
+    display: inline-flex;
+    background: #0d1526;
+    border: 1px solid #32476b;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .lang-switch button {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .lang-switch button.active {
+    background: #2563eb;
+    color: #ffffff;
+  }
+  .lang-switch button:not(.active):hover {
+    background: #1b2840;
+    color: #f8fafc;
+  }
+  button.action-btn {
+    background: #1b2840;
+    color: var(--text);
+    border: 1px solid #32476b;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  button.action-btn:hover {
+    background: #253859;
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .canvas-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 1680px;
+    background: #0b111e;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 54px rgba(0, 0, 0, 0.5);
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    cursor: default;
+    touch-action: manipulation;
+  }
+  #tooltip {
+    position: absolute;
+    pointer-events: none;
+    display: none;
+    max-width: min(380px, calc(100% - 20px));
+    background: rgba(11, 17, 30, 0.97);
+    border: 1px solid #38bdf8;
+    border-radius: 8px;
+    padding: 11px 13px;
+    font-size: 12px;
+    line-height: 1.55;
+    color: #e2e8f0;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+    z-index: 20;
+  }
+  #tooltip .tt-title {
+    font-weight: 700;
+    color: #38bdf8;
+    margin-bottom: 3px;
+    font-size: 13px;
+  }
+  #tooltip .tt-bdf {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    color: #94a3b8;
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+  #tooltip .tt-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid rgba(148, 163, 184, 0.14);
+    padding-top: 3px;
+    margin-top: 3px;
+  }
+  #tooltip .tt-key { color: #94a3b8; white-space: nowrap; }
+  #tooltip .tt-val { color: #f8fafc; font-weight: 600; text-align: right; }
+  #tooltip .tt-warn { color: #fbbf24; margin-top: 6px; font-size: 11.5px; }
+  #tooltip .tt-crit { color: #f87171; margin-top: 6px; font-size: 11.5px; font-weight: 600; }
+  .seo-footer {
+    width: 100%;
+    max-width: 1680px;
+    margin-top: 14px;
+    padding: 12px 18px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .seo-footer a { color: var(--accent); text-decoration: none; }
+  .seo-footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar" aria-label="Breadcrumb">
+  <div class="nav-left">
+    <a class="nav-link" id="navHome" href="../index.html">← All Models</a>
+  </div>
+  <div class="nav-models">
+    <span class="nav-link active" aria-current="page">Synology DS223</span>
+  </div>
+</nav>
+
+<div class="toolbar">
+  <div class="title-group">
+    <h1 id="uiTitle"></h1>
+    <p id="uiSubtitle"></p>
+  </div>
+  <div class="controls">
+    <div class="lang-switch" role="group" aria-label="Language Switcher">
+      <button id="btnZh" type="button">中文</button>
+      <button id="btnEn" type="button">EN</button>
+    </div>
+    <button id="btnExport" class="action-btn" type="button"></button>
+  </div>
+</div>
+
+<div class="canvas-wrap" id="wrap">
+  <canvas id="topoCanvas" role="img" aria-label="Synology DS223 Hardware and On-Die ARM64 SATA Topology Diagram"></canvas>
+  <div id="tooltip" role="tooltip"></div>
+</div>
+
+<noscript>
+  <div class="seo-footer">JavaScript is required to render the interactive Synology DS223 (Realtek RTD1619B) hardware topology diagram.</div>
+</noscript>
+
+<footer class="seo-footer">
+  <span id="uiFooter"></span>
+</footer>
+
+<script>
+(() => {
+  const LOGICAL_W = 1680;
+  const LOGICAL_H = 1025;
+
+  const canvas = document.getElementById('topoCanvas');
+  const ctx = canvas.getContext('2d');
+  const tooltip = document.getElementById('tooltip');
+  const wrap = document.getElementById('wrap');
+  const uiTitle = document.getElementById('uiTitle');
+  const uiSubtitle = document.getElementById('uiSubtitle');
+  const btnExport = document.getElementById('btnExport');
+  const btnZh = document.getElementById('btnZh');
+  const btnEn = document.getElementById('btnEn');
+  const navHome = document.getElementById('navHome');
+  const uiFooter = document.getElementById('uiFooter');
+
+  const COLORS = {
+    bg: '#0b111e',
+    grid: 'rgba(148, 163, 184, 0.045)',
+    socBg: '#101a2e',
+    nodeBg: '#131e33',
+    nodeBorder: '#293b5c',
+    nodeHover: '#38bdf8',
+    ram: '#a78bfa',       // Violet (On-Die DDR4 Memory Bus)
+    lan: '#22d3ee',       // Cyan (RGMII / 1GbE)
+    internal: '#34d399',  // Emerald (On-Die SoC Integrated Bus)
+    sata: '#38bdf8',      // Sky (SATA III 6Gbps)
+    usb: '#f59e0b',       // Amber (USB 3.2 Gen 1 5Gbps)
+    sys: '#60a5fa',       // Blue (eMMC / PWM / Power Control)
+    warnBg: 'rgba(245, 158, 11, 0.16)',
+    warnText: '#fbbf24',
+    critBg: 'rgba(239, 68, 68, 0.18)',
+    critText: '#f87171',
+    okBg: 'rgba(52, 211, 153, 0.14)',
+    okText: '#34d399',
+    textMain: '#f1f5f9',
+    textSub: '#94a3b8'
+  };
+
+  function detectInitialLang() {
+    try {
+      const saved = localStorage.getItem('syno_topo_lang');
+      if (saved === 'zh' || saved === 'en') return saved;
+    } catch (_) {}
+    const navLang = (navigator.language || (navigator.languages && navigator.languages[0]) || 'en').toLowerCase();
+    return navLang.startsWith('zh') ? 'zh' : 'en';
+  }
+
+  let currentLang = detectInitialLang();
+  let hoveredNode = null;
+  let pinnedNode = null;
+
+  const I18N = {
+    zh: {
+      navHome: '← 全部机型',
+      pageTitle: 'Synology DS223 (Realtek RTD1619B) 硬件架构与片内直连拓扑图',
+      toolbarTitle: 'Synology DS223 硬件互联与 2 盘位拓扑图（价值系列 · Realtek RTD1619B + 2GB DDR4 + 3× USB）',
+      toolbarSub: '数据来源：拆解推算（ARM 片内全集成直连架构，* 为平台推算项，待实机 lspci / syno_slot_mapping / sysfs 核验）｜ 悬停或点击节点查看详情',
+      exportBtn: '导出高清 PNG',
+      exportName: 'synology-ds223-2bay-topology-zh.png',
+      canvasTitle: 'SYNOLOGY DS223 硬件互联与 ARM 片内直连拓扑图（VALUE 价值系列）',
+      canvasSub: 'Realtek RTD1619B (ARM64 Cortex-A55 · 4C/4T @ 1.7GHz · 2GB DDR4 板载) ｜ 2× 热插拔 SATA III · 1× 1GbE · 3× USB 3.2 Gen 1 · 无外置 PCIe 槽',
+      socBanner: 'Realtek RTD1619B SoC — rtd1619b 平台（ARMv8-A 64-bit 片内全集成架构 · 无外置 PCIe 扩展槽）',
+      socSummary: '4C/4T Cortex-A55 @ 1.7GHz ｜ 硬件加密引擎 ｜ 内存：2GB DDR4 板载不可扩展 ｜ 核显：Mali-G57（DSM 无头运行不提供硬解）｜ 功耗：17.34W 存取 / 4.08W 休眠',
+      socZoneMem: '内存控制器域',
+      socZoneLan: '片内 MAC / RGMII 域',
+      socZoneSata: '片内原生 AHCI SATA 域（免外置 PCIe 桥芯片）',
+      socZoneUsb: '片内 xHCI 域',
+      socZoneSys: '引导与系统管理域',
+      backplaneTitle: '内置 2 盘位热插拔硬盘背板（2× 3.5"/2.5" SATA III · 免工具托盘 · 片内原生直连*）',
+      diffTitle: 'DS223 vs DS223j 差异与边界',
+      diffLines: [
+        '• 内存翻倍：2GB DDR4 板载（对比 DS223j 1GB）',
+        '• 热插拔仓：前拆免工具托盘（非固定拆壳）',
+        '• 三口 USB：前置 1× 含一键拷贝键 + 后置 2×',
+        '• 静音升级：14.6 dB(A)（对比 18.2 dB(A)）',
+        '• 硬件边界：无 M.2 / 无扩展柜 / 仅单 1GbE'
+      ],
+      pins: {
+        p_ram:  'DDR4 内存总线',
+        p_lan:  'RGMII 接口 (推算*)',
+        p_sata: '片内原生 AHCI SATA*',
+        p_usb:  '片内 xHCI 总线*',
+        p_sys:  'eMMC / PWM / GPIO*'
+      },
+      linkSpecs: {
+        l_ram:     { bw: '板载直连',    spec: 'DDR4 non-ECC' },
+        l_lan:     { bw: '1 Gbps',      spec: 'RGMII · 片内 MAC*' },
+        l_sata:    { bw: '片内直连',    spec: '2× SATA 6Gbps*' },
+        l_usb:     { bw: '片内直连',    spec: 'xHCI → 3× 5Gbps*' },
+        l_sys:     { bw: '板载总线',    spec: 'eMMC / PWM / I2C*' },
+        l_rj45:    { bw: '125 MB/s',    spec: '1000BASE-T' },
+        l_hdd:     { bw: '600 MB/s',    spec: 'SATA III 6Gbps' },
+        l_usbport: { bw: '5 Gbps',      spec: '前 1 + 后 2 USB-A' },
+        l_chassis: { bw: '温控 / 供电', spec: 'PWM + 12V DC' }
+      },
+      panel1Title: 'DS223 硬件架构特征与数据溯源（拆解推算）',
+      panel1Lines: [
+        '• 官方确认规格：Realtek RTD1619B (4C/4T @ 1.7GHz)、2GB DDR4 板载、2× 热插拔 SATA、1× 1GbE、3× USB 3.2 Gen 1、92mm 风扇、60W 电源',
+        '• ARM 片内直连架构：2 路 SATA III、千兆 MAC 与 xHCI 均由 RTD1619B 片内原生提供，无需外置 PCIe SATA 桥接芯片，整机存取仅 17.34W',
+        '• 相对 DS223j 升级：内存由 1GB 翻倍至 2GB、升级前拆热插拔免工具硬盘仓、新增前置 USB 3.2 Gen 1 与一键拷贝键，运行 Btrfs / 轻量容器更从容',
+        '• 价值系列硬件边界：无 M.2 NVMe 槽位、无扩展柜接口、无内存插槽、无官方 VMM 虚拟机，且单口 1GbE 无链路聚合或万兆升级槽',
+        '• * 拆解推算说明：片内 SATA/xHCI 映射、GbE PHY (RTL8211F*)、USB Hub 芯片与 eMMC 引导闪存依据平台拆解推算，待实机 lspci / syno_slot_mapping / sysfs 核验'
+      ],
+      panel2Title: '链路图例与关键瓶颈分析',
+      legend: [
+        'SoC 片内集成总线（虚线）',
+        'SATA III 6Gbps (600 MB/s)',
+        'RGMII / 1GbE (125 MB/s)',
+        'DDR4 内存总线 (2GB 封顶)',
+        'USB 3.2 Gen 1 (5Gbps)',
+        'eMMC / PWM 系统管理总线'
+      ],
+      notes: [
+        { title: '1. 网络天花板 · 仅单口 1GbE（实测 ~112 MB/s）', text: '远低于单块现代 3.5" 机械硬盘顺序速率 (~200+ MB/s)，无链路聚合或 2.5G/10G 扩展槽。' },
+        { title: '2. 内存不可扩展 · 2 GB DDR4 板载焊接', text: '较 DS223j 宽裕，可运行 Btrfs 快照与轻量容器；但无 SODIMM 槽，多套件并发仍受 2GB 上限约束。' },
+        { title: '3. 无内部加速与外置扩展 · 无 M.2 / 无扩展柜', text: '不支持 NVMe SSD 缓存与 DX 扩展柜，封顶 2 盘位，适合家庭私有云、备份与日常文件同步。' }
+      ],
+      ttKeys: { cap: '硬件规格', sta: '链路 / 角色', driver: '驱动 / 芯片', note: '架构说明' },
+      nodes: {
+        soc: {
+          title: 'Realtek RTD1619B SoC (ARMv8-A Cortex-A55)',
+          meta: {
+            bdf: 'DSM 平台: rtd1619b (ARM64) ｜ 数据来源: 拆解推算',
+            cap: '4C/4T @ 1.7 GHz · 硬件加密引擎 · Mali-G57 GPU (无头禁用转码)',
+            sta: '2GB DDR4 板载不可扩 ｜ 无外置 PCIe 槽（片内原生直连 SATA / USB / MAC）',
+            detail: 'Realtek RTD1619B 采用 ARM64 高集成设计，整机存取功耗仅 17.34W（休眠 4.08W），主板倒装配合被动铝制散热片与后置 92mm 风扇。虽片内含 Mali-G57 媒体单元，但 DSM 在 DS223 上以无头模式运行且不提供硬件视频转码。'
+          }
+        },
+        dev_ram: {
+          bdf: '主板板载焊接（不可扩展）', title: '2 GB DDR4 non-ECC',
+          lines: ['板载焊接颗粒（官方确认）', '容量较 DS223j 翻倍 (2GB vs 1GB)', '无 SODIMM 扩展槽 · 封顶 2GB'],
+          badge: '⚠ 固定 2GB · 无插槽不可升级',
+          meta: {
+            bdf: 'Onboard Soldered DDR4 — 官方规格确认',
+            cap: '2 GB DDR4 non-ECC（固定焊接，不可扩容）',
+            sta: '直连 RTD1619B 片内内存控制器',
+            warn: '相比 DS223j 的 1GB 内存余量明显改善，可流畅运行 DSM 7.2、Btrfs 快照、Synology Photos 与轻量级 Container Manager 容器；但无 SODIMM 插槽，不支持物理扩容与官方 VMM 虚拟机。'
+          }
+        },
+        dev_phy: {
+          bdf: '板载千兆 PHY（拆解推算*）', title: 'Realtek GbE PHY (RTL8211F*)',
+          lines: ['SoC 片内 MAC 经 RGMII 直连*', '单口 1000Mbps 全双工', '无 2.5G/10G 与链路聚合'],
+          badge: '⚠ 网络上限: 单口 1GbE (~112MB/s)',
+          meta: {
+            bdf: 'SoC Integrated MAC → Onboard GbE PHY (RTL8211F*, 拆解推算)',
+            cap: 'RGMII 接口 ｜ 10/100/1000Mbps 自适应',
+            sta: '单口 1GbE 理论线速 125 MB/s（局域网实测 ~112 MB/s）',
+            driver: 'r8169 / rtk-gmac (推算*)',
+            warn: '仅配备单个千兆网口，不支持双网口链路聚合，亦无内置 PCIe 网络升级槽；1GbE 是全机大文件顺序读写的首要瓶颈。'
+          }
+        },
+        dev_sata: {
+          bdf: 'SoC 片内原生控制器（拆解推算*）', title: 'Realtek 原生 2口 AHCI SATA III',
+          lines: ['片内原生 2× SATA III 6Gbps 直连*', '无需外置 PCIe-to-SATA 桥接芯片', '支持热插拔 · Btrfs/ext4 · 单卷 108 TB'],
+          badge: '片内直连 · 无外置 PCIe 争抢',
+          meta: {
+            bdf: 'RTD1619B Integrated SATA Controller (待实机 syno_slot_mapping / sysfs 核验)',
+            cap: '2× 原生 SATA III 6Gbps（单口有效上限 ~600 MB/s）',
+            sta: '片内总线直连 2 个内置热插拔 SATA 背板盘位，无 PCIe 通道降宽',
+            driver: 'ahci_rtk / platform ahci (推算*)',
+            detail: '2 盘位 DS223 直接由 RTD1619B 片内原生 2 路 SATA 满足需求，免去外置 PCIe SATA 扩展芯片，不存在外置控制器上行带宽争抢；支持 Btrfs 快照复制与数据自愈。'
+          }
+        },
+        dev_usb: {
+          bdf: 'SoC 片内 xHCI + Hub（推算*）', title: 'USB 3.2 Gen 1 控制器',
+          lines: ['片内 xHCI + 板载 Hub 扩展*', '前置 1× (含一键拷贝) + 后置 2×', '支持外置备份盘 / UPS'],
+          badge: '3× 5Gbps · 含前置一键拷贝',
+          meta: {
+            bdf: 'RTD1619B Integrated xHCI + Onboard USB 3.0 Hub* (拆解推算)',
+            cap: '3× USB 3.2 Gen 1 (5Gbps)，前 1 后 2 布局',
+            sta: '支持 FAT32 / NTFS / exFAT / ext4 / Btrfs 外置介质与 USB Copy',
+            driver: 'xhci_hcd',
+            detail: '相比 DS223j 仅 2 个后置口，DS223 经板载 Hub 扩展出 3 个 5Gbps USB-A 接口，并配备前面板 USB Copy 实体按键，方便移动硬盘或读卡器一键导入备份。'
+          }
+        },
+        dev_sys: {
+          bdf: '板载固件与系统监控', title: 'eMMC / 风扇 / 供电',
+          lines: ['• 板载 eMMC 引导闪存*', '• 1× 92mm 后置温控风扇', '• 60W 外置 12V 电源适配器', '• 17.34W 存取 / 4.08W 休眠'],
+          badge: '低功耗被动散热 SoC',
+          meta: {
+            bdf: 'Onboard eMMC Boot Flash* + PWM Fan Ctrl + 12V DC-in PMIC*',
+            cap: '60W 外置适配器 (100–240V AC) ｜ 92×92×25mm 风扇',
+            sta: '3 档风速模式（全速 / 低温 / 静音）',
+            detail: '板载 eMMC 闪存存放引导程序与核心引导配置（完整 DSM 系统分区安装于用户硬盘）；RTD1619B 搭配被动散热片与单颗 92mm 风扇，保持低功耗与超静音表现。'
+          }
+        },
+        port_lan: {
+          bdf: '机身后部网络接口', title: '1× RJ-45 1GbE LAN',
+          lines: ['1000BASE-T 全双工 (125 MB/s 线速)', '实测顺序传输约 112 MB/s', '无双网口故障转移或 LACP'],
+          badge: '⚠ 单千兆（局域网主瓶颈）',
+          meta: {
+            bdf: 'Rear Panel RJ-45 Port — 官方规格确认',
+            cap: '1× 1GbE (10/100/1000 Mbps)',
+            sta: '实际 SMB 顺序传输上限 ~112 MB/s',
+            warn: '受限于单口 1GbE，即使安装两块高速机械硬盘或 SATA SSD，局域网单机读写上限仍被限制在 ~112 MB/s。'
+          }
+        },
+        hdd_1: {
+          bay: '内置盘位 1（热插拔）', title: 'SATA 盘位 1',
+          lines: ['3.5" 免工具 / 2.5" 螺丝固定', 'SATA III 6Gbps (600 MB/s)', 'RTD1619B 原生直连*'],
+          meta: {
+            bdf: 'Internal Bay 1 (片内原生 SATA 端口 1，待 syno_slot_mapping / sysfs 核验)',
+            cap: '3.5" SATA HDD / 2.5" SATA SSD（热插拔托盘）',
+            sta: 'SATA III 6Gbps · 前拆面板支持热插拔，无需拆壳',
+            detail: '直连 RTD1619B 片内 SATA 控制器；支持 SHR / Basic / JBOD / RAID 0 / RAID 1 与 Btrfs 文件系统。'
+          }
+        },
+        hdd_2: {
+          bay: '内置盘位 2（热插拔）', title: 'SATA 盘位 2',
+          lines: ['3.5" 免工具 / 2.5" 螺丝固定', 'SATA III 6Gbps (600 MB/s)', 'RTD1619B 原生直连*'],
+          meta: {
+            bdf: 'Internal Bay 2 (片内原生 SATA 端口 2，待 syno_slot_mapping / sysfs 核验)',
+            cap: '3.5" SATA HDD / 2.5" SATA SSD（热插拔托盘）',
+            sta: 'SATA III 6Gbps · 前拆面板支持热插拔，无需拆壳',
+            detail: '与盘位 1 各自独享片内原生 SATA III 6Gbps 通道，双盘组 SHR / RAID 1 兼顾数据冗余并可轻松跑满 1GbE 网络。'
+          }
+        },
+        port_usb: {
+          bdf: '前 1 + 后 2 外设接口', title: '3× USB 3.2 Gen 1',
+          lines: ['前置 1× USB-A + 一键拷贝键', '后置 2× USB-A (5Gbps)', '外置备份盘 / UPS 通信'],
+          badge: '纯外设用途（无扩展柜）',
+          meta: {
+            bdf: 'Front 1× (with Copy Button) + Rear 2× USB 3.2 Gen 1 — 官方规格确认',
+            cap: 'USB 3.2 Gen 1 (5Gbps，理论有效 ~500 MB/s)',
+            sta: '支持 USB Copy 一键备份、Hyper Backup 离线备份与 UPS',
+            detail: '官方不支持通过 USB 连接群晖外置存储扩展柜；前置 USB 口与 Copy 按键大幅提升外置硬盘/相机卡离线导入便利性。'
+          }
+        },
+        port_chassis: {
+          bdf: '机身散热与供电', title: '92mm 风扇 & 60W 电源',
+          lines: ['1× 92×92×25mm 后置排风扇', '外置 60W 12V DC-in 适配器', '165×108×232.7mm · 1.28 kg'],
+          badge: '14.6 dB(A) 超静音运行',
+          meta: {
+            bdf: 'Rear Exhaust Fan + 12V DC Jack — 官方规格确认',
+            cap: '92mm PWM 风扇 ｜ 60W 外置电源 ｜ Kensington 安全锁孔',
+            sta: '官方标称噪音值仅 14.6 dB(A)，整机净重 1.28 kg',
+            detail: '相比 DS223j 的非热插拔白壳，DS223 采用前拆热插拔黑壳设计，单颗 92mm 后置风扇直吹双盘与被动散热片，兼顾低功耗（4.08W 休眠 / 17.34W 存取）与客厅低噪摆放。'
+          }
+        }
+      }
+    },
+
+    en: {
+      navHome: '← All Models',
+      pageTitle: 'Synology DS223 (Realtek RTD1619B) Hardware & On-Die SATA Topology',
+      toolbarTitle: 'Synology DS223 Hardware Topology (Value Series · Realtek RTD1619B + 2GB DDR4 + 3× USB)',
+      toolbarSub: 'Source: Teardown + Spec (ARM64 on-die integrated architecture; * = platform-inferred, pending lspci / syno_slot_mapping / sysfs)  |  Hover or tap to inspect',
+      exportBtn: 'Export PNG',
+      exportName: 'synology-ds223-2bay-topology-en.png',
+      canvasTitle: 'SYNOLOGY DS223 HARDWARE & ARM64 ON-DIE TOPOLOGY (VALUE SERIES)',
+      canvasSub: 'Realtek RTD1619B (ARM64 Cortex-A55 · 4C/4T @ 1.7GHz · 2GB Soldered DDR4)  |  2× Hot-Swap SATA III · 1× 1GbE · 3× USB 3.2 Gen 1 · No External PCIe Slots',
+      socBanner: 'Realtek RTD1619B SoC — rtd1619b Platform (ARMv8-A 64-bit Fully Integrated On-Die Architecture · No External PCIe Slots)',
+      socSummary: '4C/4T Cortex-A55 @ 1.7GHz | HW Encryption | RAM: 2GB Soldered DDR4 (Non-Upgradeable) | iGPU: Mali-G57 (Headless, No HW Transcode) | 17.34W Access / 4.08W Idle',
+      socZoneMem: 'Memory Controller',
+      socZoneLan: 'On-Die MAC / RGMII',
+      socZoneSata: 'On-Die Native AHCI SATA (No External PCIe Bridge)',
+      socZoneUsb: 'On-Die xHCI',
+      socZoneSys: 'Boot & System Ctrl',
+      backplaneTitle: 'Internal 2-Bay Hot-Swap Backplane (2× 3.5"/2.5" SATA III · Tool-Less Trays · On-Die Native Direct*)',
+      diffTitle: 'DS223 vs DS223j & Hardware Limits',
+      diffLines: [
+        '• 2× RAM: 2GB Soldered DDR4 (vs 1GB on DS223j)',
+        '• Hot-Swap: Front tool-less trays (no disassembly)',
+        '• 3× USB 3.2: Front 1× w/ Copy button + Rear 2×',
+        '• Quieter: 14.6 dB(A) rated (vs 18.2 dB(A))',
+        '• Limits: No M.2 / No DX unit / Single 1GbE only'
+      ],
+      pins: {
+        p_ram:  'DDR4 Memory Bus',
+        p_lan:  'RGMII Link (Inferred*)',
+        p_sata: 'On-Die AHCI SATA*',
+        p_usb:  'On-Die xHCI Bus*',
+        p_sys:  'eMMC / PWM / GPIO*'
+      },
+      linkSpecs: {
+        l_ram:     { bw: 'Soldered',   spec: 'DDR4 non-ECC' },
+        l_lan:     { bw: '1 Gbps',     spec: 'RGMII · On-Die MAC*' },
+        l_sata:    { bw: 'On-Die Bus', spec: '2× SATA 6Gbps*' },
+        l_usb:     { bw: 'On-Die Bus', spec: 'xHCI → 3× 5Gbps*' },
+        l_sys:     { bw: 'Board Bus',  spec: 'eMMC / PWM / I2C*' },
+        l_rj45:    { bw: '125 MB/s',   spec: '1000BASE-T' },
+        l_hdd:     { bw: '600 MB/s',   spec: 'SATA III 6Gbps' },
+        l_usbport: { bw: '5 Gbps',     spec: '1 Front + 2 Rear' },
+        l_chassis: { bw: 'Fan / PSU',  spec: 'PWM + 12V DC' }
+      },
+      panel1Title: 'DS223 Architecture Highlights & Provenance (Teardown + Spec)',
+      panel1Lines: [
+        '• Official Confirmed Specs: Realtek RTD1619B (4C/4T @ 1.7GHz), 2GB soldered DDR4, 2× hot-swap SATA, 1× 1GbE, 3× USB 3.2 Gen 1, 92mm fan, 60W PSU',
+        '• Fully Integrated ARM SoC: Dual SATA III, GbE MAC, and xHCI are integrated on-die without external PCIe SATA bridges (17.34W access power)',
+        '• Upgrades Over DS223j: Doubles RAM to 2GB, adds front hot-swap tool-less bays, front USB 3.2 Gen 1 + Copy button, and quieter 14.6 dB(A) acoustics',
+        '• Value-Series Boundaries: No M.2 NVMe slots, no expansion unit port, non-upgradeable RAM, no official VMM, and single 1GbE without LACP or 10GbE slot',
+        '• * Teardown + Spec Notes: On-die SATA/xHCI mapping, GbE PHY (RTL8211F*), USB hub IC, and eMMC boot flash await lspci / syno_slot_mapping / sysfs dump'
+      ],
+      panel2Title: 'Link Legend & Key Bottlenecks',
+      legend: [
+        'On-Die Integrated SoC Bus (Dashed)',
+        'SATA III 6Gbps (600 MB/s)',
+        'RGMII / 1GbE (125 MB/s)',
+        'DDR4 Memory Bus (2GB Fixed)',
+        'USB 3.2 Gen 1 (5Gbps)',
+        'eMMC / PWM System Control Bus'
+      ],
+      notes: [
+        { title: '1. Network Cap · Single 1GbE Only (~112 MB/s Real)', text: 'Well below a single modern 3.5" HDD (~200+ MB/s); no link aggregation or 2.5G/10G upgrade slot.' },
+        { title: '2. Fixed Memory · 2 GB Soldered DDR4 (No SODIMM)', text: 'Much healthier than DS223j (1GB) for Btrfs snapshots & light containers, yet non-upgradeable with no VMM.' },
+        { title: '3. No Cache or External Bays · No M.2 / No DX Unit', text: 'Capped at 2 internal bays with no NVMe SSD cache; tailored for personal cloud, backup, and file sync.' }
+      ],
+      ttKeys: { cap: 'Spec', sta: 'Link / Role', driver: 'Driver / IC', note: 'Notes' },
+      nodes: {
+        soc: {
+          title: 'Realtek RTD1619B SoC (ARMv8-A Cortex-A55)',
+          meta: {
+            bdf: 'DSM Platform: rtd1619b (ARM64)  |  Source: Teardown + Spec',
+            cap: '4C/4T @ 1.7 GHz · HW Encryption · Mali-G57 GPU (Headless, No Transcode)',
+            sta: '2GB Soldered DDR4 | No External PCIe Slots (On-Die SATA / USB / MAC)',
+            detail: 'Highly integrated ARM64 SoC drawing just 17.34W in access (4.08W HDD hibernation) with a passive aluminum heatsink and rear 92mm fan. Although the silicon includes Mali-G57 media blocks, DS223 runs headless in DSM without hardware video transcoding.'
+          }
+        },
+        dev_ram: {
+          bdf: 'Onboard Soldered (Fixed)', title: '2 GB DDR4 non-ECC',
+          lines: ['Soldered DRAM ICs (Confirmed)', '2× Capacity vs DS223j (1GB)', 'No SODIMM Expansion Slot'],
+          badge: '⚠ Fixed 2GB · Non-Upgradeable',
+          meta: {
+            bdf: 'Onboard Soldered DDR4 — Official Spec Confirmed',
+            cap: '2 GB DDR4 non-ECC (Fixed, Non-Expandable)',
+            sta: 'Direct to RTD1619B On-Die Memory Controller',
+            warn: 'Doubles memory over DS223j for smoother DSM 7.2, Btrfs snapshots, Synology Photos, and light Container Manager workloads; however, there is no SODIMM slot for upgrades and no official VMM support.'
+          }
+        },
+        dev_phy: {
+          bdf: 'Onboard GbE PHY (Inferred*)', title: 'Realtek GbE PHY (RTL8211F*)',
+          lines: ['On-Die MAC via RGMII*', 'Single 1000Mbps Full-Duplex', 'No 2.5G/10G or LACP Support'],
+          badge: '⚠ Network Cap: 1× 1GbE (~112 MB/s)',
+          meta: {
+            bdf: 'SoC Integrated MAC → Onboard GbE PHY (RTL8211F*, Teardown Inferred)',
+            cap: 'RGMII Interface | 10/100/1000Mbps Auto-Negotiation',
+            sta: '125 MB/s line rate (~112 MB/s real sequential throughput)',
+            driver: 'r8169 / rtk-gmac (Inferred*)',
+            warn: 'Single Gigabit Ethernet port with no link aggregation or PCIe network upgrade slot; caps sequential LAN transfers at ~112 MB/s.'
+          }
+        },
+        dev_sata: {
+          bdf: 'SoC On-Die Controller (Inferred*)', title: 'Realtek Native 2-Port AHCI SATA',
+          lines: ['On-Die 2× SATA III 6Gbps Direct*', 'No External PCIe-to-SATA HBA', 'Hot-Swap · Btrfs/ext4 · 108 TB Max'],
+          badge: 'On-Die Direct · No PCIe Contention',
+          meta: {
+            bdf: 'RTD1619B Integrated SATA Controller (Pending syno_slot_mapping / sysfs)',
+            cap: '2× Native SATA III 6Gbps (~600 MB/s per port)',
+            sta: 'Directly wired to 2 internal hot-swap SATA bays with no external PCIe bottleneck',
+            driver: 'ahci_rtk / platform ahci (Inferred*)',
+            detail: 'Both internal bays are served natively by RTD1619B on-die SATA ports without an add-on PCIe SATA bridge, avoiding uplink contention while supporting Btrfs snapshots and data scrubbing.'
+          }
+        },
+        dev_usb: {
+          bdf: 'SoC On-Die xHCI + Hub (Inferred*)', title: 'USB 3.2 Gen 1 Controller',
+          lines: ['On-Die xHCI + Onboard Hub*', '1× Front (Copy Btn) + 2× Rear', 'External Backup / UPS Link'],
+          badge: '3× 5Gbps · Front Copy Button',
+          meta: {
+            bdf: 'RTD1619B Integrated xHCI + Onboard USB 3.0 Hub* (Teardown Inferred)',
+            cap: '3× USB 3.2 Gen 1 (5Gbps), 1 front + 2 rear',
+            sta: 'Supports FAT32 / NTFS / exFAT / ext4 / Btrfs drives & USB Copy',
+            driver: 'xhci_hcd',
+            detail: 'Expands USB connectivity to three 5Gbps ports over DS223j (2 rear only), adding a front-panel port with a dedicated USB Copy button for quick offline ingestion.'
+          }
+        },
+        dev_sys: {
+          bdf: 'Board Firmware & Supervision', title: 'eMMC / Fan / Power',
+          lines: ['• Onboard eMMC Boot Flash*', '• 1× 92mm Rear PWM Fan', '• 60W External 12V Adapter', '• 17.34W Access / 4.08W Idle'],
+          badge: 'Low-Power Passive SoC',
+          meta: {
+            bdf: 'Onboard eMMC Boot Flash* + PWM Fan Ctrl + 12V DC-in PMIC*',
+            cap: '60W External PSU (100–240V AC) | 92×92×25mm Fan',
+            sta: '3 fan modes (Full-Speed, Cool, Quiet)',
+            detail: 'Onboard eMMC flash stores bootstrap firmware and system boot configuration (full DSM resides on internal drives). Passive SoC heatsink + single 92mm fan keeps noise and power draw minimal.'
+          }
+        },
+        port_lan: {
+          bdf: 'Rear Panel Network Port', title: '1× RJ-45 1GbE LAN',
+          lines: ['1000BASE-T Full-Duplex (125 MB/s)', 'Rated ~112 MB/s Sequential I/O', 'No Dual-NIC Failover or LACP'],
+          badge: '⚠ Single 1GbE (Primary LAN Cap)',
+          meta: {
+            bdf: 'Rear Panel RJ-45 Port — Official Spec Confirmed',
+            cap: '1× 1GbE (10/100/1000 Mbps)',
+            sta: 'Practical SMB throughput ceiling ~112 MB/s',
+            warn: 'Single 1GbE link caps LAN file transfers at ~112 MB/s even with dual-drive RAID 0 or SATA SSDs.'
+          }
+        },
+        hdd_1: {
+          bay: 'Internal Bay 1 (Hot-Swap)', title: 'SATA Bay 1',
+          lines: ['3.5" Tool-Less / 2.5" Screw', 'SATA III 6Gbps (600 MB/s)', 'RTD1619B Native Direct*'],
+          meta: {
+            bdf: 'Internal Bay 1 (On-Die Native SATA Port 1, pending syno_slot_mapping / sysfs)',
+            cap: '3.5" SATA HDD / 2.5" SATA SSD (hot-swap drive tray)',
+            sta: 'SATA III 6Gbps · Front-accessible hot-swap without chassis disassembly',
+            detail: 'Directly connected to RTD1619B native SATA controller; supports SHR, Basic, JBOD, RAID 0, RAID 1, and Btrfs.'
+          }
+        },
+        hdd_2: {
+          bay: 'Internal Bay 2 (Hot-Swap)', title: 'SATA Bay 2',
+          lines: ['3.5" Tool-Less / 2.5" Screw', 'SATA III 6Gbps (600 MB/s)', 'RTD1619B Native Direct*'],
+          meta: {
+            bdf: 'Internal Bay 2 (On-Die Native SATA Port 2, pending syno_slot_mapping / sysfs)',
+            cap: '3.5" SATA HDD / 2.5" SATA SSD (hot-swap drive tray)',
+            sta: 'SATA III 6Gbps · Front-accessible hot-swap without chassis disassembly',
+            detail: 'Dedicated on-die SATA III 6Gbps link alongside Bay 1; dual-drive SHR / RAID 1 easily saturates the single 1GbE port.'
+          }
+        },
+        port_usb: {
+          bdf: '1 Front + 2 Rear I/O', title: '3× USB 3.2 Gen 1',
+          lines: ['1× Front USB-A + Copy Button', '2× Rear USB-A (5Gbps)', 'External Backup / UPS Link'],
+          badge: 'Peripherals Only (No DX Unit)',
+          meta: {
+            bdf: 'Front 1× (with Copy Button) + Rear 2× USB 3.2 Gen 1 — Official Spec Confirmed',
+            cap: 'USB 3.2 Gen 1 (5Gbps, ~500 MB/s effective)',
+            sta: 'Supports one-touch USB Copy, Hyper Backup drives & USB UPS',
+            detail: 'Does not support Synology external expansion units; front USB-A with Copy button streamlines offline media offload.'
+          }
+        },
+        port_chassis: {
+          bdf: 'Chassis Cooling & Power', title: '92mm Fan & 60W PSU',
+          lines: ['1× 92×92×25mm Rear Fan', 'External 60W 12V DC-in Brick', '165×108×232.7mm · 1.28 kg'],
+          badge: '14.6 dB(A) Ultra-Quiet',
+          meta: {
+            bdf: 'Rear Exhaust Fan + 12V DC Jack — Official Spec Confirmed',
+            cap: '92mm PWM Fan | 60W External PSU | Kensington Security Slot',
+            sta: '14.6 dB(A) rated acoustic output · 1.28 kg chassis weight',
+            detail: 'Front hot-swap black chassis with single 92mm exhaust fan pulling airflow across both bays and the passive SoC heatsink (4.08W idle / 17.34W access).'
+          }
+        }
+      }
+    }
+  };
+
+  const socPins = {
+    p_ram:  { x: 188,  y: 194, color: COLORS.ram },
+    p_lan:  { x: 504,  y: 194, color: COLORS.lan },
+    p_sata: { x: 910,  y: 194, color: COLORS.internal },
+    p_usb:  { x: 1279, y: 194, color: COLORS.usb },
+    p_sys:  { x: 1525, y: 194, color: COLORS.sys }
+  };
+
+  const nodes = [
+    { id: 'soc',          x: 40,   y: 74,  w: 1600, h: 120, type: 'soc' },
+    { id: 'dev_ram',      x: 40,   y: 308, w: 296,  h: 154, type: 'chip', color: COLORS.ram,      badgeLevel: 'warn' },
+    { id: 'dev_phy',      x: 364,  y: 308, w: 280,  h: 154, type: 'chip', color: COLORS.lan,      badgeLevel: 'warn' },
+    { id: 'dev_sata',     x: 672,  y: 308, w: 476,  h: 154, type: 'chip', color: COLORS.internal, badgeLevel: 'ok' },
+    { id: 'dev_usb',      x: 1176, y: 308, w: 206,  h: 154, type: 'chip', color: COLORS.usb,      badgeLevel: 'ok' },
+    { id: 'dev_sys',      x: 1410, y: 308, w: 230,  h: 154, type: 'chip', color: COLORS.sys,      badgeLevel: 'ok' },
+    { id: 'port_lan',     x: 364,  y: 556, w: 280,  h: 122, type: 'chip', color: COLORS.lan,      badgeLevel: 'warn' },
+    { id: 'hdd_1',        x: 684,  y: 556, w: 216,  h: 114, type: 'hdd',  color: COLORS.sata },
+    { id: 'hdd_2',        x: 920,  y: 556, w: 216,  h: 114, type: 'hdd',  color: COLORS.sata },
+    { id: 'port_usb',     x: 1176, y: 556, w: 206,  h: 122, type: 'chip', color: COLORS.usb,      badgeLevel: 'ok' },
+    { id: 'port_chassis', x: 1410, y: 556, w: 230,  h: 122, type: 'chip', color: COLORS.sys,      badgeLevel: 'ok' }
+  ];
+
+  const links = [
+    { id: 'l_ram',     specKey: 'l_ram',     from: 'soc',      pin: 'p_ram',  to: 'dev_ram',      color: COLORS.ram,      width: 4,   dashed: true },
+    { id: 'l_lan',     specKey: 'l_lan',     from: 'soc',      pin: 'p_lan',  to: 'dev_phy',      color: COLORS.lan,      width: 3.5 },
+    { id: 'l_sata',    specKey: 'l_sata',    from: 'soc',      pin: 'p_sata', to: 'dev_sata',     color: COLORS.internal, width: 4.5, dashed: true },
+    { id: 'l_usb',     specKey: 'l_usb',     from: 'soc',      pin: 'p_usb',  to: 'dev_usb',      color: COLORS.usb,      width: 3.5, dashed: true },
+    { id: 'l_sys',     specKey: 'l_sys',     from: 'soc',      pin: 'p_sys',  to: 'dev_sys',      color: COLORS.sys,      width: 3,   dashed: true },
+    { id: 'l_rj45',    specKey: 'l_rj45',    from: 'dev_phy',  to: 'port_lan',     color: COLORS.lan,  width: 3,   mode: 'straight', pillY: 506 },
+    { id: 'l_hdd1',    specKey: 'l_hdd',     from: 'dev_sata', to: 'hdd_1',        color: COLORS.sata, width: 3,   mode: 'sata_drop', srcX: 792,  pillY: 504 },
+    { id: 'l_hdd2',    specKey: 'l_hdd',     from: 'dev_sata', to: 'hdd_2',        color: COLORS.sata, width: 3,   mode: 'sata_drop', srcX: 1028, pillY: 504 },
+    { id: 'l_usbport', specKey: 'l_usbport', from: 'dev_usb',  to: 'port_usb',     color: COLORS.usb,  width: 2.8, mode: 'straight', pillY: 506 },
+    { id: 'l_chassis', specKey: 'l_chassis', from: 'dev_sys',  to: 'port_chassis', color: COLORS.sys,  width: 2.5, mode: 'straight', pillY: 506, dashed: true }
+  ];
+
+  function t() { return I18N[currentLang]; }
+  function getNode(id) { return nodes.find(n => n.id === id); }
+
+  function getRelatedIds(nodeId) {
+    if (!nodeId || nodeId === 'soc') return null;
+    const set = new Set([nodeId]);
+    let changed = true;
+    const up = new Set([nodeId]);
+    while (changed) {
+      changed = false;
+      for (const l of links) {
+        if (up.has(l.to) && !up.has(l.from)) { up.add(l.from); set.add(l.from); changed = true; }
+      }
+    }
+    const down = new Set([nodeId]);
+    changed = true;
+    while (changed) {
+      changed = false;
+      for (const l of links) {
+        if (down.has(l.from) && !down.has(l.to)) { down.add(l.to); set.add(l.to); changed = true; }
+      }
+    }
+    return set;
+  }
+
+  function roundRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function drawArrow(x, y, dir, color) {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    if (dir === 'down') {
+      ctx.moveTo(x, y); ctx.lineTo(x - 5, y - 9); ctx.lineTo(x + 5, y - 9);
+    } else if (dir === 'right') {
+      ctx.moveTo(x, y); ctx.lineTo(x - 9, y - 5); ctx.lineTo(x - 9, y + 5);
+    }
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawGrid() {
+    ctx.fillStyle = COLORS.bg;
+    ctx.fillRect(0, 0, LOGICAL_W, LOGICAL_H);
+    ctx.strokeStyle = COLORS.grid;
+    ctx.lineWidth = 1;
+    for (let x = 0; x <= LOGICAL_W; x += 28) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, LOGICAL_H); ctx.stroke();
+    }
+    for (let y = 0; y <= LOGICAL_H; y += 28) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(LOGICAL_W, y); ctx.stroke();
+    }
+  }
+
+  function drawHeader() {
+    const tr = t();
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = '700 20px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.canvasTitle, 40, 36, 1600);
+
+    ctx.fillStyle = COLORS.textSub;
+    ctx.font = '12.5px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.canvasSub, 40, 56, 1600);
+  }
+
+  function drawEnclosures() {
+    const tr = t();
+
+    // Left DS223 vs DS223j Differences & Hardware Boundaries Card
+    roundRect(40, 540, 296, 160, 12);
+    ctx.save();
+    ctx.fillStyle = 'rgba(56, 189, 248, 0.04)';
+    ctx.fill();
+    ctx.setLineDash([6, 4]);
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
+    ctx.lineWidth = 1.4;
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = '#38bdf8';
+    ctx.font = '700 12px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.diffTitle, 54, 563, 268);
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '10.6px "Segoe UI", "PingFang SC", sans-serif';
+    tr.diffLines.forEach((line, idx) => {
+      ctx.fillText(line, 54, 586 + idx * 21.5, 268);
+    });
+
+    // Internal 2-Bay Hot-Swap Drive Backplane
+    roundRect(668, 540, 484, 160, 12);
+    ctx.save();
+    ctx.fillStyle = 'rgba(56, 189, 248, 0.035)';
+    ctx.fill();
+    ctx.setLineDash([6, 4]);
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
+    ctx.lineWidth = 1.4;
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = '#7dd3fc';
+    ctx.font = '700 11.2px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.backplaneTitle, 684, 688, 452);
+  }
+
+  function drawSoCNode(isHover) {
+    const tr = t();
+    const s = getNode('soc');
+    roundRect(s.x, s.y, s.w, s.h, 14);
+    ctx.fillStyle = COLORS.socBg;
+    ctx.fill();
+    ctx.lineWidth = isHover ? 2.2 : 1.7;
+    ctx.strokeStyle = isHover ? COLORS.nodeHover : 'rgba(59, 130, 246, 0.65)';
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(59, 130, 246, 0.16)';
+    roundRect(s.x + 1, s.y + 1, s.w - 2, 30, 12);
+    ctx.fill();
+
+    ctx.fillStyle = '#93c5fd';
+    ctx.font = '700 13px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.socBanner, s.x + 16, s.y + 21, s.w - 32);
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11.5px ui-monospace, Menlo, "PingFang SC", sans-serif';
+    ctx.fillText(tr.socSummary, s.x + 16, s.y + 52, s.w - 32);
+
+    // Internal domain dividers inside SoC
+    const dividers = [350, 658, 1162, 1396];
+    ctx.save();
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.24)';
+    ctx.lineWidth = 1.2;
+    dividers.forEach(dx => {
+      ctx.beginPath();
+      ctx.moveTo(dx, s.y + 66);
+      ctx.lineTo(dx, s.y + s.h - 4);
+      ctx.stroke();
+    });
+    ctx.restore();
+
+    ctx.font = '600 10.5px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillStyle = COLORS.ram;
+    ctx.fillText(tr.socZoneMem, 56, s.y + 78, 280);
+    ctx.fillStyle = COLORS.lan;
+    ctx.fillText(tr.socZoneLan, 366, s.y + 78, 276);
+    ctx.fillStyle = COLORS.internal;
+    ctx.fillText(tr.socZoneSata, 674, s.y + 78, 472);
+    ctx.fillStyle = COLORS.usb;
+    ctx.fillText(tr.socZoneUsb, 1178, s.y + 78, 202);
+    ctx.fillStyle = COLORS.sys;
+    ctx.fillText(tr.socZoneSys, 1412, s.y + 78, 212);
+
+    ctx.textAlign = 'center';
+    for (const key in socPins) {
+      const p = socPins[key];
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = '600 10.5px ui-monospace, Menlo, "PingFang SC", sans-serif';
+      ctx.fillText(tr.pins[key], p.x, p.y - 11, 210);
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 4.5, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = '#0b111e';
+      ctx.stroke();
+    }
+    ctx.textAlign = 'left';
+  }
+
+  function drawSpeedPill(cx, cy, bw, spec, color, compact = false, customW = null) {
+    const w = customW || (compact ? 112 : 148);
+    const h = compact ? 30 : 34;
+    roundRect(cx - w / 2, cy - h / 2, w, h, 5);
+    ctx.fillStyle = '#0d1526';
+    ctx.fill();
+    ctx.lineWidth = 1.1;
+    ctx.strokeStyle = color;
+    ctx.stroke();
+
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = compact ? '700 10.2px ui-monospace, Menlo, sans-serif' : '700 11px ui-monospace, Menlo, sans-serif';
+    ctx.fillText(bw, cx, cy - 1.5, w - 8);
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = compact ? '9.6px "Segoe UI", "PingFang SC", sans-serif' : '10px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(spec, cx, cy + 10.5, w - 8);
+    ctx.textAlign = 'left';
+  }
+
+  function drawLinks(activeSet) {
+    const specs = t().linkSpecs;
+    for (const l of links) {
+      const sp = specs[l.specKey];
+      const isActive = !activeSet || (activeSet.has(l.from) && activeSet.has(l.to));
+      ctx.save();
+      ctx.globalAlpha = isActive ? 1 : 0.16;
+      ctx.strokeStyle = l.color;
+      ctx.lineWidth = (isActive && activeSet) ? l.width + 1.2 : l.width;
+      if (l.dashed) ctx.setLineDash([6, 4]);
+
+      const dst = getNode(l.to);
+
+      if (l.pin) {
+        const p = socPins[l.pin];
+        const x2 = dst.x + dst.w / 2;
+        const y2 = dst.y;
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y + 4);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        drawArrow(x2, y2, 'down', l.color);
+        drawSpeedPill((p.x + x2) / 2, (p.y + y2) / 2, sp.bw, sp.spec, l.color);
+      } else if (l.mode === 'straight') {
+        const src = getNode(l.from);
+        const x1 = src.x + src.w / 2;
+        const y1 = src.y + src.h;
+        const x2 = dst.x + dst.w / 2;
+        const y2 = dst.y;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        drawArrow(x2, y2, 'down', l.color);
+        drawSpeedPill(x2, l.pillY || (y1 + y2) / 2, sp.bw, sp.spec, l.color, false, 134);
+      } else if (l.mode === 'sata_drop') {
+        const src = getNode(l.from);
+        const x1 = l.srcX;
+        const y1 = src.y + src.h;
+        const x2 = dst.x + dst.w / 2;
+        const y2 = dst.y;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        drawArrow(x2, y2, 'down', l.color);
+        drawSpeedPill(x2, l.pillY, sp.bw, sp.spec, l.color, true, 126);
+      }
+
+      ctx.restore();
+    }
+  }
+
+  function drawNodes(activeSet) {
+    const trNodes = t().nodes;
+    drawSoCNode(hoveredNode && hoveredNode.id === 'soc');
+
+    for (const n of nodes) {
+      if (n.type === 'soc') continue;
+      const nt = trNodes[n.id];
+      const isHover = hoveredNode && hoveredNode.id === n.id;
+      const isActive = !activeSet || activeSet.has(n.id);
+      const innerMaxW = n.w - 20;
+
+      ctx.save();
+      ctx.globalAlpha = isActive ? 1 : 0.25;
+
+      roundRect(n.x, n.y, n.w, n.h, 8);
+      ctx.fillStyle = (n.type === 'hdd') ? '#111b2e' : COLORS.nodeBg;
+      ctx.fill();
+
+      ctx.lineWidth = isHover ? 2.2 : 1.3;
+      ctx.strokeStyle = isHover ? COLORS.nodeHover : (n.color || COLORS.nodeBorder);
+      ctx.stroke();
+
+      ctx.fillStyle = n.color;
+      roundRect(n.x + 1, n.y + 1, n.w - 2, 4, 2);
+      ctx.fill();
+
+      if (n.type === 'chip') {
+        ctx.fillStyle = n.color;
+        ctx.font = '700 10.5px ui-monospace, Menlo, sans-serif';
+        ctx.fillText(nt.bdf, n.x + 10, n.y + 20, innerMaxW);
+
+        ctx.fillStyle = COLORS.textMain;
+        ctx.font = '700 13.5px "Segoe UI", "PingFang SC", sans-serif';
+        ctx.fillText(nt.title, n.x + 10, n.y + 39, innerMaxW);
+
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '11px "Segoe UI", "PingFang SC", sans-serif';
+        const lineStep = nt.lines.length >= 4 ? 15.5 : 17.5;
+        nt.lines.forEach((line, idx) => {
+          ctx.fillText(line, n.x + 10, n.y + 59 + idx * lineStep, innerMaxW);
+        });
+
+        if (nt.badge) {
+          const by = n.y + n.h - 26;
+          roundRect(n.x + 8, by, n.w - 16, 20, 4);
+          if (n.badgeLevel === 'crit') {
+            ctx.fillStyle = COLORS.critBg;
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(248, 113, 113, 0.45)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.fillStyle = COLORS.critText;
+          } else if (n.badgeLevel === 'warn') {
+            ctx.fillStyle = COLORS.warnBg;
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(251, 191, 36, 0.4)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.fillStyle = COLORS.warnText;
+          } else {
+            ctx.fillStyle = COLORS.okBg;
+            ctx.fill();
+            ctx.fillStyle = COLORS.okText;
+          }
+          ctx.font = '700 10.2px "Segoe UI", "PingFang SC", sans-serif';
+          ctx.fillText(nt.badge, n.x + 13, by + 13.5, n.w - 26);
+        }
+      } else if (n.type === 'hdd') {
+        ctx.fillStyle = n.color;
+        ctx.font = '700 10.5px "Segoe UI", "PingFang SC", sans-serif';
+        ctx.fillText(nt.bay, n.x + 12, n.y + 21, innerMaxW);
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '700 14px "Segoe UI", "PingFang SC", sans-serif';
+        ctx.fillText(nt.title, n.x + 12, n.y + 42, innerMaxW);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '11px "Segoe UI", "PingFang SC", sans-serif';
+        nt.lines.forEach((line, idx) => {
+          ctx.fillText(line, n.x + 12, n.y + 62 + idx * 17, innerMaxW);
+        });
+      }
+
+      ctx.restore();
+    }
+  }
+
+  function drawInfoPanels() {
+    const tr = t();
+
+    // Panel 1 (Left): Architecture Highlights & Provenance
+    roundRect(40, 730, 786, 262, 12);
+    ctx.fillStyle = '#101829';
+    ctx.fill();
+    ctx.strokeStyle = '#24324d';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#38bdf8';
+    ctx.font = '700 13px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.panel1Title, 58, 758, 750);
+
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.16)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(58, 770);
+    ctx.lineTo(808, 770);
+    ctx.stroke();
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11.5px "Segoe UI", "PingFang SC", sans-serif';
+    tr.panel1Lines.forEach((txt, i) => {
+      ctx.fillText(txt, 58, 798 + i * 38, 750);
+    });
+
+    // Panel 2 (Right): Link Legend & Bottleneck Guide
+    roundRect(854, 730, 786, 262, 12);
+    ctx.fillStyle = '#101829';
+    ctx.fill();
+    ctx.strokeStyle = '#24324d';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = '700 13px "Segoe UI", "PingFang SC", sans-serif';
+    ctx.fillText(tr.panel2Title, 872, 758, 750);
+
+    const legendMeta = [
+      { color: COLORS.internal, x: 872,  y: 786, maxW: 210, dashed: true },
+      { color: COLORS.sata,     x: 1126, y: 786, maxW: 210 },
+      { color: COLORS.lan,      x: 1380, y: 786, maxW: 210 },
+      { color: COLORS.ram,      x: 872,  y: 810, maxW: 210 },
+      { color: COLORS.usb,      x: 1126, y: 810, maxW: 210 },
+      { color: COLORS.sys,      x: 1380, y: 810, maxW: 210, dashed: true }
+    ];
+
+    ctx.font = '600 11px "Segoe UI", "PingFang SC", sans-serif';
+    legendMeta.forEach((it, idx) => {
+      ctx.save();
+      ctx.strokeStyle = it.color;
+      ctx.lineWidth = 3.2;
+      if (it.dashed) ctx.setLineDash([5, 3]);
+      ctx.beginPath();
+      ctx.moveTo(it.x, it.y - 4);
+      ctx.lineTo(it.x + 24, it.y - 4);
+      ctx.stroke();
+      ctx.restore();
+      ctx.fillStyle = '#e2e8f0';
+      ctx.fillText(tr.legend[idx], it.x + 32, it.y, it.maxW);
+    });
+
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.16)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(872, 826);
+    ctx.lineTo(1622, 826);
+    ctx.stroke();
+
+    const noteColors = [COLORS.critText, COLORS.warnText, COLORS.warnText];
+    let ny = 852;
+    tr.notes.forEach((nt, idx) => {
+      ctx.fillStyle = noteColors[idx];
+      ctx.font = '700 11.5px "Segoe UI", "PingFang SC", sans-serif';
+      ctx.fillText(nt.title, 872, ny, 750);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '11.2px "Segoe UI", "PingFang SC", sans-serif';
+      ctx.fillText(nt.text, 872, ny + 18, 750);
+      ny += 47;
+    });
+  }
+
+  function syncToolbarUI() {
+    const tr = t();
+    document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
+    document.title = tr.pageTitle;
+    navHome.textContent = tr.navHome;
+    uiTitle.textContent = tr.toolbarTitle;
+    uiSubtitle.textContent = tr.toolbarSub;
+    btnExport.textContent = tr.exportBtn;
+    uiFooter.innerHTML = '<a href="https://github.com/Einsfier/synology-hardware-topology" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;color:#94a3b8;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;"><svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>Einsfier/synology-hardware-topology</a>';
+    btnZh.classList.toggle('active', currentLang === 'zh');
+    btnEn.classList.toggle('active', currentLang === 'en');
+  }
+
+  function render() {
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = LOGICAL_W * dpr;
+    canvas.height = LOGICAL_H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    drawGrid();
+    drawHeader();
+    drawEnclosures();
+    drawInfoPanels();
+
+    const activeNode = pinnedNode || hoveredNode;
+    const activeSet = activeNode ? getRelatedIds(activeNode.id) : null;
+    drawLinks(activeSet);
+    drawNodes(activeSet);
+
+    ctx.fillStyle = '#64748b';
+    ctx.font = '11px ui-monospace, Menlo, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText('github.com/Einsfier/synology-hardware-topology', LOGICAL_W - 40, LOGICAL_H - 13);
+    ctx.textAlign = 'left';
+  }
+
+  function setLang(lang) {
+    if (lang !== 'zh' && lang !== 'en') return;
+    currentLang = lang;
+    try { localStorage.setItem('syno_topo_lang', lang); } catch (_) {}
+    pinnedNode = null;
+    hoveredNode = null;
+    tooltip.style.display = 'none';
+    syncToolbarUI();
+    render();
+  }
+
+  function hitTest(mx, my) {
+    for (let i = nodes.length - 1; i >= 0; i--) {
+      const n = nodes[i];
+      if (mx >= n.x && mx <= n.x + n.w && my >= n.y && my <= n.y + n.h) return n;
+    }
+    return null;
+  }
+
+  function updateTooltip(node, clientX, clientY) {
+    if (!node) {
+      tooltip.style.display = 'none';
+      return;
+    }
+    const tr = t();
+    const nt = tr.nodes[node.id];
+    if (!nt || !nt.meta) {
+      tooltip.style.display = 'none';
+      return;
+    }
+    const m = nt.meta;
+    const k = tr.ttKeys;
+    let html = `<div class="tt-title">${nt.title}</div>`;
+    if (m.bdf) html += `<div class="tt-bdf">${m.bdf}</div>`;
+    if (m.cap) html += `<div class="tt-row"><span class="tt-key">${k.cap}</span><span class="tt-val">${m.cap}</span></div>`;
+    if (m.sta) html += `<div class="tt-row"><span class="tt-key">${k.sta}</span><span class="tt-val">${m.sta}</span></div>`;
+    if (m.driver) html += `<div class="tt-row"><span class="tt-key">${k.driver}</span><span class="tt-val">${m.driver}</span></div>`;
+    if (m.detail) html += `<div style="margin-top:6px;color:#cbd5e1;font-size:11.5px;">${m.detail}</div>`;
+    if (m.warn) html += `<div class="tt-warn">⚠ ${m.warn}</div>`;
+    if (m.crit) html += `<div class="tt-crit">⛔ ${m.crit}</div>`;
+
+    tooltip.innerHTML = html;
+    tooltip.style.display = 'block';
+
+    const rect = wrap.getBoundingClientRect();
+    const ttW = tooltip.offsetWidth || 340;
+    const ttH = tooltip.offsetHeight || 180;
+    let left = clientX - rect.left + 16;
+    let top = clientY - rect.top + 16;
+    if (left + ttW + 10 > rect.width) left = clientX - rect.left - ttW - 16;
+    if (top + ttH + 10 > rect.height) top = clientY - rect.top - ttH - 16;
+    left = Math.max(8, Math.min(left, Math.max(8, rect.width - ttW - 8)));
+    top = Math.max(8, Math.min(top, Math.max(8, rect.height - ttH - 8)));
+    tooltip.style.left = left + 'px';
+    tooltip.style.top = top + 'px';
+  }
+
+  function getLogicalCoords(e) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+      mx: (e.clientX - rect.left) * (LOGICAL_W / rect.width),
+      my: (e.clientY - rect.top) * (LOGICAL_H / rect.height)
+    };
+  }
+
+  canvas.addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse' || pinnedNode) return;
+    const { mx, my } = getLogicalCoords(e);
+    const hit = hitTest(mx, my);
+    canvas.style.cursor = hit ? 'pointer' : 'default';
+    if (hit !== hoveredNode) {
+      hoveredNode = hit;
+      render();
+    }
+    updateTooltip(hit, e.clientX, e.clientY);
+  });
+
+  canvas.addEventListener('pointerdown', (e) => {
+    const { mx, my } = getLogicalCoords(e);
+    const hit = hitTest(mx, my);
+    if (!hit) {
+      if (pinnedNode || hoveredNode) {
+        pinnedNode = null;
+        hoveredNode = null;
+        tooltip.style.display = 'none';
+        render();
+      }
+      return;
+    }
+    if (pinnedNode && pinnedNode.id === hit.id) {
+      pinnedNode = null;
+      if (e.pointerType !== 'mouse') {
+        hoveredNode = null;
+        tooltip.style.display = 'none';
+      }
+    } else {
+      pinnedNode = hit;
+      hoveredNode = hit;
+      updateTooltip(hit, e.clientX, e.clientY);
+    }
+    render();
+  });
+
+  canvas.addEventListener('pointerleave', (e) => {
+    if (e.pointerType !== 'mouse' || pinnedNode) return;
+    hoveredNode = null;
+    tooltip.style.display = 'none';
+    render();
+  });
+
+  document.addEventListener('pointerdown', (e) => {
+    if (pinnedNode && !wrap.contains(e.target)) {
+      pinnedNode = null;
+      hoveredNode = null;
+      tooltip.style.display = 'none';
+      render();
+    }
+  });
+
+  btnZh.addEventListener('click', () => setLang('zh'));
+  btnEn.addEventListener('click', () => setLang('en'));
+
+  btnExport.addEventListener('click', () => {
+    pinnedNode = null;
+    hoveredNode = null;
+    tooltip.style.display = 'none';
+    render();
+    const link = document.createElement('a');
+    link.download = t().exportName;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
+
+  window.addEventListener('resize', render);
+  syncToolbarUI();
+  render();
+})();
+</script>
+</body>
+</html>
